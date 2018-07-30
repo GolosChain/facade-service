@@ -12,8 +12,8 @@ class Router extends BasicService {
         super();
 
         this._gate = new Gate();
-        this._options = new Options();
-        this._subscribe = new Subscribe();
+        this._options = new Options(this._gate);
+        this._subscribe = new Subscribe(this._gate);
     }
 
     async start() {
@@ -27,6 +27,10 @@ class Router extends BasicService {
             },
             requiredClients: {
                 frontend: env.GLS_FRONTEND_GATE_CONNECT,
+                notify: env.GLS_NOTIFY_CONNECT,
+                options: env.GLS_OPTIONS_CONNECT,
+                push: env.GLS_PUSH_CONNECT,
+                mail: env.GLS_MAIL_CONNECT,
             },
         });
 

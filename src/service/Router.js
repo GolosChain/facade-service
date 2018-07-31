@@ -5,9 +5,11 @@ const env = require('../Env');
 const Options = require('./handler/Options');
 const Subscribe = require('./handler/Subscribe');
 const Transfer = require('./handler/Transfer');
+const History = require('./handler/History');
 
 // TODO notify unsubscribe on offline
 // TODO check transfer error
+// TODO change notify history api
 class Router extends BasicService {
     constructor() {
         super();
@@ -15,6 +17,7 @@ class Router extends BasicService {
         this._gate = new Gate();
         this._options = new Options(this._gate);
         this._subscribe = new Subscribe(this._gate);
+        this._history = new History(this._gate);
         this._transfer = new Transfer(this._gate);
     }
 
@@ -27,10 +30,12 @@ class Router extends BasicService {
                 onlineNotifyOn: this._subscribe.onlineNotifyOn.bind(this),
                 onlineNotifyOff: this._subscribe.onlineNotifyOff.bind(this),
                 pushNotifyOn: this._subscribe.pushNotifyOn.bind(this),
+                getNotifyHistory: this._history.notify.bind(this),
             },
             requiredClients: {
                 frontend: env.GLS_FRONTEND_GATE_CONNECT,
-                notify: env.GLS_NOTIFY_CONNECT,
+                notifyOnline: env.GLS_NOTIFY_ONLINE_CONNECT,
+                notifyRegistrator: env.GLS_NOTIFY_REGISTRATOR_CONNECT,
                 options: env.GLS_OPTIONS_CONNECT,
                 push: env.GLS_PUSH_CONNECT,
                 mail: env.GLS_MAIL_CONNECT,

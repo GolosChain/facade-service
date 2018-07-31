@@ -1,4 +1,3 @@
-const R = require('ramda');
 const core = require('gls-core-service');
 const stats = core.Stats.client;
 
@@ -7,43 +6,28 @@ class Subscribe {
         this._gate = gate;
     }
 
-    async onlineNotifyOn(data) {
+    async onlineNotifyOn({ user, channelId, requestId }) {
         const time = new Date();
-
-        await this._gate.sendTo('notify', 'subscribe', data);
+        const result = await this._gate.sendTo('notifyOnline', 'subscribe', { user, channelId, requestId });
 
         stats.timing('online_notify_on', new Date() - time);
-        return 'Ok';
+        return result;
     }
 
-    async onlineNotifyOff(data) {
+    async onlineNotifyOff({ user, channelId }) {
         const time = new Date();
-
-        await this._gate.sendTo('notify', 'unsubscribe', data);
+        const result = await this._gate.sendTo('notifyOnline', 'unsubscribe', { user, channelId });
 
         stats.timing('online_notify_off', new Date() - time);
-        return 'Ok';
+        return result;
     }
 
     async pushNotifyOn({ user, params: { key, deviceType } }) {
         const time = new Date();
-
-        if (!R.all(R.is(String), [key, deviceType])) {
-            throw { code: 400, message: 'Invalid params.' };
-        }
-
-        if (!['ios', 'android', 'web'].includes(deviceType)) {
-            throw { code: 400, message: 'Invalid device type.' };
-        }
-
-        if (key.length < 10) {
-            throw { code: 400, message: 'Too short key.' };
-        }
-
-        await this._gate.sendTo('push', 'subscribe', { user, key, deviceType });
+        const result = await this._gate.sendTo('push', 'subscribe', { user, key, deviceType });
 
         stats.timing('push_notify_on', new Date() - time);
-        return 'Ok';
+        return result;
     }
 }
 

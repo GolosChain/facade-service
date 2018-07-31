@@ -3,9 +3,8 @@ const stats = core.Stats.client;
 const Abstract = require('./Abstract');
 
 class Transfer extends Abstract {
-    async do(data) {
+    async handle({ channelId, requestId, error, result }) {
         const time = new Date();
-        const { channelId, requestId, error, result } = data;
 
         if (!channelId || !requestId) {
             throw { code: 400, message: 'Invalid packet routing format.' };
@@ -15,9 +14,9 @@ class Transfer extends Abstract {
             throw { code: 400, message: 'Invalid packet data format.' };
         }
 
-        await this.sendTo('frontend', 'transfer', data);
+        await this.sendTo('frontend', 'transfer', { channelId, requestId, error, result });
 
-        stats.timing('transfer', new Date() - time);
+        stats.timing('transfer_handle', new Date() - time);
         return 'Ok';
     }
 }

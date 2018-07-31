@@ -4,8 +4,9 @@ const Gate = core.service.Gate;
 const env = require('../Env');
 const Options = require('./handler/Options');
 const Subscribe = require('./handler/Subscribe');
-const Transfer = require('./handler/Transfer');
 const History = require('./handler/History');
+const Transfer = require('./handler/Transfer');
+const Offline = require('./handler/Offline');
 
 // TODO notify unsubscribe on offline
 // TODO check transfer error
@@ -19,12 +20,14 @@ class Router extends BasicService {
         this._subscribe = new Subscribe(this._gate);
         this._history = new History(this._gate);
         this._transfer = new Transfer(this._gate);
+        this._offline = new Offline(this._gate);
     }
 
     async start() {
         await this._gate.start({
             serverRoutes: {
-                transfer: this._transfer.do.bind(this),
+                transfer: this._transfer.handle.bind(this),
+                offline: this._offline.handle.bind(this),
                 getOptions: this._options.get.bind(this),
                 setOptions: this._options.set.bind(this),
                 onlineNotifyOn: this._subscribe.onlineNotifyOn.bind(this),

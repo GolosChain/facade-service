@@ -6,6 +6,7 @@ const Gate = core.service.Gate;
 const env = require('../Env');
 const Options = require('./handler/Options');
 const Subscribe = require('./handler/Subscribe');
+const Transfer = require('./handler/Transfer');
 
 class Router extends BasicService {
     constructor() {
@@ -14,16 +15,18 @@ class Router extends BasicService {
         this._gate = new Gate();
         this._options = new Options(this._gate);
         this._subscribe = new Subscribe(this._gate);
+        this._transfer = new Transfer(this._gate);
     }
 
     async start() {
         await this._gate.start({
             serverRoutes: {
-                getOptions: this._options.get,
-                setOptions: this._options.set,
-                subscribeOnOnlineNotify: this._subscribe.onlineNotifyOn,
-                unsubscribeOnOnlineNotify: this._subscribe.onlineNotifyOff,
-                subscribeOnPushNotify: this._subscribe.pushNotifyOn,
+                transfer: this._transfer.do.bind(this),
+                getOptions: this._options.get.bind(this),
+                setOptions: this._options.set.bind(this),
+                onlineNotifyOn: this._subscribe.onlineNotifyOn.bind(this),
+                onlineNotifyOff: this._subscribe.onlineNotifyOff.bind(this),
+                pushNotifyOn: this._subscribe.pushNotifyOn.bind(this),
             },
             requiredClients: {
                 frontend: env.GLS_FRONTEND_GATE_CONNECT,

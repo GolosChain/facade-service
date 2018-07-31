@@ -3,13 +3,14 @@ const stats = core.Stats.client;
 const logger = core.Logger;
 const BasicService = core.service.Basic;
 const env = require('./Env');
+const Router = require('./service/Router');
 
 class Main extends BasicService {
     constructor() {
         super();
 
         this.printEnvBasedConfig(env);
-        this.addNested(); // TODO -
+        this.addNested(new Router());
         this.stopOnExit();
     }
 

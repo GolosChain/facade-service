@@ -8,6 +8,15 @@ class Transfer {
 
     async do(data) {
         const time = new Date();
+        const { channelId, requestId, error, result } = data;
+
+        if (!channelId || !requestId) {
+            throw { code: 400, message: 'Invalid packet routing format.' };
+        }
+
+        if (!error && !result) {
+            throw { code: 400, message: 'Invalid packet data format.' };
+        }
 
         await this._gate.sendTo('frontend', 'transfer', data);
 

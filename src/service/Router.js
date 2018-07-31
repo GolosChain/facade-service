@@ -1,6 +1,4 @@
 const core = require('gls-core-service');
-const stats = core.Stats.client;
-const logger = core.Logger;
 const BasicService = core.service.Basic;
 const Gate = core.service.Gate;
 const env = require('../Env');
@@ -8,6 +6,8 @@ const Options = require('./handler/Options');
 const Subscribe = require('./handler/Subscribe');
 const Transfer = require('./handler/Transfer');
 
+// TODO notify unsubscribe on offline
+// TODO check transfer error
 class Router extends BasicService {
     constructor() {
         super();

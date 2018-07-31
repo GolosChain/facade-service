@@ -1,14 +1,12 @@
 const core = require('gls-core-service');
 const stats = core.Stats.client;
+const Abstract = require('./Abstract');
 
-class History {
-    constructor(gate) {
-        this._gate = gate;
-    }
-
+class History extends Abstract {
     async notify({ user, params: { skip, limit, types } }) {
         const time = new Date();
-        const result = await this._gate.sendTo('notifyRegistrator', 'history', { user, skip, limit, types });
+        const data = { user, skip, limit, types };
+        const result = await this.sendTo('notifyRegistrator', 'history', data);
 
         stats.timing('notify_history', new Date() - time);
         return result;

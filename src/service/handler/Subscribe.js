@@ -1,14 +1,12 @@
 const core = require('gls-core-service');
 const stats = core.Stats.client;
+const Abstract = require('./Abstract');
 
-class Subscribe {
-    constructor(gate) {
-        this._gate = gate;
-    }
-
+class Subscribe extends Abstract {
     async onlineNotifyOn({ user, channelId, requestId }) {
         const time = new Date();
-        const result = await this._gate.sendTo('notifyOnline', 'subscribe', { user, channelId, requestId });
+        const data = { user, channelId, requestId };
+        const result = await this.sendTo('notifyOnline', 'subscribe', data);
 
         stats.timing('online_notify_on', new Date() - time);
         return result;
@@ -16,7 +14,8 @@ class Subscribe {
 
     async onlineNotifyOff({ user, channelId }) {
         const time = new Date();
-        const result = await this._gate.sendTo('notifyOnline', 'unsubscribe', { user, channelId });
+        const data = { user, channelId };
+        const result = await this.sendTo('notifyOnline', 'unsubscribe', data);
 
         stats.timing('online_notify_off', new Date() - time);
         return result;
@@ -24,7 +23,8 @@ class Subscribe {
 
     async pushNotifyOn({ user, params: { key, deviceType } }) {
         const time = new Date();
-        const result = await this._gate.sendTo('push', 'subscribe', { user, key, deviceType });
+        const data = { user, key, deviceType };
+        const result = await this.sendTo('push', 'subscribe', data);
 
         stats.timing('push_notify_on', new Date() - time);
         return result;

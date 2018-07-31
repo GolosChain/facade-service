@@ -1,11 +1,8 @@
 const core = require('gls-core-service');
 const stats = core.Stats.client;
+const Abstract = require('./Abstract');
 
-class Transfer {
-    constructor(gate) {
-        this._gate = gate;
-    }
-
+class Transfer extends Abstract {
     async do(data) {
         const time = new Date();
         const { channelId, requestId, error, result } = data;
@@ -18,7 +15,7 @@ class Transfer {
             throw { code: 400, message: 'Invalid packet data format.' };
         }
 
-        await this._gate.sendTo('frontend', 'transfer', data);
+        await this.sendTo('frontend', 'transfer', data);
 
         stats.timing('transfer', new Date() - time);
         return 'Ok';

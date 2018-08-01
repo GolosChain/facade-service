@@ -8,9 +8,6 @@ const History = require('./handler/History');
 const Transfer = require('./handler/Transfer');
 const Offline = require('./handler/Offline');
 
-// TODO notify unsubscribe on offline
-// TODO check transfer error
-// TODO change notify history api
 class Router extends BasicService {
     constructor() {
         super();
@@ -26,14 +23,17 @@ class Router extends BasicService {
     async start() {
         await this._gate.start({
             serverRoutes: {
-                transfer: this._transfer.handle.bind(this),
-                offline: this._offline.handle.bind(this),
-                getOptions: this._options.get.bind(this),
-                setOptions: this._options.set.bind(this),
-                onlineNotifyOn: this._subscribe.onlineNotifyOn.bind(this),
-                onlineNotifyOff: this._subscribe.onlineNotifyOff.bind(this),
-                pushNotifyOn: this._subscribe.pushNotifyOn.bind(this),
-                getNotifyHistory: this._history.notify.bind(this),
+                /* public points */
+                offline: this._offline.handle.bind(this._offline),
+                getOptions: this._options.get.bind(this._options),
+                setOptions: this._options.set.bind(this._options),
+                onlineNotifyOn: this._subscribe.onlineNotifyOn.bind(this._subscribe),
+                onlineNotifyOff: this._subscribe.onlineNotifyOff.bind(this._subscribe),
+                pushNotifyOn: this._subscribe.pushNotifyOn.bind(this._subscribe),
+                getNotifyHistory: this._history.notify.bind(this._history),
+
+                /* inner services only */
+                transfer: this._transfer.handle.bind(this._transfer),
             },
             requiredClients: {
                 frontend: env.GLS_FRONTEND_GATE_CONNECT,

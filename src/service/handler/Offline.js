@@ -7,7 +7,7 @@ class Offline extends Abstract {
         const time = new Date();
 
         try {
-            await this.sendTo('notifyOnline', 'unsubscribe', { user, channelId });
+            await this.sendTo('onlineNotify', 'unsubscribe', { user, channelId });
         } catch (error) {
             // notify-service offline, do nothing
         }

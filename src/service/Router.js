@@ -37,8 +37,8 @@ class Router extends BasicService {
             },
             requiredClients: {
                 frontend: env.GLS_FRONTEND_GATE_CONNECT,
-                notifyOnline: env.GLS_NOTIFY_ONLINE_CONNECT,
-                notifyRegistrator: env.GLS_NOTIFY_REGISTRATOR_CONNECT,
+                onlineNotify: env.GLS_ONLINE_NOTIFY_CONNECT,
+                notify: env.GLS_NOTIFY_CONNECT,
                 options: env.GLS_OPTIONS_CONNECT,
                 push: env.GLS_PUSH_CONNECT,
                 mail: env.GLS_MAIL_CONNECT,

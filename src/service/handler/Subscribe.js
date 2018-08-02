@@ -6,7 +6,7 @@ class Subscribe extends Abstract {
     async onlineNotifyOn({ user, channelId, requestId }) {
         const time = new Date();
         const data = { user, channelId, requestId };
-        const result = await this.sendTo('notifyOnline', 'subscribe', data);
+        const result = await this.sendTo('onlineNotify', 'subscribe', data);
 
         stats.timing('online_notify_on', new Date() - time);
         return result;
@@ -15,7 +15,7 @@ class Subscribe extends Abstract {
     async onlineNotifyOff({ user, channelId }) {
         const time = new Date();
         const data = { user, channelId };
-        const result = await this.sendTo('notifyOnline', 'unsubscribe', data);
+        const result = await this.sendTo('onlineNotify', 'unsubscribe', data);
 
         stats.timing('online_notify_off', new Date() - time);
         return result;

@@ -17,7 +17,7 @@ class Options extends Abstract {
         }
 
         let notify;
-        const notifyData = await this.sendTo('notifyOnline', 'getOptions', data);
+        const notifyData = await this.sendTo('onlineNotify', 'getOptions', data);
 
         if (notifyData.error) {
             throw notifyData.error;
@@ -61,7 +61,7 @@ class Options extends Abstract {
         }
 
         if (notify) {
-            const { error } = await this.sendTo('notifyOnline', 'setOptions', { notify, ...data });
+            const { error } = await this.sendTo('onlineNotify', 'setOptions', { notify, ...data });
 
             if (error) {
                 errors.push(`Notify -> ${error}`);

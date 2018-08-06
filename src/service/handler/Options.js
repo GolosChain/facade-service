@@ -7,41 +7,33 @@ class Options extends Abstract {
         const time = new Date();
         const data = { user, profile };
 
-        let basic;
-        const basicData = await this.sendTo('options', 'get', data);
+        const basic = await this._tryGetOptionsBy({
+            service: 'options',
+            method: 'get',
+            errorPrefix: 'Basic',
+            data,
+        });
 
-        if (basicData.error) {
-            throw basicData.error;
-        } else {
-            basic = basicData.result;
-        }
+        const notify = await this._tryGetOptionsBy({
+            service: 'onlineNotify',
+            method: 'getOptions',
+            errorPrefix: 'Notify',
+            data,
+        });
 
-        let notify;
-        const notifyData = await this.sendTo('onlineNotify', 'getOptions', data);
+        const push = await this._tryGetOptionsBy({
+            service: 'push',
+            method: 'getOptions',
+            errorPrefix: 'Push',
+            data,
+        });
 
-        if (notifyData.error) {
-            throw notifyData.error;
-        } else {
-            notify = notifyData.result;
-        }
-
-        let push;
-        const pushData = await this.sendTo('push', 'getOptions', data);
-
-        if (pushData.error) {
-            throw pushData.error;
-        } else {
-            push = pushData.result;
-        }
-
-        let mail;
-        const mailData = await this.sendTo('mail', 'getOptions', data);
-
-        if (mailData.error) {
-            throw mailData.error;
-        } else {
-            mail = mailData.result;
-        }
+        const mail = await this._tryGetOptionsBy({
+            service: 'mail',
+            method: 'getOptions',
+            errorPrefix: 'Mail',
+            data,
+        });
 
         stats.timing('options_get', new Date() - time);
         return { basic, notify, push, mail };
@@ -49,47 +41,79 @@ class Options extends Abstract {
 
     async set({ user, params: { profile, basic, notify, push, mail } }) {
         const time = new Date();
-        const data = { user, profile };
         const errors = [];
+        const trySetOptionsBy = this._makeOptionsSetter(user, profile, errors);
 
         if (basic) {
-            const { error } = await this.sendTo('options', 'set', { basic, ...data });
-
-            if (error) {
-                errors.push(`Basic -> ${error}`);
-            }
+            await trySetOptionsBy({
+                data: basic,
+                service: 'options',
+                method: 'set',
+                errorPrefix: 'Basic',
+            });
         }
 
         if (notify) {
-            const { error } = await this.sendTo('onlineNotify', 'setOptions', { notify, ...data });
-
-            if (error) {
-                errors.push(`Notify -> ${error}`);
-            }
+            await trySetOptionsBy({
+                data: notify,
+                service: 'onlineNotify',
+                method: 'setOptions',
+                errorPrefix: 'Notify',
+            });
         }
 
         if (push) {
-            const { error } = await this.sendTo('push', 'setOptions', { push, ...data });
-
-            if (error) {
-                errors.push(`Push -> ${error}`);
-            }
+            await trySetOptionsBy({
+                data: push,
+                service: 'push',
+                method: 'setOptions',
+                errorPrefix: 'Push',
+            });
         }
 
         if (mail) {
-            const { error } = await this.sendTo('mail', 'setOptions', { mail, ...data });
-
-            if (error) {
-                errors.push(`Mail -> ${error}`);
-            }
+            await trySetOptionsBy({
+                data: mail,
+                service: 'mail',
+                method: 'setOptions',
+                errorPrefix: 'Mail',
+            });
         }
 
         if (errors.length) {
+            stats.increment('options_set_error');
             throw { code: 500, message: `Some options not changed - ${errors.join(' | ')}` };
         }
 
         stats.timing('options_set', new Date() - time);
         return 'Ok';
+    }
+
+    async _tryGetOptionsBy({ service, method, errorPrefix, data }) {
+        let result;
+        const response = await this.sendTo(service, method, data);
+
+        if (response.error) {
+            throw this._makeGetError(response, errorPrefix);
+        } else {
+            result = response.result;
+        }
+
+        return result;
+    }
+
+    _makeGetError(response, prefix) {
+        return { code: response.error.code, message: `${prefix} -> ${response.error.message}` };
+    }
+
+    _makeOptionsSetter(user, profile, errors) {
+        return async ({ service, method, errorPrefix, data }) => {
+            const { error } = await this.sendTo(service, method, { user, profile, data });
+
+            if (error) {
+                errors.push(`${errorPrefix} -> ${error}`);
+            }
+        };
     }
 }
 

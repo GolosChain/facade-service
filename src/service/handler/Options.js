@@ -28,15 +28,17 @@ class Options extends Abstract {
             data,
         });
 
-        const mail = await this._tryGetOptionsBy({
+        // TODO just uncomment on mail service done
+        /*const mail = await this._tryGetOptionsBy({
             service: 'mail',
             method: 'getOptions',
             errorPrefix: 'Mail',
             data,
-        });
+        });*/
 
         stats.timing('options_get', new Date() - time);
-        return { basic, notify, push, mail };
+        // TODO just uncomment on mail service done
+        return { basic, notify, push /*, mail*/ };
     }
 
     async set({ user, params: { profile, basic, notify, push, mail } }) {
@@ -111,7 +113,7 @@ class Options extends Abstract {
             const { error } = await this.sendTo(service, method, { user, profile, data });
 
             if (error) {
-                errors.push(`${errorPrefix} -> ${error}`);
+                errors.push(`${errorPrefix} -> ${error.message}`);
             }
         };
     }

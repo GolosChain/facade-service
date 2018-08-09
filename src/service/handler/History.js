@@ -3,13 +3,13 @@ const stats = core.Stats.client;
 const Abstract = require('./Abstract');
 
 class History extends Abstract {
-    async notify({ user, params: { skip, limit, types } }) {
+    async notify({ user, params: { fromId, limit, types } }) {
         const time = new Date();
-        const data = { user, skip, limit, types };
-        const result = await this.sendTo('notifyRegistrator', 'history', data);
+        const data = { user, fromId, limit, types };
+        const response = await this.sendTo('notify', 'history', data);
 
         stats.timing('notify_history', new Date() - time);
-        return result;
+        return response.result;
     }
 }
 

@@ -4,14 +4,14 @@ const errors = core.HttpError;
 const Abstract = require('./Abstract');
 
 class Transfer extends Abstract {
-    async handle({ channelId, requestId, error, result, _frontendGate }) {
+    async handle({ channelId, method, error, result, _frontendGate }) {
         const time = new Date();
 
         if (_frontendGate) {
             throw errors.E403.error;
         }
 
-        if (!channelId || !requestId) {
+        if (!channelId || !method) {
             throw { code: 400, message: 'Invalid packet routing format.' };
         }
 
@@ -19,7 +19,7 @@ class Transfer extends Abstract {
             throw { code: 400, message: 'Invalid packet data format.' };
         }
 
-        await this.sendTo('frontend', 'transfer', { channelId, requestId, error, result });
+        await this.sendTo('frontend', 'transfer', { channelId, method, error, result });
 
         stats.timing('transfer_handle', new Date() - time);
         return 'Ok';

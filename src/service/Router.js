@@ -31,6 +31,7 @@ class Router extends BasicService {
                 onlineNotifyOff: this._subscribe.onlineNotifyOff.bind(this._subscribe),
                 pushNotifyOn: this._subscribe.pushNotifyOn.bind(this._subscribe),
                 getNotifyHistory: this._history.notify.bind(this._history),
+                getNotifyHistoryFresh: this._history.notifyFresh.bind(this._history),
 
                 /* inner services only */
                 transfer: this._transfer.handle.bind(this._transfer),

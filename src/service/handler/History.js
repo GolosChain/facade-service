@@ -8,8 +8,26 @@ class History extends Abstract {
         const data = { user, fromId, limit, types };
         const response = await this.sendTo('notify', 'history', data);
 
-        stats.timing('notify_history', new Date() - time);
-        return response.result;
+        if (response.error) {
+            stats.increment('notify_history_error');
+            throw response.error;
+        } else {
+            stats.timing('notify_history', new Date() - time);
+            return response.result;
+        }
+    }
+
+    async notifyFresh({ user }) {
+        const time = new Date();
+        const response = await this.sendTo('notify', 'historyFresh', { user });
+
+        if (response.error) {
+            stats.increment('notify_history_fresh_error');
+            throw response.error;
+        } else {
+            stats.timing('notify_history_fresh', new Date() - time);
+            return response.result;
+        }
     }
 }
 

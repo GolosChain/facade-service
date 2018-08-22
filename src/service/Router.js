@@ -32,6 +32,9 @@ class Router extends BasicService {
                 pushNotifyOn: this._subscribe.pushNotifyOn.bind(this._subscribe),
                 getNotifyHistory: this._history.notify.bind(this._history),
                 getNotifyHistoryFresh: this._history.notifyFresh.bind(this._history),
+                getFavorites: this._options.getFavorites.bind(this._options),
+                addFavorite: this._options.addFavorite.bind(this._options),
+                removeFavorite: this._options.removeFavorite.bind(this._options),
 
                 /* inner services only */
                 transfer: this._transfer.handle.bind(this._transfer),

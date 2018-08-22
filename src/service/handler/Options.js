@@ -91,6 +91,32 @@ class Options extends Abstract {
         return 'Ok';
     }
 
+    async getFavorites({ user }) {
+        const response = await this.sendTo('options', 'getFavorites', { user });
+
+        if (response.error) {
+            throw response.error;
+        } else {
+            return response.result;
+        }
+    }
+
+    async addFavorite({ user, params: { permlink } }) {
+        const response = await this.sendTo('options', 'addFavorite', { user, permlink });
+
+        if (response.error) {
+            throw response.error;
+        }
+    }
+
+    async removeFavorite({ user, params: { permlink } }) {
+        const response = await this.sendTo('options', 'removeFavorite', { user, permlink });
+
+        if (response.error) {
+            throw response.error;
+        }
+    }
+
     async _tryGetOptionsBy({ service, method, errorPrefix, data }) {
         let result;
         const response = await this.sendTo(service, method, data);

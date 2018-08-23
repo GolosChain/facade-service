@@ -32,6 +32,7 @@ class Router extends BasicService {
                 options: env.GLS_OPTIONS_CONNECT,
                 push: env.GLS_PUSH_CONNECT,
                 mail: env.GLS_MAIL_CONNECT,
+                registration: env.GLS_REGISTRATION_CONNECT,
             },
         });
 

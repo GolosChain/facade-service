@@ -3,28 +3,38 @@ const stats = core.Stats.client;
 const Abstract = require('./Abstract');
 
 class Registration extends Abstract {
-    firstStep({ params: { user } }) {
-        // TODO -
+    async firstStep(data) {
+        return await this.transfer('firstStep', data);
     }
 
-    verify({ params: { user } }) {
-        // TODO -
+    async verify(data) {
+        return await this.transfer('verify', data);
     }
 
-    toBlockChain({ params: { user } }) {
-        // TODO -
+    async toBlockChain(data) {
+        return await this.transfer('toBlockChain', data);
     }
 
-    changePhone({ params: { user } }) {
-        // TODO -
+    async changePhone(data) {
+        return await this.transfer('changePhone', data);
     }
 
-    resendSmsCode({ params: { user } }) {
-        // TODO -
+    async resendSmsCode(data) {
+        return await this.transfer('resendSmsCode', data);
     }
 
-    subscribeOnSmsGet({ params: { user } }) {
-        // TODO -
+    async subscribeOnSmsGet(data) {
+        return await this.transfer('subscribeOnSmsGet', data);
+    }
+
+    async transfer(method, { params }) {
+        const response = await this.sendTo('registration', method, params);
+
+        if (response.error) {
+            throw response.error;
+        } else {
+            return response.result;
+        }
     }
 }
 

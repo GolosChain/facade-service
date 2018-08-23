@@ -3,32 +3,32 @@ const stats = core.Stats.client;
 const Abstract = require('./Abstract');
 
 class Registration extends Abstract {
-    async firstStep(data) {
-        return await this.transfer('firstStep', data);
+    async firstStep({ params }) {
+        return await this.transfer('firstStep', params);
     }
 
-    async verify(data) {
-        return await this.transfer('verify', data);
+    async verify({ params }) {
+        return await this.transfer('verify', params);
     }
 
-    async toBlockChain(data) {
-        return await this.transfer('toBlockChain', data);
+    async toBlockChain({ params }) {
+        return await this.transfer('toBlockChain', params);
     }
 
-    async changePhone(data) {
-        return await this.transfer('changePhone', data);
+    async changePhone({ params }) {
+        return await this.transfer('changePhone', params);
     }
 
-    async resendSmsCode(data) {
-        return await this.transfer('resendSmsCode', data);
+    async resendSmsCode({ params }) {
+        return await this.transfer('resendSmsCode', params);
     }
 
-    async subscribeOnSmsGet(data) {
-        return await this.transfer('subscribeOnSmsGet', data);
+    async subscribeOnSmsGet({ channelId, params }) {
+        return await this.transfer('subscribeOnSmsGet', { channelId, ...params });
     }
 
-    async transfer(method, { params }) {
-        const response = await this.sendTo('registration', method, params);
+    async transfer(method, data) {
+        const response = await this.sendTo('registration', method, data);
 
         if (response.error) {
             throw response.error;

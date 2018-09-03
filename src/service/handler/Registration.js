@@ -1,5 +1,3 @@
-const core = require('gls-core-service');
-const stats = core.Stats.client;
 const Abstract = require('./Abstract');
 
 class Registration extends Abstract {

@@ -3,6 +3,10 @@ const stats = core.Stats.client;
 const Abstract = require('./Abstract');
 
 class Registration extends Abstract {
+    async getState({ params }) {
+        return await this._transfer('getState', params);
+    }
+
     async firstStep({ params }) {
         return await this._transfer('firstStep', params);
     }

@@ -64,6 +64,7 @@ class Router extends BasicService {
             getFavorites: options.getFavorites.bind(options),
             addFavorite: options.addFavorite.bind(options),
             removeFavorite: options.removeFavorite.bind(options),
+            'registration.getState': registration.getState.bind(registration),
             'registration.firstStep': registration.firstStep.bind(registration),
             'registration.verify': registration.verify.bind(registration),
             'registration.toBlockChain': registration.toBlockChain.bind(registration),

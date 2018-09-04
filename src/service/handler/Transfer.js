@@ -19,10 +19,15 @@ class Transfer extends Abstract {
             throw { code: 400, message: 'Invalid packet data format.' };
         }
 
-        await this.sendTo('frontend', 'transfer', { channelId, method, error, result });
+        const response = await this.sendTo('frontend', 'transfer', { channelId, method, error, result });
 
         stats.timing('transfer_handle', new Date() - time);
-        return 'Ok';
+        
+        if (response.error) {
+            throw response.error;
+        }
+
+        return response.result;
     }
 }
 

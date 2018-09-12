@@ -8,6 +8,7 @@ const History = require('./handler/History');
 const Transfer = require('./handler/Transfer');
 const Offline = require('./handler/Offline');
 const Registration = require('./handler/Registration');
+const Rates = require('./handler/Rates');
 
 class Router extends BasicService {
     constructor() {
@@ -20,6 +21,7 @@ class Router extends BasicService {
         this._transfer = new Transfer(this._gate);
         this._offline = new Offline(this._gate);
         this._registration = new Registration(this._gate);
+        this._rates = new Rates(this._gate);
     }
 
     async start() {
@@ -33,6 +35,7 @@ class Router extends BasicService {
                 push: env.GLS_PUSH_CONNECT,
                 mail: env.GLS_MAIL_CONNECT,
                 registration: env.GLS_REGISTRATION_CONNECT,
+                rates: env.GLS_RATES_CONNECT,
             },
         });
 
@@ -50,6 +53,7 @@ class Router extends BasicService {
         const transfer = this._transfer;
         const offline = this._offline;
         const registration = this._registration;
+        const rates = this._rates;
 
         return {
             /* public points */
@@ -71,6 +75,9 @@ class Router extends BasicService {
             'registration.changePhone': registration.changePhone.bind(registration),
             'registration.resendSmsCode': registration.resendSmsCode.bind(registration),
             'registration.subscribeOnSmsGet': registration.subscribeOnSmsGet.bind(registration),
+            'rates.getActual': rates.getActual.bind(rates),
+            'rates.getHistorical': rates.getHistorical.bind(rates),
+            'rates.getHistoricalMulti': rates.getHistoricalMulti.bind(rates),
 
             /* inner services only */
             transfer: transfer.handle.bind(transfer),

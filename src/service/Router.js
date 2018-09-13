@@ -65,6 +65,8 @@ class Router extends BasicService {
             pushNotifyOn: subscribe.pushNotifyOn.bind(subscribe),
             getNotifyHistory: history.notify.bind(history),
             getNotifyHistoryFresh: history.notifyFresh.bind(history),
+            'notify.markAsViewed': history.markAsViewed.bind(history),
+            'notify.markAllAsViewed': history.markAllAsViewed.bind(history),
             getFavorites: options.getFavorites.bind(options),
             addFavorite: options.addFavorite.bind(options),
             removeFavorite: options.removeFavorite.bind(options),

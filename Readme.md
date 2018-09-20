@@ -13,9 +13,9 @@
 Детальное описание:
 
 ```
- offline:                // Оповещает все заинтересованные сервисы о том что пользователь офлайн
-     user <string>       // Имя пользователя
-     channelId <string>  // Идентификатор канала передачи данных
+ offline:                  // Оповещает все заинтересованные сервисы о том что пользователь офлайн
+     user <string>         // Имя пользователя
+     channelId <string>    // Идентификатор канала передачи данных
              
      
  getOptions:               // Запрос на получение настрек пользователя
@@ -28,25 +28,25 @@
      user <string>         // Имя пользователя
      params:               // Параметры запроса из гейта
          profile <string>  // Идентификатор профиля пользователя
-         basic             //
-         notify            //
-         push              //
-         mail              //
+         basic <object>    //
+         notify <object>   //
+         push <object>     //
+         mail <object>     //
      
  onlineNotifyOn:                // Подписывает на онлайн оповещения для пользователя
      user <string>              // Имя пользователя
      channelId <string>         // Идентификатор канала передачи данных
      requestId <number|string>  //
      
- onlineNotifyOff:        // Отписывает от онлайн оповещений для пользователя
-     user <string>       // Имя пользователя
-     channelId <string>  // Идентификатор канала передачи данных
+ onlineNotifyOff:               // Отписывает от онлайн оповещений для пользователя
+     user <string>              // Имя пользователя
+     channelId <string>         // Идентификатор канала передачи данных
      
- pushNotifyOn:                // Подписывает на push-оповещения для пользователя по профилю
-     user <string>            // Имя пользователя
-     params:                  // Параметры запроса из гейта
-         profile <string>     // Идентификатор профиля пользователя
-         deviceType <string>  // Тип устройства
+ pushNotifyOn:                  // Подписывает на push-оповещения для пользователя по профилю
+     user <string>              // Имя пользователя
+     params:                    // Параметры запроса из гейта
+         profile <string>       // Идентификатор профиля пользователя
+         deviceType <string>    // Тип устройства
      
  getNotifyHistory:                     // Получение истории нотификаций
      user <string>                     // Имя пользователя
@@ -56,21 +56,21 @@
          types                         //
          markAsViewed <boolean>(true)  // Пометить ли все выгруженные записи как прочитанные
      
- getNotifyHistoryFresh:  // Получение количества непрочитанных нотификаций
-     user <string>       // Имя пользователя
+ getNotifyHistoryFresh:     // Получение количества непрочитанных нотификаций
+     user <string>          // Имя пользователя
                          
- notify. // Ветка работы с нотификациями                      
+ notify. // --- Ветка работы с нотификациями ---                      
                          
- notify.markAsViewed:    // Пометить указанные нотификации как прочитанные
-     user <string>       // Имя пользователя
-     params:             // Параметры запроса из гейта
-         ids <string[]>  // Список идентификаторов для пометки
+ notify.markAsViewed:       // Пометить указанные нотификации как прочитанные
+     user <string>          // Имя пользователя
+     params:                // Параметры запроса из гейта
+         ids <string[]>     // Список идентификаторов для пометки
      
- notify.markAllAsViewed:  // Пометить все нотификации как прочитанные
-     user <string>        // Имя пользователя
+ notify.markAllAsViewed:    // Пометить все нотификации как прочитанные
+     user <string>          // Имя пользователя
      
- getFavorites:      // Получить избранные посты пользователя
-     user <string>  // Имя пользователя
+ getFavorites:              // Получить избранные посты пользователя
+     user <string>          // Имя пользователя
      
  addFavorite:               // Добавить пост в избранные
      user <string>          // Имя пользователя
@@ -81,46 +81,57 @@
      user <string>          // Имя пользователя
      params:                // Параметры запроса из гейта
          permlink <string>  // Пермлинк поста
+         
+ registration. // --- Ветка работы с регистрацией ---    
      
- registration. // Ветка работы с регистрацией    
+ registration.getState:      // Получить текущее состояние регистрации
+     params:                 // Параметры запроса из гейта
+         user                // Имя пользователя
      
- registration.getState:  // Получить текущее состояние регистрации
-     params:             // Параметры запроса из гейта
-         //
+ registration.firstStep:     // Сделать первый шаг регистрации
+     params:                 // Параметры запроса из гейта
+         captcha? <string>   // Верификационный код капчи (если не отключена)
+         user <string>       // Имя пользователя
+         phone <string>      // Телефон пользователя
+         mail <string>       // Почта пользователя
      
- registration.firstStep:  // Сделать первый шаг регистрации
-     params:              // Параметры запроса из гейта
-         //
-     
- registration.verify:  // Сделать верификацию регистрации (для тех стратегий где нужно)
-     params:           // Параметры запроса из гейта
-         //
+ registration.verify:        // Сделать верификацию регистрации (кроме стратегии smsFromUser)
+     params:                 // Параметры запроса из гейта
+         user <sting>        // Имя пользователя
+         code? <string>      // Код из смс (стратегия smsToUser)
      
  registration.toBlockChain:  // Зарегистрировать пользователя в блокчейн
      params:                 // Параметры запроса из гейта
-         //
+         user <string>       // Имя пользователя
+         owner <string>      // Ключ владельца
+         active <string>     // Активный ключ
+         posting <string>    // Постинг ключ
+         memo <string>       // Мемо ключ (ключ заметок)
      
- registration.changePhone:  // Сменить номер телефона
+ registration.changePhone:   // Сменить номер телефона (стратегия smsFromUser, smsToUser)
+     params:                 // Параметры запроса из гейта
+         user <string>       // Имя пользователя
+         phone <string>      // Телефон пользователя
+     
+ registration.resendSmsCode:      // Переотправить код на телефон пользователя (стратегия smsToUser)
+     params:                      // Параметры запроса из гейта
+         user <string>            // Имя пользователя
+         phone <string>           // Телефон пользователя
+     
+ registration.subscribeOnSmsGet:  // Подписаться на получение смс от пользователя (стратегия smsFromUser)
+     channelId <string>           // Идентификатор канала передачи данных
+     params:                      // Параметры запроса из гейта
+         user <string>            // Имя пользователя
+         phone <string>           // Телефон пользователя
+ 
+ rates. // --- ... ---
+     
+ rates.getActual:           // 
      params:                // Параметры запроса из гейта
          //
      
- registration.resendSmsCode:  // Переотправить код на телефон пользователя
-     params:                  // Параметры запроса из гейта
-         //
-     
- registration.subscribeOnSmsGet:  // Подписаться на факт получения смс от пользователя
-     channelId <string>           // Идентификатор канала передачи данных
-     params:                      // Параметры запроса из гейта
-         //
- 
- rates. //
-     
- rates.getActual:  // 
-     params:       // Параметры запроса из гейта
-         //
-     
- rates.getHistorical:  //
-     params:           // Параметры запроса из гейта
+ rates.getHistorical:       //
+     params:                // Параметры запроса из гейта
          //
      
  rates.getHistoricalMulti:  //
@@ -136,7 +147,7 @@
      method <string>            // Имя RPC метода
      error <object|null>        // Объект ошибки (нет если есть result)
      result <object|null>       // Объект данных (нет если есть error)
-     _frontendGate <true|null>  // Флаг того что запрос был отправлен из гейта
+     _frontendGate? <boolean>   // Флаг того что запрос был отправлен из гейта
                                 // В случае true - запрос будет заблокирован
 ```
 

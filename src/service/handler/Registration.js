@@ -1,32 +1,32 @@
 const Abstract = require('./Abstract');
 
 class Registration extends Abstract {
-    async getState({ params }) {
-        return await this._transfer('getState', params);
+    async getState({ params: { user } }) {
+        return await this._transfer('getState', { user });
     }
 
-    async firstStep({ params }) {
-        return await this._transfer('firstStep', params);
+    async firstStep({ params: { captcha, user, phone, mail } }) {
+        return await this._transfer('firstStep', { captcha, user, phone, mail });
     }
 
-    async verify({ params }) {
-        return await this._transfer('verify', params);
+    async verify({ params: { user, ...data } }) {
+        return await this._transfer('verify', { user, ...data });
     }
 
-    async toBlockChain({ params }) {
-        return await this._transfer('toBlockChain', params);
+    async toBlockChain({ params: { user, owner, active, posting, memo } }) {
+        return await this._transfer('toBlockChain', { user, owner, active, posting, memo });
     }
 
-    async changePhone({ params }) {
-        return await this._transfer('changePhone', params);
+    async changePhone({ params: { user, phone } }) {
+        return await this._transfer('changePhone', { user, phone });
     }
 
-    async resendSmsCode({ params }) {
-        return await this._transfer('resendSmsCode', params);
+    async resendSmsCode({ params: { user, phone } }) {
+        return await this._transfer('resendSmsCode', { user, phone });
     }
 
-    async subscribeOnSmsGet({ channelId, params }) {
-        return await this._transfer('subscribeOnSmsGet', { channelId, ...params });
+    async subscribeOnSmsGet({ channelId, params: { user, phone } }) {
+        return await this._transfer('subscribeOnSmsGet', { channelId, user, phone });
     }
 
     async _transfer(method, data) {

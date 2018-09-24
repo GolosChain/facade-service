@@ -1,16 +1,16 @@
 const Abstract = require('./Abstract');
 
 class Rates extends Abstract {
-    async getActual({ params }) {
-        return await this._transfer('getActual', params);
+    async getActual() {
+        return await this._transfer('getActual', {});
     }
 
-    async getHistorical({ params }) {
-        return await this._transfer('getHistorical', params);
+    async getHistorical({ params: { date } }) {
+        return await this._transfer('getHistorical', { date });
     }
 
-    async getHistoricalMulti({ params }) {
-        return await this._transfer('getHistoricalMulti', params);
+    async getHistoricalMulti({ params: { dates } }) {
+        return await this._transfer('getHistoricalMulti', { dates });
     }
 
     async _transfer(method, data) {

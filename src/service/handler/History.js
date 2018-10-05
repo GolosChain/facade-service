@@ -16,6 +16,21 @@ class History extends Abstract {
         return await this._handleResponse(response, 'notify_history_fresh', time);
     }
 
+    async onlineNotify({ user, params: { fromId, limit, markAsViewed } }) {
+        const time = new Date();
+        const data = { user, fromId, limit, markAsViewed };
+        const response = await this.sendTo('onlineNotify', 'history', data);
+
+        return await this._handleResponse(response, 'online_notify_history', time);
+    }
+
+    async onlineNotifyFresh({ user }) {
+        const time = new Date();
+        const response = await this.sendTo('onlineNotify', 'historyFresh', { user });
+
+        return await this._handleResponse(response, 'online_notify_history_fresh', time);
+    }
+
     async markAsViewed({ user, params: { ids } }) {
         const time = new Date();
         const response = await this.sendTo('notify', 'markAsViewed', { user, ids });

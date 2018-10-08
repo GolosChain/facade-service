@@ -62,6 +62,8 @@ class Router extends BasicService {
             setOptions: options.set.bind(options),
             onlineNotifyOn: subscribe.onlineNotifyOn.bind(subscribe),
             onlineNotifyOff: subscribe.onlineNotifyOff.bind(subscribe),
+            'onlineNotify.history': history.onlineNotify.bind(history),
+            'onlineNotify.historyFresh': history.onlineNotifyFresh.bind(history),
             pushNotifyOn: subscribe.pushNotifyOn.bind(subscribe),
             getNotifyHistory: history.notify.bind(history),
             getNotifyHistoryFresh: history.notifyFresh.bind(history),

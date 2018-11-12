@@ -117,15 +117,17 @@ class Options extends Abstract {
         }
     }
 
-    async getBlackList({ owner }) {
+    async getBlackList({ user: owner }) {
         const response = await this.sendTo('notify', 'getBlackList', { owner });
 
         if (response.error) {
             throw response.error;
         }
+
+        return response.result;
     }
 
-    async addToBlackList({ owner, banned }) {
+    async addToBlackList({ user: owner, params: { banned } }) {
         const response = await this.sendTo('notify', 'addToBlackList', { owner, banned });
 
         if (response.error) {
@@ -133,7 +135,7 @@ class Options extends Abstract {
         }
     }
 
-    async removeFromBlackList({ owner, banned }) {
+    async removeFromBlackList({ user: owner, params: { banned } }) {
         const response = await this.sendTo('notify', 'removeFromBlackList', { owner, banned });
 
         if (response.error) {

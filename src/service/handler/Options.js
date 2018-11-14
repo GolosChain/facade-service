@@ -117,6 +117,32 @@ class Options extends Abstract {
         }
     }
 
+    async getBlackList({ user: owner }) {
+        const response = await this.sendTo('notify', 'getBlackList', { owner });
+
+        if (response.error) {
+            throw response.error;
+        }
+
+        return response.result;
+    }
+
+    async addToBlackList({ user: owner, params: { banned } }) {
+        const response = await this.sendTo('notify', 'addToBlackList', { owner, banned });
+
+        if (response.error) {
+            throw response.error;
+        }
+    }
+
+    async removeFromBlackList({ user: owner, params: { banned } }) {
+        const response = await this.sendTo('notify', 'removeFromBlackList', { owner, banned });
+
+        if (response.error) {
+            throw response.error;
+        }
+    }
+
     async _tryGetOptionsBy({ service, method, errorPrefix, data }) {
         let result;
         const response = await this.sendTo(service, method, data);

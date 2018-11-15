@@ -1,6 +1,5 @@
 const core = require('gls-core-service');
-const stats = core.Stats.client;
-const errors = core.HttpError;
+const stats = core.utils.statsClient;
 const Abstract = require('./Abstract');
 
 class Transfer extends Abstract {
@@ -8,7 +7,7 @@ class Transfer extends Abstract {
         const time = new Date();
 
         if (_frontendGate) {
-            throw errors.E403.error;
+            throw { code: 403, message: 'Access denied.' };
         }
 
         if (!channelId || !method) {

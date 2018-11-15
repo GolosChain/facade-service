@@ -1,5 +1,5 @@
 const core = require('gls-core-service');
-const stats = core.Stats.client;
+const stats = core.utils.statsClient;
 const Abstract = require('./Abstract');
 
 class Options extends Abstract {
@@ -28,20 +28,12 @@ class Options extends Abstract {
             data,
         });
 
-        // TODO just uncomment on mail service done
-        /*const mail = await this._tryGetOptionsBy({
-            service: 'mail',
-            method: 'getOptions',
-            errorPrefix: 'Mail',
-            data,
-        });*/
-
         stats.timing('options_get', new Date() - time);
-        // TODO just uncomment on mail service done
-        return { basic, notify, push /*, mail*/ };
+
+        return { basic, notify, push };
     }
 
-    async set({ user, params: { profile, basic, notify, push, mail } }) {
+    async set({ user, params: { profile, basic, notify, push } }) {
         const time = new Date();
         const errors = [];
         const trySetOptionsBy = this._makeOptionsSetter(user, profile, errors);
@@ -70,15 +62,6 @@ class Options extends Abstract {
                 service: 'push',
                 method: 'setOptions',
                 errorPrefix: 'Push',
-            });
-        }
-
-        if (mail) {
-            await trySetOptionsBy({
-                data: mail,
-                service: 'mail',
-                method: 'setOptions',
-                errorPrefix: 'Mail',
             });
         }
 

@@ -17,17 +17,17 @@ class Subscribe extends Abstract {
         return await this._handleResponse(response, 'online_notify_off', time);
     }
 
-    async pushNotifyOn({ user, params: { key } }) {
+    async pushNotifyOn({ user, params: { key, profile } }) {
         const time = new Date();
-        const data = { user, key };
+        const data = { user, key, profile };
         const response = await this.sendTo('push', 'subscribe', data);
 
         return await this._handleResponse(response, 'push_notify_on', time);
     }
 
-    async pushNotifyOff({ user, params: { key } }) {
+    async pushNotifyOff({ user, params: { key, profile } }) {
         const time = new Date();
-        const data = { user, key };
+        const data = { user, key, profile };
 
         const response = await this.sendTo('push', 'unsubscribe', data);
 

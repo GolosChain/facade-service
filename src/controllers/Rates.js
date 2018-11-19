@@ -14,13 +14,10 @@ class Rates extends Abstract {
     }
 
     async _transfer(method, data) {
+        const time = new Date();
         const response = await this.sendTo('rates', method, data);
 
-        if (response.error) {
-            throw response.error;
-        } else {
-            return response.result;
-        }
+        return await this._handleResponse(response, 'rates_execution', time);
     }
 }
 

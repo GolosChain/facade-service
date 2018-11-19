@@ -1,37 +1,15 @@
 const core = require('gls-core-service');
-const stats = core.Stats.client;
-const logger = core.Logger;
-const BasicService = core.service.Basic;
-const env = require('./Env');
-const Router = require('./service/Router');
+const stats = core.utils.statsClient;
+const BasicMain = core.services.BasicMain;
+const env = require('./data/env');
+const Connector = require('./services/Connector');
 
-class Main extends BasicService {
+class Main extends BasicMain {
     constructor() {
-        super();
+        super(stats, env);
 
-        this.printEnvBasedConfig(env);
-        this.addNested(new Router());
-        this.stopOnExit();
-    }
-
-    async start() {
-        await this.startNested();
-        stats.increment('main_service_start');
-    }
-
-    async stop() {
-        await this.stopNested();
-        stats.increment('main_service_stop');
-        process.exit(0);
+        this.addNested(new Connector());
     }
 }
 
-new Main().start().then(
-    () => {
-        logger.info('Main service started!');
-    },
-    error => {
-        logger.error(`Main service failed - ${error}`);
-        process.exit(1);
-    }
-);
+module.exports = Main;

@@ -30,13 +30,10 @@ class Registration extends Abstract {
     }
 
     async _transfer(method, data) {
+        const time = new Date();
         const response = await this.sendTo('registration', method, data);
 
-        if (response.error) {
-            throw response.error;
-        } else {
-            return response.result;
-        }
+        return await this._handleResponse(response, 'registration_execution', time);
     }
 }
 

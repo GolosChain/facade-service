@@ -1,5 +1,5 @@
 const core = require('gls-core-service');
-const stats = core.Stats.client;
+const stats = core.utils.statsClient;
 const Abstract = require('./Abstract');
 
 class Offline extends Abstract {
@@ -13,6 +13,7 @@ class Offline extends Abstract {
         }
 
         stats.timing('offline_handle', new Date() - time);
+
         return 'Ok';
     }
 }

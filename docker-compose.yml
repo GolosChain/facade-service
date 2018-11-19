@@ -9,7 +9,7 @@ services:
     networks:
       - services-tier
     ports:
-      - $GLS_GATE_HOST:$GLS_GATE_PORT:$GLS_GATE_PORT
+      - $GLS_CONNECTOR_HOST:$GLS_CONNECTOR_PORT:$GLS_CONNECTOR_PORT
     environment:
       - GLS_FRONTEND_GATE_CONNECT
       - GLS_ONLINE_NOTIFY_CONNECT
@@ -22,8 +22,8 @@ services:
       - GLS_DAY_START
       - GLS_METRICS_HOST
       - GLS_METRICS_PORT
-      - GLS_GATE_HOST
-      - GLS_GATE_PORT
+      - GLS_CONNECTOR_HOST
+      - GLS_CONNECTOR_PORT
 
 networks:
   services-tier:

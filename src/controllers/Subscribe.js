@@ -28,7 +28,6 @@ class Subscribe extends Abstract {
     async pushNotifyOff({ user, params: { key, profile } }) {
         const time = new Date();
         const data = { user, key, profile };
-
         const response = await this.sendTo('push', 'notifyOff', data);
 
         return await this._handleResponse(response, 'push_notify_off', time);

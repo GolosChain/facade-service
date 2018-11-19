@@ -20,7 +20,7 @@ class Subscribe extends Abstract {
     async pushNotifyOn({ user, params: { key, profile } }) {
         const time = new Date();
         const data = { user, key, profile };
-        const response = await this.sendTo('push', 'subscribe', data);
+        const response = await this.sendTo('push', 'notifyOn', data);
 
         return await this._handleResponse(response, 'push_notify_on', time);
     }
@@ -29,7 +29,7 @@ class Subscribe extends Abstract {
         const time = new Date();
         const data = { user, key, profile };
 
-        const response = await this.sendTo('push', 'unsubscribe', data);
+        const response = await this.sendTo('push', 'notifyOff', data);
 
         return await this._handleResponse(response, 'push_notify_off', time);
     }

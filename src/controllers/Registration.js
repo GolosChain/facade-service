@@ -17,8 +17,8 @@ class Registration extends Abstract {
         return await this._transfer('toBlockChain', { user, owner, active, posting, memo });
     }
 
-    async changePhone({ params: { user, phone } }) {
-        return await this._transfer('changePhone', { user, phone });
+    async changePhone({ params: { user, phone, captcha } }) {
+        return await this._transfer('changePhone', { user, phone, captcha });
     }
 
     async resendSmsCode({ params: { user, phone } }) {

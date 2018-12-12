@@ -66,7 +66,11 @@ class Connector extends BasicConnector {
                 'rates.getActual': rates.getActual.bind(rates),
                 'rates.getHistorical': rates.getHistorical.bind(rates),
                 'rates.getHistoricalMulti': rates.getHistoricalMulti.bind(rates),
-                'content.getFeed': content.getFeed.bind(content),
+                'content.getNaturalFeed': content.getNaturalFeed.bind(content),
+                'content.getPopularFeed': content.getPopularFeed.bind(content),
+                'content.getActualFeed': content.getActualFeed.bind(content),
+                'content.getPromoFeed': content.getPromoFeed.bind(content),
+                'content.getPersonalFeed': content.getPersonalFeed.bind(content),
 
                 /* inner services only */
                 transfer: transfer.handle.bind(transfer),

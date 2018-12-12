@@ -8,6 +8,7 @@ const Transfer = require('../controllers/Transfer');
 const Offline = require('../controllers/Offline');
 const Registration = require('../controllers/Registration');
 const Rates = require('../controllers/Rates');
+const Content = require('../controllers/Content');
 
 class Connector extends BasicConnector {
     constructor() {
@@ -20,6 +21,7 @@ class Connector extends BasicConnector {
         this._offline = new Offline({ connector: this });
         this._registration = new Registration({ connector: this });
         this._rates = new Rates({ connector: this });
+        this._content = new Content({ connector: this });
     }
 
     async start() {
@@ -30,6 +32,7 @@ class Connector extends BasicConnector {
         const offline = this._offline;
         const registration = this._registration;
         const rates = this._rates;
+        const content = this._content;
 
         await super.start({
             serverRoutes: {
@@ -63,6 +66,11 @@ class Connector extends BasicConnector {
                 'rates.getActual': rates.getActual.bind(rates),
                 'rates.getHistorical': rates.getHistorical.bind(rates),
                 'rates.getHistoricalMulti': rates.getHistoricalMulti.bind(rates),
+                'content.getNaturalFeed': content.getNaturalFeed.bind(content),
+                'content.getPopularFeed': content.getPopularFeed.bind(content),
+                'content.getActualFeed': content.getActualFeed.bind(content),
+                'content.getPromoFeed': content.getPromoFeed.bind(content),
+                'content.getPersonalFeed': content.getPersonalFeed.bind(content),
 
                 /* inner services only */
                 transfer: transfer.handle.bind(transfer),
@@ -76,6 +84,7 @@ class Connector extends BasicConnector {
                 mail: env.GLS_MAIL_CONNECT,
                 registration: env.GLS_REGISTRATION_CONNECT,
                 rates: env.GLS_RATES_CONNECT,
+                prism: env.GLS_PRISM_CONNECT,
             },
         });
     }

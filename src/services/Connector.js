@@ -46,6 +46,8 @@ class Connector extends BasicConnector {
                 'onlineNotify.historyFresh': history.onlineNotifyFresh.bind(history),
                 'push.notifyOn': subscribe.pushNotifyOn.bind(subscribe),
                 'push.notifyOff': subscribe.pushNotifyOff.bind(subscribe),
+                'push.history': history.push.bind(history),
+                'push.historyFresh': history.pushFresh.bind(history),
                 getNotifyHistory: history.notify.bind(history),
                 getNotifyHistoryFresh: history.notifyFresh.bind(history),
                 'notify.markAsViewed': history.markAsViewed.bind(history),

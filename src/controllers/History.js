@@ -31,17 +31,20 @@ class History extends Abstract {
         return await this._handleResponse(response, 'get_history', time);
     }
 
-    async push({ user, params: { afterId, limit, markAsViewed = true, freshOnly } }) {
+    async push({
+        user,
+        params: { profile, afterId, limit, types, markAsViewed = true, freshOnly },
+    }) {
         const time = new Date();
-        const data = { user, afterId, limit, markAsViewed, freshOnly };
+        const data = { user, profile, afterId, limit, types, markAsViewed, freshOnly };
         const response = await this.sendTo('push', 'history', data);
 
         return await this._handleResponse(response, 'get_history', time);
     }
 
-    async pushFresh({ user }) {
+    async pushFresh({ user, profile }) {
         const time = new Date();
-        const response = await this.sendTo('push', 'historyFresh', { user });
+        const response = await this.sendTo('push', 'historyFresh', { user, profile });
 
         return await this._handleResponse(response, 'get_history', time);
     }

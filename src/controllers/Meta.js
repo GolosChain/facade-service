@@ -2,22 +2,27 @@ const Abstract = require('./Abstract');
 
 class Meta extends Abstract {
     async recordPostView({ params: { postLink, fingerPrint } }) {
-        return await this._transfer('recordPostView', {
+        const response = await this.sendTo('meta', 'recordPostView', {
             postLink,
             fingerPrint,
             ip: 'TODO', // TODO: прокинуть из gate
         });
+
+        if (response.error) {
+            throw response.error;
+        }
+
+        return response.result;
     }
 
     async getPostsViewCount({ params: { postLinks } }) {
-        return await this._transfer('getPostsViewCount', { postLinks });
-    }
+        const response = await this.sendTo('meta', 'getPostsViewCount', { postLinks });
 
-    async _transfer(method, data) {
-        const start = Date.now();
-        const response = await this.sendTo('meta', method, data);
+        if (response.error) {
+            throw response.error;
+        }
 
-        return await this._handleResponse(response, 'meta_execution', start);
+        return response.result;
     }
 }
 

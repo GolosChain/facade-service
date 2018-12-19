@@ -42,7 +42,7 @@ class History extends Abstract {
         return await this._handleResponse(response, 'get_history', time);
     }
 
-    async pushFresh({ user, profile }) {
+    async pushFresh({ user, params: { profile } }) {
         const time = new Date();
         const response = await this.sendTo('push', 'historyFresh', { user, profile });
 

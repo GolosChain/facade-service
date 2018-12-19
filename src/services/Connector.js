@@ -9,6 +9,7 @@ const Offline = require('../controllers/Offline');
 const Registration = require('../controllers/Registration');
 const Rates = require('../controllers/Rates');
 const Content = require('../controllers/Content');
+const Meta = require('../controllers/Meta');
 
 class Connector extends BasicConnector {
     constructor() {
@@ -22,6 +23,7 @@ class Connector extends BasicConnector {
         this._registration = new Registration({ connector: this });
         this._rates = new Rates({ connector: this });
         this._content = new Content({ connector: this });
+        this._meta = new Meta({ connector: this });
     }
 
     async start() {
@@ -33,6 +35,7 @@ class Connector extends BasicConnector {
         const registration = this._registration;
         const rates = this._rates;
         const content = this._content;
+        const meta = this._meta;
 
         await super.start({
             serverRoutes: {
@@ -71,6 +74,8 @@ class Connector extends BasicConnector {
                 'content.getActualFeed': content.getActualFeed.bind(content),
                 'content.getPromoFeed': content.getPromoFeed.bind(content),
                 'content.getPersonalFeed': content.getPersonalFeed.bind(content),
+                'meta.getPostsViewCount': meta.getPostsViewCount.bind(meta),
+                'meta.recordPostView': meta.recordPostView.bind(meta),
 
                 /* inner services only */
                 transfer: transfer.handle.bind(transfer),
@@ -85,6 +90,7 @@ class Connector extends BasicConnector {
                 registration: env.GLS_REGISTRATION_CONNECT,
                 rates: env.GLS_RATES_CONNECT,
                 prism: env.GLS_PRISM_CONNECT,
+                meta: env.GLS_META_CONNECT,
             },
         });
     }

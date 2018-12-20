@@ -6,14 +6,14 @@ class History extends Abstract {
         const data = { user, fromId, limit, types, markAsViewed, freshOnly };
         const response = await this.sendTo('notify', 'history', data);
 
-        return await this._handleResponse(response, 'notify_history', time);
+        return await this._handleResponse(response, 'get_history', time);
     }
 
     async notifyFresh({ user }) {
         const time = new Date();
         const response = await this.sendTo('notify', 'historyFresh', { user });
 
-        return await this._handleResponse(response, 'notify_history_fresh', time);
+        return await this._handleResponse(response, 'get_history', time);
     }
 
     async onlineNotify({ user, params: { fromId, limit, markAsViewed = true, freshOnly } }) {
@@ -21,28 +21,46 @@ class History extends Abstract {
         const data = { user, fromId, limit, markAsViewed, freshOnly };
         const response = await this.sendTo('onlineNotify', 'history', data);
 
-        return await this._handleResponse(response, 'online_notify_history', time);
+        return await this._handleResponse(response, 'get_history', time);
     }
 
     async onlineNotifyFresh({ user }) {
         const time = new Date();
         const response = await this.sendTo('onlineNotify', 'historyFresh', { user });
 
-        return await this._handleResponse(response, 'online_notify_history_fresh', time);
+        return await this._handleResponse(response, 'get_history', time);
+    }
+
+    async push({
+        user,
+        params: { profile, afterId, limit, types, markAsViewed = true, freshOnly },
+    }) {
+        const time = new Date();
+        const data = { user, profile, afterId, limit, types, markAsViewed, freshOnly };
+        const response = await this.sendTo('push', 'history', data);
+
+        return await this._handleResponse(response, 'get_history', time);
+    }
+
+    async pushFresh({ user, params: { profile } }) {
+        const time = new Date();
+        const response = await this.sendTo('push', 'historyFresh', { user, profile });
+
+        return await this._handleResponse(response, 'get_history', time);
     }
 
     async markAsViewed({ user, params: { ids } }) {
         const time = new Date();
         const response = await this.sendTo('notify', 'markAsViewed', { user, ids });
 
-        return await this._handleResponse(response, 'notify_mark_viewed', time);
+        return await this._handleResponse(response, 'get_history', time);
     }
 
     async markAllAsViewed({ user }) {
         const time = new Date();
         const response = await this.sendTo('notify', 'markAllAsViewed', { user });
 
-        return await this._handleResponse(response, 'notify_mark_all_viewed', time);
+        return await this._handleResponse(response, 'get_history', time);
     }
 }
 

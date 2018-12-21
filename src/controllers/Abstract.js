@@ -9,7 +9,7 @@ class Abstract extends BasicController {
 
             throw response.error;
         } else {
-            stats.timing(statsId, new Date() - time);
+            stats.timing(statsId, Date.now() - time);
 
             return response.result;
         }

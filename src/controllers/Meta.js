@@ -1,11 +1,11 @@
 const Abstract = require('./Abstract');
 
 class Meta extends Abstract {
-    async recordPostView({ params: { postLink, fingerPrint } }) {
+    async recordPostView({ clientRequestIp, params: { postLink, fingerPrint } }) {
         const response = await this.sendTo('meta', 'recordPostView', {
             postLink,
             fingerPrint,
-            ip: 'TODO', // TODO: прокинуть из gate
+            clientRequestIp,
         });
 
         if (response.error) {

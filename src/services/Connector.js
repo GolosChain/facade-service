@@ -13,7 +13,7 @@ const Meta = require('../controllers/Meta');
 
 class Connector extends BasicConnector {
     constructor() {
-        super('facade');
+        super();
 
         this._options = new Options({ connector: this });
         this._subscribe = new Subscribe({ connector: this });

@@ -19,8 +19,8 @@ class Meta extends Abstract {
         });
     }
 
-    async getUsersLastOnline({ params: { usernames } }) {
-        return await this.callService('meta', 'getUsersLastOnline', { usernames });
+    async getUserLastOnline({ params: { username } }) {
+        return await this.callService('meta', 'getUserLastOnline', { username });
     }
 }
 

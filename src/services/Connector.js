@@ -13,7 +13,7 @@ const Meta = require('../controllers/Meta');
 
 class Connector extends BasicConnector {
     constructor() {
-        super();
+        super('facade');
 
         this._options = new Options({ connector: this });
         this._subscribe = new Subscribe({ connector: this });
@@ -79,7 +79,7 @@ class Connector extends BasicConnector {
                 'meta.getPostsViewCount': meta.getPostsViewCount.bind(meta),
                 'meta.recordPostView': meta.recordPostView.bind(meta),
                 'meta.markUserOnline': meta.markUserOnline.bind(meta),
-                'meta.getUsersLastOnline': meta.getUsersLastOnline.bind(meta),
+                'meta.getUserLastOnline': meta.getUserLastOnline.bind(meta),
 
                 /* inner services only */
                 transfer: transfer.handle.bind(transfer),

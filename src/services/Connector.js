@@ -78,6 +78,8 @@ class Connector extends BasicConnector {
                 'content.getPersonalFeed': content.getPersonalFeed.bind(content),
                 'meta.getPostsViewCount': meta.getPostsViewCount.bind(meta),
                 'meta.recordPostView': meta.recordPostView.bind(meta),
+                'meta.markUserOnline': meta.markUserOnline.bind(meta),
+                'meta.getUsersLastOnline': meta.getUsersLastOnline.bind(meta),
 
                 /* inner services only */
                 transfer: transfer.handle.bind(transfer),

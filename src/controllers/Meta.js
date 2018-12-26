@@ -2,27 +2,25 @@ const Abstract = require('./Abstract');
 
 class Meta extends Abstract {
     async recordPostView({ clientRequestIp, params: { postLink, fingerPrint } }) {
-        const response = await this.sendTo('meta', 'recordPostView', {
+        return await this.callService('meta', 'recordPostView', {
             postLink,
             fingerPrint,
             clientRequestIp,
         });
-
-        if (response.error) {
-            throw response.error;
-        }
-
-        return response.result;
     }
 
     async getPostsViewCount({ params: { postLinks } }) {
-        const response = await this.sendTo('meta', 'getPostsViewCount', { postLinks });
+        return await this.callService('meta', 'getPostsViewCount', { postLinks });
+    }
 
-        if (response.error) {
-            throw response.error;
-        }
+    async markUserOnline({ user }) {
+        return await this.callService('meta', 'markUserOnline', {
+            username: user,
+        });
+    }
 
-        return response.result;
+    async getUsersLastOnline({ params: { usernames } }) {
+        return await this.callService('meta', 'getUsersLastOnline', { usernames });
     }
 }
 

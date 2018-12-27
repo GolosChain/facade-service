@@ -287,8 +287,8 @@
  meta.getPostsViewCount          // Получить количество просмотров для постов
      postLinks <string[]>        // Список ссылок на посты в формате author/perm-link
 
- meta.getUsersLastOnline:             // Получить время (timestamp) последного онлайна пользователей
-     usernames <string[]>        // Именя пользователей
+ meta.getUserLastOnline:         // Получить время (timestamp) последного онлайна пользователей
+     user <string>               // Имя пользователя
 ```
 
 Апи для обращения из внутренних микросервисов:

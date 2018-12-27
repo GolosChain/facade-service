@@ -14,13 +14,11 @@ class Meta extends Abstract {
     }
 
     async markUserOnline({ user }) {
-        return await this.callService('meta', 'markUserOnline', {
-            username: user,
-        });
+        return await this.callService('meta', 'markUserOnline', { user });
     }
 
-    async getUserLastOnline({ params: { username } }) {
-        return await this.callService('meta', 'getUserLastOnline', { username });
+    async getUserLastOnline({ params: { user } }) {
+        return await this.callService('meta', 'getUserLastOnline', { user });
     }
 }
 

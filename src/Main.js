@@ -8,6 +8,10 @@ class Main extends BasicMain {
     constructor() {
         super(stats, env);
 
+        this.defineMeta({
+            name: 'facade',
+        });
+
         this.addNested(new Connector());
     }
 }

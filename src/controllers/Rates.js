@@ -1,6 +1,6 @@
-const Abstract = require('./Abstract');
-
-class Rates extends Abstract {
+const core = require('gls-core-service');
+const Basic = core.controllers.Basic;
+class Rates extends Basic {
     async getActual() {
         return await this._transfer('getActual', {});
     }
@@ -14,10 +14,7 @@ class Rates extends Abstract {
     }
 
     async _transfer(method, data) {
-        const time = new Date();
-        const response = await this.sendTo('rates', method, data);
-
-        return await this._handleResponse(response, 'rates_execution', time);
+        return await this.sendTo('rates', method, data);
     }
 }
 

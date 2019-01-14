@@ -1,10 +1,8 @@
 const core = require('gls-core-service');
-const stats = core.utils.statsClient;
-const Abstract = require('./Abstract');
+const Basic = core.controllers.Basic;
 
-class Options extends Abstract {
+class Options extends Basic {
     async get({ user, params: { profile } }) {
-        const time = new Date();
         const data = { user, profile };
 
         const basic = await this._tryGetOptionsBy({
@@ -28,13 +26,10 @@ class Options extends Abstract {
             data,
         });
 
-        stats.timing('options_get', new Date() - time);
-
         return { basic, notify, push };
     }
 
     async set({ user, params: { profile, basic, notify, push } }) {
-        const time = new Date();
         const errors = [];
         const trySetOptionsBy = this._makeOptionsSetter(user, profile, errors);
 
@@ -66,11 +61,9 @@ class Options extends Abstract {
         }
 
         if (errors.length) {
-            stats.increment('options_set_error');
             throw { code: 500, message: `Some options not changed - ${errors.join(' | ')}` };
         }
 
-        stats.timing('options_set', new Date() - time);
         return 'Ok';
     }
 

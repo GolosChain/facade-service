@@ -1,18 +1,13 @@
 const core = require('gls-core-service');
-const stats = core.utils.statsClient;
-const Abstract = require('./Abstract');
+const Basic = core.controllers.Basic;
 
-class Offline extends Abstract {
+class Offline extends Basic {
     async handle({ user, channelId }) {
-        const time = new Date();
-
         try {
             await this.sendTo('onlineNotify', 'unsubscribe', { user, channelId });
         } catch (error) {
             // notify-service offline, do nothing
         }
-
-        stats.timing('offline_handle', new Date() - time);
 
         return 'Ok';
     }

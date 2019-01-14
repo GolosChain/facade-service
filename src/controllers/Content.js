@@ -1,44 +1,30 @@
-const Abstract = require('./Abstract');
+const core = require('gls-core-service');
+const Basic = core.controllers.Basic;
 
-class Content extends Abstract {
+class Content extends Basic {
     async getNaturalFeed({ params: { tags, afterId, limit } }) {
-        const time = new Date();
         const data = { tags, afterId, limit };
-        const response = await this.sendTo('prism', 'getNaturalFeed', data);
-
-        return await this._handleResponse(response, 'content_feed', time);
+        return await this.sendTo('prism', 'getNaturalFeed', data);
     }
 
     async getPopularFeed({ params: { tags, afterId, limit } }) {
-        const time = new Date();
         const data = { tags, afterId, limit };
-        const response = await this.sendTo('prism', 'getPopularFeed', data);
-
-        return await this._handleResponse(response, 'content_feed', time);
+        return await this.sendTo('prism', 'getPopularFeed', data);
     }
 
     async getActualFeed({ params: { tags, afterId, limit } }) {
-        const time = new Date();
         const data = { tags, afterId, limit };
-        const response = await this.sendTo('prism', 'getActualFeed', data);
-
-        return await this._handleResponse(response, 'content_feed', time);
+        return await this.sendTo('prism', 'getActualFeed', data);
     }
 
     async getPromoFeed({ params: { tags, afterId, limit } }) {
-        const time = new Date();
         const data = { tags, afterId, limit };
-        const response = await this.sendTo('prism', 'getPromoFeed', data);
-
-        return await this._handleResponse(response, 'content_feed', time);
+        return await this.sendTo('prism', 'getPromoFeed', data);
     }
 
     async getPersonalFeed({ user, params: { tags, afterId, limit } }) {
-        const time = new Date();
         const data = { user, tags, afterId, limit };
-        const response = await this.sendTo('prism', 'getPersonalFeed', data);
-
-        return await this._handleResponse(response, 'content_feed', time);
+        return await this.sendTo('prism', 'getPersonalFeed', data);
     }
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "facade-service",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "./src/Main.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "author": "golos.io",
   "license": "GPL-3.0",
   "dependencies": {
-    "gls-core-service": "^2.15.1"
+    "gls-core-service": "^2.16.1"
   },
   "prettier": {
     "singleQuote": true,

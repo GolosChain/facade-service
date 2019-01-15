@@ -1,7 +1,7 @@
 version: '3.6'
 services:
   node:
-    container_name: node
+    container_name: facade-node
     restart: always
     build:
       context: .
@@ -10,22 +10,8 @@ services:
       - services-tier
     ports:
       - $GLS_CONNECTOR_HOST:$GLS_CONNECTOR_PORT:$GLS_CONNECTOR_PORT
-    environment:
-      - GLS_FRONTEND_GATE_CONNECT
-      - GLS_ONLINE_NOTIFY_CONNECT
-      - GLS_NOTIFY_CONNECT
-      - GLS_OPTIONS_CONNECT
-      - GLS_PUSH_CONNECT
-      - GLS_MAIL_CONNECT
-      - GLS_REGISTRATION_CONNECT
-      - GLS_RATES_CONNECT
-      - GLS_PRISM_CONNECT
-      - GLS_META_CONNECT
-      - GLS_DAY_START
-      - GLS_METRICS_HOST
-      - GLS_METRICS_PORT
-      - GLS_CONNECTOR_HOST
-      - GLS_CONNECTOR_PORT
+    env_file:
+      - .env
 
 networks:
   services-tier:

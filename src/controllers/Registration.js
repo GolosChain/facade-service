@@ -30,7 +30,7 @@ class Registration extends Basic {
     }
 
     async _transfer(method, data) {
-        return await this.sendTo('registration', method, data);
+        return await this.callService('registration', method, data);
     }
 }
 

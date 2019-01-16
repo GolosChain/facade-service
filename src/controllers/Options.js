@@ -1,6 +1,5 @@
 const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
-
 class Options extends Basic {
     async get({ user, params: { profile } }) {
         const data = { user, profile };
@@ -68,7 +67,7 @@ class Options extends Basic {
     }
 
     async getFavorites({ user }) {
-        const response = await this.sendTo('options', 'getFavorites', { user });
+        const response = await this.callService('options', 'getFavorites', { user });
 
         if (response.error) {
             throw response.error;
@@ -78,7 +77,7 @@ class Options extends Basic {
     }
 
     async addFavorite({ user, params: { permlink } }) {
-        const response = await this.sendTo('options', 'addFavorite', { user, permlink });
+        const response = await this.callService('options', 'addFavorite', { user, permlink });
 
         if (response.error) {
             throw response.error;
@@ -86,7 +85,7 @@ class Options extends Basic {
     }
 
     async removeFavorite({ user, params: { permlink } }) {
-        const response = await this.sendTo('options', 'removeFavorite', { user, permlink });
+        const response = await this.callService('options', 'removeFavorite', { user, permlink });
 
         if (response.error) {
             throw response.error;
@@ -94,7 +93,7 @@ class Options extends Basic {
     }
 
     async getBlackList({ user: owner }) {
-        const response = await this.sendTo('notify', 'getBlackList', { owner });
+        const response = await this.callService('notify', 'getBlackList', { owner });
 
         if (response.error) {
             throw response.error;
@@ -104,7 +103,7 @@ class Options extends Basic {
     }
 
     async addToBlackList({ user: owner, params: { banned } }) {
-        const response = await this.sendTo('notify', 'addToBlackList', { owner, banned });
+        const response = await this.callService('notify', 'addToBlackList', { owner, banned });
 
         if (response.error) {
             throw response.error;
@@ -112,7 +111,7 @@ class Options extends Basic {
     }
 
     async removeFromBlackList({ user: owner, params: { banned } }) {
-        const response = await this.sendTo('notify', 'removeFromBlackList', { owner, banned });
+        const response = await this.callService('notify', 'removeFromBlackList', { owner, banned });
 
         if (response.error) {
             throw response.error;
@@ -121,7 +120,7 @@ class Options extends Basic {
 
     async _tryGetOptionsBy({ service, method, errorPrefix, data }) {
         let result;
-        const response = await this.sendTo(service, method, data);
+        const response = await this.callService(service, method, data);
 
         if (response.error) {
             throw this._makeGetError(response, errorPrefix);
@@ -138,7 +137,7 @@ class Options extends Basic {
 
     _makeOptionsSetter(user, profile, errors) {
         return async ({ service, method, errorPrefix, data }) => {
-            const { error } = await this.sendTo(service, method, { user, profile, data });
+            const { error } = await this.callService(service, method, { user, profile, data });
 
             if (error) {
                 errors.push(`${errorPrefix} -> ${error.message}`);

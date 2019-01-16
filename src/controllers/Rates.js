@@ -14,7 +14,7 @@ class Rates extends Basic {
     }
 
     async _transfer(method, data) {
-        return await this.sendTo('rates', method, data);
+        return await this.callService('rates', method, data);
     }
 }
 

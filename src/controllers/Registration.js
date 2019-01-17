@@ -5,8 +5,8 @@ class Registration extends Basic {
         return await this._transfer('getState', { user });
     }
 
-    async firstStep({ params: { captcha, user, phone, mail } }) {
-        return await this._transfer('firstStep', { captcha, user, phone, mail });
+    async firstStep({ params: { captcha, user, phone, mail, testingPass } }) {
+        return await this._transfer('firstStep', { captcha, user, phone, mail, testingPass });
     }
 
     async verify({ params: { user, ...data } }) {
@@ -17,8 +17,8 @@ class Registration extends Basic {
         return await this._transfer('toBlockChain', { user, owner, active, posting, memo });
     }
 
-    async changePhone({ params: { user, phone, captcha } }) {
-        return await this._transfer('changePhone', { user, phone, captcha });
+    async changePhone({ params: { user, phone, captcha, testingPass } }) {
+        return await this._transfer('changePhone', { user, phone, captcha, testingPass });
     }
 
     async resendSmsCode({ params: { user, phone } }) {

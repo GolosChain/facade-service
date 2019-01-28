@@ -28,8 +28,13 @@ class Connector extends BasicConnector {
 
     _enableSecure(handler) {
         return async (...params) => {
-            if (params.auth && params.auth.user && params.auth.roles) {
+            if (params.auth && params.auth.user) {
                 return await handler.apply(this, params);
+            } else {
+                throw {
+                    code: 1103,
+                    message: 'Unauthorized request: access denied',
+                };
             }
         };
     }

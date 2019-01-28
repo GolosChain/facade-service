@@ -1,5 +1,6 @@
 const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
+
 class Transfer extends Basic {
     async handle({ channelId, method, error, result, _frontendGate }) {
         if (_frontendGate) {

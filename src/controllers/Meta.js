@@ -1,5 +1,6 @@
 const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
+
 class Meta extends Basic {
     async recordPostView({ meta: { clientRequestIp }, params: { postLink, fingerPrint } }) {
         return await this.callService('meta', 'recordPostView', {

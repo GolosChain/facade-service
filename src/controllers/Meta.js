@@ -14,7 +14,7 @@ class Meta extends Basic {
         return await this.callService('meta', 'getPostsViewCount', { postLinks });
     }
 
-    async markUserOnline({ user }) {
+    async markUserOnline({ auth: { user } }) {
         return await this.callService('meta', 'markUserOnline', { user });
     }
 

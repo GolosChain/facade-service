@@ -1,7 +1,7 @@
 const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
 class Offline extends Basic {
-    async handle({ user, channelId }) {
+    async handle({ auth: { user }, channelId }) {
         try {
             await this.callService('onlineNotify', 'unsubscribe', { user, channelId });
         } catch (error) {

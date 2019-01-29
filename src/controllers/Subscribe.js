@@ -8,19 +8,19 @@ class Subscribe extends Basic {
         return await this.callService('onlineNotify', 'subscribe', data);
     }
 
-    async onlineNotifyOff({ user, channelId }) {
+    async onlineNotifyOff({ auth: { user }, channelId }) {
         const data = { user, channelId };
 
         return await this.callService('onlineNotify', 'unsubscribe', data);
     }
 
-    async pushNotifyOn({ user, params: { key, profile } }) {
+    async pushNotifyOn({ auth: { user }, params: { key, profile } }) {
         const data = { user, key, profile };
 
         return await this.callService('push', 'notifyOn', data);
     }
 
-    async pushNotifyOff({ user, params: { key, profile } }) {
+    async pushNotifyOff({ auth: { user }, params: { key, profile } }) {
         const data = { user, key, profile };
 
         return await this.callService('push', 'notifyOff', data);

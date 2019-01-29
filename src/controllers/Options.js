@@ -2,7 +2,7 @@ const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
 
 class Options extends Basic {
-    async get({ user, params: { profile } }) {
+    async get({ auth: { user }, params: { profile } }) {
         const data = { user, profile };
 
         const basic = await this._tryGetOptionsBy({
@@ -29,7 +29,7 @@ class Options extends Basic {
         return { basic, notify, push };
     }
 
-    async set({ user, params: { profile, basic, notify, push } }) {
+    async set({ auth: { user }, params: { profile, basic, notify, push } }) {
         const errors = [];
         const trySetOptionsBy = this._makeOptionsSetter(user, profile, errors);
 
@@ -67,37 +67,37 @@ class Options extends Basic {
         return 'Ok';
     }
 
-    async getFavorites({ user }) {
+    async getFavorites({ auth: { user } }) {
         const data = { user };
 
         return await this.callService('options', 'getFavorites', data);
     }
 
-    async addFavorite({ user, params: { permlink } }) {
+    async addFavorite({ auth: { user }, params: { permlink } }) {
         const data = { user, permlink };
 
         return await this.callService('options', 'addFavorite', data);
     }
 
-    async removeFavorite({ user, params: { permlink } }) {
+    async removeFavorite({ auth: { user }, params: { permlink } }) {
         const data = { user, permlink };
 
         return await this.callService('options', 'removeFavorite', data);
     }
 
-    async getBlackList({ user: owner }) {
+    async getBlackList({ auth: { user: owner } }) {
         const data = { owner };
 
         return await this.callService('notify', 'getBlackList', data);
     }
 
-    async addToBlackList({ user: owner, params: { banned } }) {
+    async addToBlackList({ auth: { user: owner }, params: { banned } }) {
         const data = { owner, banned };
 
         return await this.callService('notify', 'addToBlackList', data);
     }
 
-    async removeFromBlackList({ user: owner, params: { banned } }) {
+    async removeFromBlackList({ auth: { user: owner }, params: { banned } }) {
         const data = { owner, banned };
 
         return await this.callService('notify', 'removeFromBlackList', data);

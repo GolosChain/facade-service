@@ -26,7 +26,7 @@ class Content extends Basic {
         return await this.callService('prism', 'getPromoFeed', data);
     }
 
-    async getPersonalFeed({ user, params: { tags, afterId, limit } }) {
+    async getPersonalFeed({ auth: { user }, params: { tags, afterId, limit } }) {
         const data = { user, tags, afterId, limit };
 
         return await this.callService('prism', 'getPersonalFeed', data);

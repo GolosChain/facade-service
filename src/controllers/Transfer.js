@@ -15,18 +15,12 @@ class Transfer extends Basic {
             throw { code: 400, message: 'Invalid packet data format.' };
         }
 
-        const response = await this.callService('frontend', 'transfer', {
+        return await this.callService('frontend', 'transfer', {
             channelId,
             method,
             error,
             result,
         });
-
-        if (response.error) {
-            throw response.error;
-        }
-
-        return response.result;
     }
 }
 

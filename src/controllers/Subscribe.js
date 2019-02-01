@@ -2,13 +2,13 @@ const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
 
 class Subscribe extends Basic {
-    async onlineNotifyOn({ user, channelId, requestId }) {
+    async onlineNotifyOn({ auth: { user }, routing: { channelId, requestId } }) {
         const data = { user, channelId, requestId };
 
         return await this.callService('onlineNotify', 'subscribe', data);
     }
 
-    async onlineNotifyOff({ auth: { user }, channelId }) {
+    async onlineNotifyOff({ auth: { user }, routing: { channelId } }) {
         const data = { user, channelId };
 
         return await this.callService('onlineNotify', 'unsubscribe', data);

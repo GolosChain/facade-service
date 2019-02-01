@@ -38,7 +38,7 @@ class Registration extends Basic {
         return await this._transfer('resendSmsCode', data);
     }
 
-    async subscribeOnSmsGet({ channelId, params: { user, phone } }) {
+    async subscribeOnSmsGet({ routing: { channelId }, params: { user, phone } }) {
         const data = { channelId, user, phone };
 
         return await this._transfer('subscribeOnSmsGet', data);

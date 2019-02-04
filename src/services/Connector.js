@@ -114,6 +114,7 @@ class Connector extends BasicConnector {
                 rates: env.GLS_RATES_CONNECT,
                 prism: env.GLS_PRISM_CONNECT,
                 meta: env.GLS_META_CONNECT,
+                bandwidth: env.GLS_BANDWIDTH_PROVIDER_CONNECT,
             },
         });
     }

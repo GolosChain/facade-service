@@ -89,13 +89,10 @@ class Connector extends BasicConnector {
                 'rates.getActual': rates.getActual.bind(rates),
                 'rates.getHistorical': rates.getHistorical.bind(rates),
                 'rates.getHistoricalMulti': rates.getHistoricalMulti.bind(rates),
-                'content.getNaturalFeed': content.getNaturalFeed.bind(content),
-                'content.getPopularFeed': content.getPopularFeed.bind(content),
-                'content.getActualFeed': content.getActualFeed.bind(content),
-                'content.getPromoFeed': content.getPromoFeed.bind(content),
-                'content.getPersonalFeed': this._enableSecure(
-                    content.getPersonalFeed.bind(content)
-                ),
+                'content.getComments': content.getComments.bind(content),
+                'content.getPost': content.getPost.bind(content),
+                'content.getFeed': content.getFeed.bind(content),
+                'content.getProfile': content.getProfile.bind(content),
                 'meta.getPostsViewCount': this._enableSecure(meta.getPostsViewCount.bind(meta)),
                 'meta.recordPostView': this._enableSecure(meta.recordPostView.bind(meta)),
                 'meta.markUserOnline': this._enableSecure(meta.markUserOnline.bind(meta)),

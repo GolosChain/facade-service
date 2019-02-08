@@ -8,8 +8,8 @@ class Registration extends Basic {
         return await this._transfer('getState', data);
     }
 
-    async firstStep({ params: { captcha, user, phone, mail } }) {
-        const data = { captcha, user, phone, mail };
+    async firstStep({ params: { captcha, user, phone, mail, testingPass } }) {
+        const data = { captcha, user, phone, mail, testingPass };
 
         return await this._transfer('firstStep', data);
     }
@@ -26,8 +26,8 @@ class Registration extends Basic {
         return await this._transfer('toBlockChain', data);
     }
 
-    async changePhone({ params: { user, phone, captcha } }) {
-        const data = { user, phone, captcha };
+    async changePhone({ params: { user, phone, captcha, testingPass } }) {
+        const data = { user, phone, captcha, testingPass };
 
         return await this._transfer('changePhone', data);
     }

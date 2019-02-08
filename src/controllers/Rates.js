@@ -1,23 +1,25 @@
-const Abstract = require('./Abstract');
+const core = require('gls-core-service');
+const Basic = core.controllers.Basic;
 
-class Rates extends Abstract {
+class Rates extends Basic {
     async getActual() {
         return await this._transfer('getActual', {});
     }
 
     async getHistorical({ params: { date } }) {
-        return await this._transfer('getHistorical', { date });
+        const data = { date };
+
+        return await this._transfer('getHistorical', data);
     }
 
     async getHistoricalMulti({ params: { dates } }) {
-        return await this._transfer('getHistoricalMulti', { dates });
+        const data = { dates };
+
+        return await this._transfer('getHistoricalMulti', data);
     }
 
     async _transfer(method, data) {
-        const time = new Date();
-        const response = await this.sendTo('rates', method, data);
-
-        return await this._handleResponse(response, 'rates_execution', time);
+        return await this.callService('rates', method, data);
     }
 }
 

@@ -1,36 +1,29 @@
-const Abstract = require('./Abstract');
+const core = require('gls-core-service');
+const Basic = core.controllers.Basic;
 
-class Subscribe extends Abstract {
-    async onlineNotifyOn({ user, channelId, requestId }) {
-        const time = new Date();
+class Subscribe extends Basic {
+    async onlineNotifyOn({ auth: { user }, routing: { channelId, requestId } }) {
         const data = { user, channelId, requestId };
-        const response = await this.sendTo('onlineNotify', 'subscribe', data);
 
-        return await this._handleResponse(response, 'online_notify_on', time);
+        return await this.callService('onlineNotify', 'subscribe', data);
     }
 
-    async onlineNotifyOff({ user, channelId }) {
-        const time = new Date();
+    async onlineNotifyOff({ auth: { user }, routing: { channelId } }) {
         const data = { user, channelId };
-        const response = await this.sendTo('onlineNotify', 'unsubscribe', data);
 
-        return await this._handleResponse(response, 'online_notify_off', time);
+        return await this.callService('onlineNotify', 'unsubscribe', data);
     }
 
-    async pushNotifyOn({ user, params: { key, profile } }) {
-        const time = new Date();
+    async pushNotifyOn({ auth: { user }, params: { key, profile } }) {
         const data = { user, key, profile };
-        const response = await this.sendTo('push', 'notifyOn', data);
 
-        return await this._handleResponse(response, 'push_notify_on', time);
+        return await this.callService('push', 'notifyOn', data);
     }
 
-    async pushNotifyOff({ user, params: { key, profile } }) {
-        const time = new Date();
+    async pushNotifyOff({ auth: { user }, params: { key, profile } }) {
         const data = { user, key, profile };
-        const response = await this.sendTo('push', 'notifyOff', data);
 
-        return await this._handleResponse(response, 'push_notify_off', time);
+        return await this.callService('push', 'notifyOff', data);
     }
 }
 

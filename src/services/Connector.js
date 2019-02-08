@@ -26,6 +26,19 @@ class Connector extends BasicConnector {
         this._meta = new Meta({ connector: this });
     }
 
+    _enableSecure(handler) {
+        return async (...params) => {
+            if (params.auth && params.auth.user) {
+                return await handler.apply(this, params);
+            } else {
+                throw {
+                    code: 1103,
+                    message: 'Unauthorized request: access denied',
+                };
+            }
+        };
+    }
+
     async start() {
         const options = this._options;
         const subscribe = this._subscribe;
@@ -40,27 +53,31 @@ class Connector extends BasicConnector {
         await super.start({
             serverRoutes: {
                 /* public points */
-                offline: offline.handle.bind(offline),
-                getOptions: options.get.bind(options),
-                setOptions: options.set.bind(options),
-                onlineNotifyOn: subscribe.onlineNotifyOn.bind(subscribe),
-                onlineNotifyOff: subscribe.onlineNotifyOff.bind(subscribe),
-                'onlineNotify.history': history.onlineNotify.bind(history),
-                'onlineNotify.historyFresh': history.onlineNotifyFresh.bind(history),
-                'push.notifyOn': subscribe.pushNotifyOn.bind(subscribe),
-                'push.notifyOff': subscribe.pushNotifyOff.bind(subscribe),
-                'push.history': history.push.bind(history),
-                'push.historyFresh': history.pushFresh.bind(history),
-                getNotifyHistory: history.notify.bind(history),
-                getNotifyHistoryFresh: history.notifyFresh.bind(history),
-                'notify.markAsViewed': history.markAsViewed.bind(history),
-                'notify.markAllAsViewed': history.markAllAsViewed.bind(history),
-                'notify.getBlackList': options.getBlackList.bind(options),
-                'notify.addToBlackList': options.addToBlackList.bind(options),
-                'notify.removeFromBlackList': options.removeFromBlackList.bind(options),
-                getFavorites: options.getFavorites.bind(options),
-                addFavorite: options.addFavorite.bind(options),
-                removeFavorite: options.removeFavorite.bind(options),
+                offline: this._enableSecure(offline.handle.bind(offline)),
+                getOptions: this._enableSecure(options.get.bind(options)),
+                setOptions: this._enableSecure(options.set.bind(options)),
+                onlineNotifyOn: this._enableSecure(subscribe.onlineNotifyOn.bind(subscribe)),
+                onlineNotifyOff: this._enableSecure(subscribe.onlineNotifyOff.bind(subscribe)),
+                'onlineNotify.history': this._enableSecure(history.onlineNotify.bind(history)),
+                'onlineNotify.historyFresh': this._enableSecure(
+                    history.onlineNotifyFresh.bind(history)
+                ),
+                'push.notifyOn': this._enableSecure(subscribe.pushNotifyOn.bind(subscribe)),
+                'push.notifyOff': this._enableSecure(subscribe.pushNotifyOff.bind(subscribe)),
+                'push.history': this._enableSecure(history.push.bind(history)),
+                'push.historyFresh': this._enableSecure(history.pushFresh.bind(history)),
+                getNotifyHistory: this._enableSecure(history.notify.bind(history)),
+                getNotifyHistoryFresh: this._enableSecure(history.notifyFresh.bind(history)),
+                'notify.markAsViewed': this._enableSecure(history.markAsViewed.bind(history)),
+                'notify.markAllAsViewed': this._enableSecure(history.markAllAsViewed.bind(history)),
+                'notify.getBlackList': this._enableSecure(options.getBlackList.bind(options)),
+                'notify.addToBlackList': this._enableSecure(options.addToBlackList.bind(options)),
+                'notify.removeFromBlackList': this._enableSecure(
+                    options.removeFromBlackList.bind(options)
+                ),
+                getFavorites: this._enableSecure(options.getFavorites.bind(options)),
+                addFavorite: this._enableSecure(options.addFavorite.bind(options)),
+                removeFavorite: this._enableSecure(options.removeFavorite.bind(options)),
                 'registration.getState': registration.getState.bind(registration),
                 'registration.firstStep': registration.firstStep.bind(registration),
                 'registration.verify': registration.verify.bind(registration),
@@ -75,11 +92,13 @@ class Connector extends BasicConnector {
                 'content.getPopularFeed': content.getPopularFeed.bind(content),
                 'content.getActualFeed': content.getActualFeed.bind(content),
                 'content.getPromoFeed': content.getPromoFeed.bind(content),
-                'content.getPersonalFeed': content.getPersonalFeed.bind(content),
-                'meta.getPostsViewCount': meta.getPostsViewCount.bind(meta),
-                'meta.recordPostView': meta.recordPostView.bind(meta),
-                'meta.markUserOnline': meta.markUserOnline.bind(meta),
-                'meta.getUserLastOnline': meta.getUserLastOnline.bind(meta),
+                'content.getPersonalFeed': this._enableSecure(
+                    content.getPersonalFeed.bind(content)
+                ),
+                'meta.getPostsViewCount': this._enableSecure(meta.getPostsViewCount.bind(meta)),
+                'meta.recordPostView': this._enableSecure(meta.recordPostView.bind(meta)),
+                'meta.markUserOnline': this._enableSecure(meta.markUserOnline.bind(meta)),
+                'meta.getUserLastOnline': this._enableSecure(meta.getUserLastOnline.bind(meta)),
 
                 /* inner services only */
                 transfer: transfer.handle.bind(transfer),
@@ -95,6 +114,7 @@ class Connector extends BasicConnector {
                 rates: env.GLS_RATES_CONNECT,
                 prism: env.GLS_PRISM_CONNECT,
                 meta: env.GLS_META_CONNECT,
+                bandwidth: env.GLS_BANDWIDTH_PROVIDER_CONNECT,
             },
         });
     }

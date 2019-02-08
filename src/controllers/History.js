@@ -1,66 +1,58 @@
-const Abstract = require('./Abstract');
+const core = require('gls-core-service');
+const Basic = core.controllers.Basic;
 
-class History extends Abstract {
-    async notify({ user, params: { fromId, limit, types, markAsViewed = true, freshOnly } }) {
-        const time = new Date();
+class History extends Basic {
+    async notify({
+        auth: { user },
+        params: { fromId, limit, types, markAsViewed = true, freshOnly },
+    }) {
         const data = { user, fromId, limit, types, markAsViewed, freshOnly };
-        const response = await this.sendTo('notify', 'history', data);
 
-        return await this._handleResponse(response, 'get_history', time);
+        return await this.callService('notify', 'history', data);
     }
 
-    async notifyFresh({ user }) {
-        const time = new Date();
-        const response = await this.sendTo('notify', 'historyFresh', { user });
-
-        return await this._handleResponse(response, 'get_history', time);
+    async notifyFresh({ auth: { user } }) {
+        return await this.callService('notify', 'historyFresh', { user });
     }
 
-    async onlineNotify({ user, params: { fromId, limit, markAsViewed = true, freshOnly } }) {
-        const time = new Date();
+    async onlineNotify({
+        auth: { user },
+        params: { fromId, limit, markAsViewed = true, freshOnly },
+    }) {
         const data = { user, fromId, limit, markAsViewed, freshOnly };
-        const response = await this.sendTo('onlineNotify', 'history', data);
 
-        return await this._handleResponse(response, 'get_history', time);
+        return await this.callService('onlineNotify', 'history', data);
     }
 
-    async onlineNotifyFresh({ user }) {
-        const time = new Date();
-        const response = await this.sendTo('onlineNotify', 'historyFresh', { user });
-
-        return await this._handleResponse(response, 'get_history', time);
+    async onlineNotifyFresh({ auth: { user } }) {
+        return await this.callService('onlineNotify', 'historyFresh', { user });
     }
 
     async push({
-        user,
+        auth: { user },
         params: { profile, afterId, limit, types, markAsViewed = true, freshOnly },
     }) {
-        const time = new Date();
         const data = { user, profile, afterId, limit, types, markAsViewed, freshOnly };
-        const response = await this.sendTo('push', 'history', data);
 
-        return await this._handleResponse(response, 'get_history', time);
+        return await this.callService('push', 'history', data);
     }
 
-    async pushFresh({ user, params: { profile } }) {
-        const time = new Date();
-        const response = await this.sendTo('push', 'historyFresh', { user, profile });
+    async pushFresh({ auth: { user }, params: { profile } }) {
+        const data = { user, profile };
 
-        return await this._handleResponse(response, 'get_history', time);
+        return await this.callService('push', 'historyFresh', data);
     }
 
-    async markAsViewed({ user, params: { ids } }) {
-        const time = new Date();
-        const response = await this.sendTo('notify', 'markAsViewed', { user, ids });
+    async markAsViewed({ auth: { user }, params: { ids } }) {
+        const data = { user, ids };
 
-        return await this._handleResponse(response, 'get_history', time);
+        return await this.callService('notify', 'markAsViewed', data);
     }
 
-    async markAllAsViewed({ user }) {
-        const time = new Date();
-        const response = await this.sendTo('notify', 'markAllAsViewed', { user });
+    async markAllAsViewed({ auth: { user } }) {
+        const data = { user };
 
-        return await this._handleResponse(response, 'get_history', time);
+        return await this.callService('notify', 'markAllAsViewed', data);
     }
 }
 

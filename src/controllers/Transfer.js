@@ -1,11 +1,8 @@
 const core = require('gls-core-service');
-const stats = core.utils.statsClient;
-const Abstract = require('./Abstract');
+const Basic = core.controllers.Basic;
 
-class Transfer extends Abstract {
+class Transfer extends Basic {
     async handle({ channelId, method, error, result, _frontendGate }) {
-        const time = new Date();
-
         if (_frontendGate) {
             throw { code: 403, message: 'Access denied.' };
         }
@@ -18,20 +15,12 @@ class Transfer extends Abstract {
             throw { code: 400, message: 'Invalid packet data format.' };
         }
 
-        const response = await this.sendTo('frontend', 'transfer', {
+        return await this.callService('frontend', 'transfer', {
             channelId,
             method,
             error,
             result,
         });
-
-        stats.timing('transfer_handle', new Date() - time);
-
-        if (response.error) {
-            throw response.error;
-        }
-
-        return response.result;
     }
 }
 

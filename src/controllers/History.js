@@ -1,42 +1,58 @@
 const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
+
 class History extends Basic {
-    async notify({ user, params: { fromId, limit, types, markAsViewed = true, freshOnly } }) {
+    async notify({
+        auth: { user },
+        params: { fromId, limit, types, markAsViewed = true, freshOnly },
+    }) {
         const data = { user, fromId, limit, types, markAsViewed, freshOnly };
+
         return await this.callService('notify', 'history', data);
     }
 
-    async notifyFresh({ user }) {
+    async notifyFresh({ auth: { user } }) {
         return await this.callService('notify', 'historyFresh', { user });
     }
 
-    async onlineNotify({ user, params: { fromId, limit, markAsViewed = true, freshOnly } }) {
+    async onlineNotify({
+        auth: { user },
+        params: { fromId, limit, markAsViewed = true, freshOnly },
+    }) {
         const data = { user, fromId, limit, markAsViewed, freshOnly };
+
         return await this.callService('onlineNotify', 'history', data);
     }
 
-    async onlineNotifyFresh({ user }) {
+    async onlineNotifyFresh({ auth: { user } }) {
         return await this.callService('onlineNotify', 'historyFresh', { user });
     }
 
     async push({
-        user,
+        auth: { user },
         params: { profile, afterId, limit, types, markAsViewed = true, freshOnly },
     }) {
         const data = { user, profile, afterId, limit, types, markAsViewed, freshOnly };
+
         return await this.callService('push', 'history', data);
     }
 
-    async pushFresh({ user, params: { profile } }) {
-        return await this.callService('push', 'historyFresh', { user, profile });
+    async pushFresh({ auth: { user }, params: { profile } }) {
+        const data = { user, profile };
+
+        return await this.callService('push', 'historyFresh', data);
     }
 
-    async markAsViewed({ user, params: { ids } }) {
-        return await this.callService('notify', 'markAsViewed', { user, ids });
+    async markAsViewed({ auth: { user }, params: { ids } }) {
+        const data = { user, ids };
+
+        return await this.callService('notify', 'markAsViewed', data);
     }
 
-    async markAllAsViewed({ user }) {
-        return await this.callService('notify', 'markAllAsViewed', { user });
+    async markAllAsViewed({ auth: { user } }) {
+        const data = { user };
+
+        return await this.callService('notify', 'markAllAsViewed', data);
     }
 }
 

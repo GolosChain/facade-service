@@ -1,7 +1,8 @@
 const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
+
 class Options extends Basic {
-    async get({ user, params: { profile } }) {
+    async get({ auth: { user }, params: { profile } }) {
         const data = { user, profile };
 
         const basic = await this._tryGetOptionsBy({
@@ -28,7 +29,7 @@ class Options extends Basic {
         return { basic, notify, push };
     }
 
-    async set({ user, params: { profile, basic, notify, push } }) {
+    async set({ auth: { user }, params: { profile, basic, notify, push } }) {
         const errors = [];
         const trySetOptionsBy = this._makeOptionsSetter(user, profile, errors);
 
@@ -66,61 +67,45 @@ class Options extends Basic {
         return 'Ok';
     }
 
-    async getFavorites({ user }) {
-        const response = await this.callService('options', 'getFavorites', { user });
+    async getFavorites({ auth: { user } }) {
+        const data = { user };
 
-        if (response.error) {
-            throw response.error;
-        } else {
-            return response.result;
-        }
+        return await this.callService('options', 'getFavorites', data);
     }
 
-    async addFavorite({ user, params: { permlink } }) {
-        const response = await this.callService('options', 'addFavorite', { user, permlink });
+    async addFavorite({ auth: { user }, params: { permlink } }) {
+        const data = { user, permlink };
 
-        if (response.error) {
-            throw response.error;
-        }
+        return await this.callService('options', 'addFavorite', data);
     }
 
-    async removeFavorite({ user, params: { permlink } }) {
-        const response = await this.callService('options', 'removeFavorite', { user, permlink });
+    async removeFavorite({ auth: { user }, params: { permlink } }) {
+        const data = { user, permlink };
 
-        if (response.error) {
-            throw response.error;
-        }
+        return await this.callService('options', 'removeFavorite', data);
     }
 
-    async getBlackList({ user: owner }) {
-        const response = await this.callService('notify', 'getBlackList', { owner });
+    async getBlackList({ auth: { user: owner } }) {
+        const data = { owner };
 
-        if (response.error) {
-            throw response.error;
-        }
-
-        return response.result;
+        return await this.callService('notify', 'getBlackList', data);
     }
 
-    async addToBlackList({ user: owner, params: { banned } }) {
-        const response = await this.callService('notify', 'addToBlackList', { owner, banned });
+    async addToBlackList({ auth: { user: owner }, params: { banned } }) {
+        const data = { owner, banned };
 
-        if (response.error) {
-            throw response.error;
-        }
+        return await this.callService('notify', 'addToBlackList', data);
     }
 
-    async removeFromBlackList({ user: owner, params: { banned } }) {
-        const response = await this.callService('notify', 'removeFromBlackList', { owner, banned });
+    async removeFromBlackList({ auth: { user: owner }, params: { banned } }) {
+        const data = { owner, banned };
 
-        if (response.error) {
-            throw response.error;
-        }
+        return await this.callService('notify', 'removeFromBlackList', data);
     }
 
     async _tryGetOptionsBy({ service, method, errorPrefix, data }) {
         let result;
-        const response = await this.callService(service, method, data);
+        const response = await this.sendTo(service, method, data);
 
         if (response.error) {
             throw this._makeGetError(response, errorPrefix);
@@ -137,7 +122,7 @@ class Options extends Basic {
 
     _makeOptionsSetter(user, profile, errors) {
         return async ({ service, method, errorPrefix, data }) => {
-            const { error } = await this.callService(service, method, { user, profile, data });
+            const { error } = await this.sendTo(service, method, { user, profile, data });
 
             if (error) {
                 errors.push(`${errorPrefix} -> ${error.message}`);

@@ -15,15 +15,17 @@ class Connector extends BasicConnector {
     constructor() {
         super();
 
-        this._options = new Options({ connector: this });
-        this._subscribe = new Subscribe({ connector: this });
-        this._history = new History({ connector: this });
-        this._transfer = new Transfer({ connector: this });
-        this._offline = new Offline({ connector: this });
-        this._registration = new Registration({ connector: this });
-        this._rates = new Rates({ connector: this });
-        this._content = new Content({ connector: this });
-        this._meta = new Meta({ connector: this });
+        const linking = { connector: this };
+
+        this._options = new Options(linking);
+        this._subscribe = new Subscribe(linking);
+        this._history = new History(linking);
+        this._transfer = new Transfer(linking);
+        this._offline = new Offline(linking);
+        this._registration = new Registration(linking);
+        this._rates = new Rates(linking);
+        this._content = new Content(linking);
+        this._meta = new Meta(linking);
     }
 
     _enableSecure(handler) {
@@ -53,11 +55,10 @@ class Connector extends BasicConnector {
         await super.start({
             serverRoutes: {
                 /* public points */
-                offline: this._enableSecure(offline.handle.bind(offline)),
-                getOptions: this._enableSecure(options.get.bind(options)),
-                setOptions: this._enableSecure(options.set.bind(options)),
-                onlineNotifyOn: this._enableSecure(subscribe.onlineNotifyOn.bind(subscribe)),
-                onlineNotifyOff: this._enableSecure(subscribe.onlineNotifyOff.bind(subscribe)),
+                'options.get': this._enableSecure(options.get.bind(options)),
+                'options.set': this._enableSecure(options.set.bind(options)),
+                'onlineNotify.on': this._enableSecure(subscribe.onlineNotifyOn.bind(subscribe)),
+                'onlineNotify.off': this._enableSecure(subscribe.onlineNotifyOff.bind(subscribe)),
                 'onlineNotify.history': this._enableSecure(history.onlineNotify.bind(history)),
                 'onlineNotify.historyFresh': this._enableSecure(
                     history.onlineNotifyFresh.bind(history)
@@ -66,8 +67,8 @@ class Connector extends BasicConnector {
                 'push.notifyOff': this._enableSecure(subscribe.pushNotifyOff.bind(subscribe)),
                 'push.history': this._enableSecure(history.push.bind(history)),
                 'push.historyFresh': this._enableSecure(history.pushFresh.bind(history)),
-                getNotifyHistory: this._enableSecure(history.notify.bind(history)),
-                getNotifyHistoryFresh: this._enableSecure(history.notifyFresh.bind(history)),
+                'notify.getHistory': this._enableSecure(history.notify.bind(history)),
+                'notify.getHistoryFresh': this._enableSecure(history.notifyFresh.bind(history)),
                 'notify.markAsViewed': this._enableSecure(history.markAsViewed.bind(history)),
                 'notify.markAllAsViewed': this._enableSecure(history.markAllAsViewed.bind(history)),
                 'notify.getBlackList': this._enableSecure(options.getBlackList.bind(options)),
@@ -75,9 +76,9 @@ class Connector extends BasicConnector {
                 'notify.removeFromBlackList': this._enableSecure(
                     options.removeFromBlackList.bind(options)
                 ),
-                getFavorites: this._enableSecure(options.getFavorites.bind(options)),
-                addFavorite: this._enableSecure(options.addFavorite.bind(options)),
-                removeFavorite: this._enableSecure(options.removeFavorite.bind(options)),
+                'favorites.get': this._enableSecure(options.getFavorites.bind(options)),
+                'favorites.add': this._enableSecure(options.addFavorite.bind(options)),
+                'favorites.remove': this._enableSecure(options.removeFavorite.bind(options)),
                 'registration.getState': registration.getState.bind(registration),
                 'registration.firstStep': registration.firstStep.bind(registration),
                 'registration.verify': registration.verify.bind(registration),
@@ -100,7 +101,10 @@ class Connector extends BasicConnector {
                 'meta.markUserOnline': this._enableSecure(meta.markUserOnline.bind(meta)),
                 'meta.getUserLastOnline': this._enableSecure(meta.getUserLastOnline.bind(meta)),
 
-                /* inner services only */
+                /* service points */
+                offline: this._enableSecure(offline.handle.bind(offline)),
+
+                /* inner services only points */
                 transfer: transfer.handle.bind(transfer),
             },
             requiredClients: {

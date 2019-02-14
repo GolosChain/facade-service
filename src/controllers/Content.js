@@ -2,34 +2,28 @@ const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
 
 class Content extends Basic {
-    async getNaturalFeed({ params: { tags, afterId, limit } }) {
-        const data = { tags, afterId, limit };
+    async getComments({ params: { sortBy, sequenceKey, limit, userId, postId, type } }) {
+        const data = { sortBy, sequenceKey, limit, userId, postId, type };
 
-        return await this.callService('prism', 'getNaturalFeed', data);
+        return await this.callService('prism', 'getComments', data);
     }
 
-    async getPopularFeed({ params: { tags, afterId, limit } }) {
-        const data = { tags, afterId, limit };
+    async getPost({ params: { postId, userId } }) {
+        const data = { postId, userId };
 
-        return await this.callService('prism', 'getPopularFeed', data);
+        return await this.callService('prism', 'getPost', data);
     }
 
-    async getActualFeed({ params: { tags, afterId, limit } }) {
-        const data = { tags, afterId, limit };
+    async getFeed({ params: { type, sortBy, sequenceKey, limit, userId, communityId } }) {
+        const data = { type, sortBy, sequenceKey, limit, userId, communityId };
 
-        return await this.callService('prism', 'getActualFeed', data);
+        return await this.callService('prism', 'getFeed', data);
     }
 
-    async getPromoFeed({ params: { tags, afterId, limit } }) {
-        const data = { tags, afterId, limit };
+    async getProfile({ params: { id } }) {
+        const data = { id };
 
-        return await this.callService('prism', 'getPromoFeed', data);
-    }
-
-    async getPersonalFeed({ auth: { user }, params: { tags, afterId, limit } }) {
-        const data = { user, tags, afterId, limit };
-
-        return await this.callService('prism', 'getPersonalFeed', data);
+        return await this.callService('prism', 'getProfile', data);
     }
 }
 

@@ -31,9 +31,9 @@ class Connector extends BasicConnector {
     }
 
     _enableSecure(handler) {
-        return async (...params) => {
+        return async params => {
             if (params.auth && params.auth.user) {
-                return await handler.apply(this, params);
+                return await handler(params);
             } else {
                 throw {
                     code: 1103,

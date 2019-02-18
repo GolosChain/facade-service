@@ -30,8 +30,11 @@ class Content extends Basic {
         return await this.callService('prism', 'getComments', data);
     }
 
-    async getPost({ auth: { user: currentUserId }, params: { userId, permlink, refBlockNum } }) {
-        const data = { currentUserId, userId, permlink, refBlockNum };
+    async getPost({
+        auth: { user: currentUserId },
+        params: { userId: requestedUserId, permlink, refBlockNum },
+    }) {
+        const data = { currentUserId, requestedUserId, permlink, refBlockNum };
 
         return await this.callService('prism', 'getPost', data);
     }

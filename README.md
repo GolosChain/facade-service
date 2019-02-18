@@ -226,26 +226,26 @@ routing:
          user <string>            // Имя пользователя
          phone <string>           // Телефон пользователя
 
- rates.getActual:             // Получить актуальные курсы обмена
-      <empty>                 // Без параметров
+ rates.getActual:                 // Получить актуальные курсы обмена
+      <empty>                     // Без параметров
 
- rates.getHistorical:         // Получить историю курсов обмена
-     params:                  // Параметры запроса из гейта
-         date <timestamp>     // Необходимая дата
+ rates.getHistorical:             // Получить историю курсов обмена
+     params:                      // Параметры запроса из гейта
+         date <timestamp>         // Необходимая дата
 
- rates.getHistoricalMulti:    // Получить историю курсов обмена для нескольких дат
-     params:                  // Параметры запроса из гейта
-         dates <timestamp[]>  // Массив необходимых дат
+ rates.getHistoricalMulti:        // Получить историю курсов обмена для нескольких дат
+     params:                      // Параметры запроса из гейта
+         dates <timestamp[]>      // Массив необходимых дат
 
- meta.recordPostView             // Запись факта просмотра поста
-     postLink <string>           // Полная ссылка на пост author/perm-link
-     fingerPrint <string>        // Finger print браузера
+ meta.recordPostView              // Запись факта просмотра поста
+     postLink <string>            // Полная ссылка на пост author/perm-link
+     fingerPrint <string>         // Finger print браузера
 
- meta.getPostsViewCount          // Получить количество просмотров для постов
-     postLinks <string[]>        // Список ссылок на посты в формате author/perm-link
+ meta.getPostsViewCount           // Получить количество просмотров для постов
+     postLinks <string[]>         // Список ссылок на посты в формате author/perm-link
 
- meta.getUserLastOnline:         // Получить время (timestamp) последного онлайна пользователей
-     user <string>               // Имя пользователя
+ meta.getUserLastOnline:          // Получить время (timestamp) последного онлайна пользователей
+     user <string>                // Имя пользователя
 
  content.getComments:                // Получение ленты комментариев
      params:                         // Параметры запроса из гейта
@@ -255,16 +255,17 @@ routing:
          type <string>('post')       // Тип ленты
            [
              'user'                  // Получить комментарии пользователя, требует userId
-           | 'post'                  // Получить комментарии для поста, требует postId
+           | 'post'                  // Получить комментарии для поста, требует userId, permlink, refBlockNum
            ]
          userId <string/null>        // Идентификатор пользователя
-         postId <string/null>        // Идентификатор поста
+         permlink <string/null>      // Пермлинк поста
+         refBlockNum <number/null>   // Привязанный блок поста
 
  content.getPost:                    // Получение конкретного поста
      params:                         // Параметры запроса из гейта
-         postId <string>             // Идентификатор поста
-         userId <string/null>        // Идентификатор пользователя
-                                     // Если указан - проверит лайкал/дислайкал ли этот пользователь пост
+         userId <string>             // Идентификатор пользователя
+         permlink <string>           // Пермлинк поста
+         refBlockNum <number>        // Привязанный блок поста
 
  content.getFeed:                    // Получение ленты постов
      params:                         // Параметры запроса из гейта
@@ -278,12 +279,11 @@ routing:
          sequenceKey <string/null>   // Идентификатор пагинации для получения следующего контента
          limit <number>              // Количество элементов
          userId <string/null>        // Идентификатор пользователя
-                                     // Если указан - проверит лайкал/дислайкал ли этот пользователь посты
          communityId <string>        // Идентификатор комьюнити
 
- content.getProfile:  // Получение профиля пользователя
-     params:          // Параметры запроса из гейта
-         id <string>  // Идентификатор пользователя
+ content.getProfile:      // Получение профиля пользователя
+     params:              // Параметры запроса из гейта
+         userId <string>  // Идентификатор пользователя
 ```
 
 Апи для обращения из внутренних микросервисов:

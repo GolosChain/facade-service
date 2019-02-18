@@ -250,12 +250,15 @@ routing:
  content.getComments:                // Получение ленты комментариев
      params:                         // Параметры запроса из гейта
          sortBy <string>('time')     // Способ сортировки
+         [
+           time                      // Сортировка по времени добавления
+         ]
          sequenceKey <string/null>   // Идентификатор пагинации для получения следующего контента
          limit <number>(10)          // Количество элементов
          type <string>('post')       // Тип ленты
            [
-             'user'                  // Получить комментарии пользователя, требует userId
-           | 'post'                  // Получить комментарии для поста, требует userId, permlink, refBlockNum
+             user                    // Получить комментарии пользователя, требует userId
+           | post                    // Получить комментарии для поста, требует userId, permlink, refBlockNum
            ]
          userId <string/null>        // Идентификатор пользователя
          permlink <string/null>      // Пермлинк поста
@@ -275,7 +278,10 @@ routing:
          | subscriptions             // Лента подписок пользователя, требует userId
          | byUser                    // Лента постов самого пользователя, требует userId
          ]
-         sortBy <string>             // Способ сортировки
+         sortBy <string>('time')     // Способ сортировки
+         [
+           time                      // Сортировка по времени добавления
+         ]
          sequenceKey <string/null>   // Идентификатор пагинации для получения следующего контента
          limit <number>              // Количество элементов
          userId <string/null>        // Идентификатор пользователя

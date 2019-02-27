@@ -85,6 +85,7 @@ class Connector extends BasicConnector {
                 'registration.getState': registration.getState.bind(registration),
                 'registration.firstStep': registration.firstStep.bind(registration),
                 'registration.verify': registration.verify.bind(registration),
+                'registration.setUsername': registration.setUsername.bind(registration),
                 'registration.toBlockChain': registration.toBlockChain.bind(registration),
                 'registration.changePhone': registration.changePhone.bind(registration),
                 'registration.resendSmsCode': registration.resendSmsCode.bind(registration),

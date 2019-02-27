@@ -20,6 +20,12 @@ class Registration extends Basic {
         return await this._transfer('verify', requestData);
     }
 
+    async setUsername({ params: { user, phone, ...data } }) {
+        const requestData = { user, phone, ...data };
+
+        return await this._transfer('setUsername', requestData);
+    }
+
     async toBlockChain({ params: { user, owner, active, posting, memo } }) {
         const data = { user, owner, active, posting, memo };
 

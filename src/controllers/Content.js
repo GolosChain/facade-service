@@ -41,7 +41,15 @@ class Content extends Basic {
 
     async getFeed({
         auth: { user: currentUserId },
-        params: { type, sortBy, sequenceKey, limit, userId: requestedUserId, communityId },
+        params: {
+            type,
+            sortBy,
+            sequenceKey,
+            limit,
+            userId: requestedUserId,
+            communityId,
+            timeframe,
+        },
     }) {
         const data = {
             type,
@@ -51,6 +59,7 @@ class Content extends Basic {
             currentUserId,
             requestedUserId,
             communityId,
+            timeframe,
         };
 
         return await this.callService('prism', 'getFeed', data);

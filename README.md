@@ -185,9 +185,9 @@ meta.markUserOnline:         // Пометить юзера как онлайн
 Апи, доступное без авторизации:
 
 ```
-iframely.getEmbed:      // Сделать запрос к iframely
-    params:                 // Параметры запроса из гейта
-        type                // тип (oembed либо iframely)
+iframely.getEmbed:         // Сделать запрос к iframely
+    params:                // Параметры запроса из гейта
+        type               // тип (oembed либо iframely)
         url                // url
 
 registration.getState:      // Получить текущее состояние регистрации

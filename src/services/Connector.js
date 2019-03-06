@@ -11,6 +11,7 @@ const Rates = require('../controllers/Rates');
 const Content = require('../controllers/Content');
 const Meta = require('../controllers/Meta');
 const Bandwidth = require('../controllers/Bandwidth');
+const Iframely = require('../controllers/Iframely');
 
 class Connector extends BasicConnector {
     constructor() {
@@ -28,6 +29,7 @@ class Connector extends BasicConnector {
         this._content = new Content(linking);
         this._meta = new Meta(linking);
         this._bandwidth = new Bandwidth(linking);
+        this._iframely = new Iframely(linking);
     }
 
     _enableSecure(handler) {
@@ -54,6 +56,7 @@ class Connector extends BasicConnector {
         const content = this._content;
         const meta = this._meta;
         const bandwidth = this._bandwidth;
+        const iframely = this._iframely;
 
         await super.start({
             serverRoutes: {
@@ -102,6 +105,7 @@ class Connector extends BasicConnector {
                 'meta.markUserOnline': this._enableSecure(meta.markUserOnline.bind(meta)),
                 'meta.getUserLastOnline': this._enableSecure(meta.getUserLastOnline.bind(meta)),
                 'bandwidth.provide': this._enableSecure(bandwidth.provideBandwidth.bind(bandwidth)),
+                'frame.getEmbed': iframely.getEmbed.bind(iframely),
 
                 /* service points */
                 offline: this._enableSecure(offline.handle.bind(offline)),

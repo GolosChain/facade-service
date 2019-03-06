@@ -9,7 +9,8 @@
   "author": "golos.io",
   "license": "GPL-3.0",
   "dependencies": {
-    "gls-core-service": "^3.8.0"
+    "gls-core-service": "^3.8.0",
+    "node-fetch": "^2.3.0"
   },
   "prettier": {
     "singleQuote": true,

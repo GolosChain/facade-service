@@ -30,7 +30,7 @@ class Iframely extends Basic {
     }
 
     _validateTypeOrThrow(type) {
-        const typeIsValid = ['oembed', 'iframely'].indexOf(type) === -1 ? false : true;
+        const typeIsValid = ['oembed', 'iframely'].includes(type);
 
         if (!typeIsValid) {
             throw {
@@ -41,7 +41,7 @@ class Iframely extends Basic {
     }
 
     _validateUrlOrThrow(url) {
-        const urlIsValid = Boolean(URL_PATTERN.test(url));
+        const urlIsValid = URL_PATTERN.test(url);
 
         if (!urlIsValid) {
             throw {

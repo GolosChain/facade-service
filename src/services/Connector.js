@@ -105,7 +105,7 @@ class Connector extends BasicConnector {
                 'meta.markUserOnline': this._enableSecure(meta.markUserOnline.bind(meta)),
                 'meta.getUserLastOnline': this._enableSecure(meta.getUserLastOnline.bind(meta)),
                 'bandwidth.provide': this._enableSecure(bandwidth.provideBandwidth.bind(bandwidth)),
-                'iframely.getEmbed': iframely.getEmbed.bind(iframely),
+                'frame.getEmbed': iframely.getEmbed.bind(iframely),
 
                 /* service points */
                 offline: this._enableSecure(offline.handle.bind(offline)),

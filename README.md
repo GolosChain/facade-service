@@ -148,6 +148,14 @@ notify.getHistory:                     // Получение истории но
 notify.getHistoryFresh:      // Получение количества непрочитанных нотификаций
     user <string>            // Имя пользователя
 
+notify.markAsViewed:         // Пометить указанные нотификации как не новые (`fresh: false`)
+    user <string>            // Имя пользователя
+    params:                  // Параметры запроса из гейта
+        ids <string[]>       // Список идентификаторов для пометки
+
+notify.markAllAsViewed:      // Пометить все нотификации как не новые (`fresh: false`)
+    user <string>            // Имя пользователя
+
 notify.markAsViewed:         // Пометить указанные нотификации как прочитанные
     user <string>            // Имя пользователя
     params:                  // Параметры запроса из гейта

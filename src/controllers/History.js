@@ -54,6 +54,18 @@ class History extends Basic {
 
         return await this.callService('notify', 'markAllAsViewed', data);
     }
+
+    async markAsRead({ auth: { user }, params: { ids } }) {
+        const data = { user, ids };
+
+        return await this.callService('notify', 'markAsRead', data);
+    }
+
+    async markAllAsRead({ auth: { user } }) {
+        const data = { user };
+
+        return await this.callService('notify', 'markAllAsRead', data);
+    }
 }
 
 module.exports = History;

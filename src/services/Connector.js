@@ -77,6 +77,8 @@ class Connector extends BasicConnector {
                 'notify.getHistoryFresh': this._enableSecure(history.notifyFresh.bind(history)),
                 'notify.markAsViewed': this._enableSecure(history.markAsViewed.bind(history)),
                 'notify.markAllAsViewed': this._enableSecure(history.markAllAsViewed.bind(history)),
+                'notify.markAsRead': this._enableSecure(history.markAsRead.bind(history)),
+                'notify.markAllAsRead': this._enableSecure(history.markAllAsRead.bind(history)),
                 'notify.getBlackList': this._enableSecure(options.getBlackList.bind(options)),
                 'notify.addToBlackList': this._enableSecure(options.addToBlackList.bind(options)),
                 'notify.removeFromBlackList': this._enableSecure(

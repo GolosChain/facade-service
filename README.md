@@ -156,12 +156,12 @@ notify.markAsViewed:         // Пометить указанные нотифи
 notify.markAllAsViewed:      // Пометить все нотификации как не новые (`fresh: false`)
     user <string>            // Имя пользователя
 
-notify.markAsRead:         // Пометить указанные нотификации как прочитанные
+notify.markAsRead:         // Пометить указанные нотификации как прочитанные (`unread: false`)
     user <string>            // Имя пользователя
     params:                  // Параметры запроса из гейта
         ids <string[]>       // Список идентификаторов для пометки
 
-notify.markAllAsRead:      // Пометить все нотификации как прочитанные
+notify.markAllAsRead:      // Пометить все нотификации как прочитанные (`unread: false`)
     user <string>            // Имя пользователя
 
 notify.getBlackList:         // Возвращает черный список пользователя

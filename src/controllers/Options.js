@@ -5,26 +5,32 @@ class Options extends Basic {
     async get({ auth: { user }, params: { profile } }) {
         const data = { user, profile };
 
-        const basic = await this._tryGetOptionsBy({
-            service: 'options',
-            method: 'get',
-            errorPrefix: 'Basic',
-            data,
-        });
+        const basic = Object(
+            await this._tryGetOptionsBy({
+                service: 'options',
+                method: 'get',
+                errorPrefix: 'Basic',
+                data,
+            })
+        );
 
-        const notify = await this._tryGetOptionsBy({
-            service: 'onlineNotify',
-            method: 'getOptions',
-            errorPrefix: 'Notify',
-            data,
-        });
+        const notify = Object(
+            await this._tryGetOptionsBy({
+                service: 'onlineNotify',
+                method: 'getOptions',
+                errorPrefix: 'Notify',
+                data,
+            })
+        );
 
-        const push = await this._tryGetOptionsBy({
-            service: 'push',
-            method: 'getOptions',
-            errorPrefix: 'Push',
-            data,
-        });
+        const push = Object(
+            await this._tryGetOptionsBy({
+                service: 'push',
+                method: 'getOptions',
+                errorPrefix: 'Push',
+                data,
+            })
+        );
 
         return { basic, notify, push };
     }
@@ -104,20 +110,15 @@ class Options extends Basic {
     }
 
     async _tryGetOptionsBy({ service, method, errorPrefix, data }) {
-        let result;
-        const response = await this.sendTo(service, method, data);
-
-        if (response.error) {
-            throw this._makeGetError(response, errorPrefix);
-        } else {
-            result = response.result;
+        try {
+            return await this.callService(service, method, data);
+        } catch (error) {
+            return this._makeGetError(error, errorPrefix);
         }
-
-        return result;
     }
 
-    _makeGetError(response, prefix) {
-        return { code: response.error.code, message: `${prefix} -> ${response.error.message}` };
+    _makeGetError(error, prefix) {
+        return { code: error.code, message: `${prefix} -> ${error.message}` };
     }
 
     _makeOptionsSetter(user, profile, errors) {

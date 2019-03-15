@@ -2,8 +2,8 @@ const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
 
 class Registration extends Basic {
-    async getState({ params: { user } }) {
-        const data = { user };
+    async getState({ params: { user, phone } }) {
+        const data = { user, phone };
 
         return await this._transfer('getState', data);
     }

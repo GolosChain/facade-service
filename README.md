@@ -193,10 +193,10 @@ meta.markUserOnline:         // Пометить юзера как онлайн
 Апи, доступное без авторизации:
 
 ```
-frame.getEmbed:         // Сделать запрос к iframely
-    params:                // Параметры запроса из гейта
-        type               // тип (oembed либо iframely)
-        url                // url
+frame.getEmbed:             // Сделать запрос к iframely
+    params:                 // Параметры запроса из гейта
+        type                // Тип (oembed либо iframely)
+        url                 // Ссылка на ресурс
 
 registration.getState:      // Получить текущее состояние регистрации
     params:                 // Параметры запроса из гейта
@@ -251,14 +251,17 @@ rates.getHistoricalMulti:        // Получить историю курсов
         dates <timestamp[]>      // Массив необходимых дат
 
 meta.recordPostView              // Запись факта просмотра поста
-    postLink <string>            // Полная ссылка на пост author/perm-link
-    fingerPrint <string>         // Finger print браузера
+    params:                      // Параметры запроса из гейта
+        postLink <string>        // Полная ссылка на пост author/perm-link
+        fingerPrint <string>     // Finger print браузера
 
 meta.getPostsViewCount           // Получить количество просмотров для постов
-    postLinks <string[]>         // Список ссылок на посты в формате author/perm-link
+    params:                      // Параметры запроса из гейта
+        postLinks <string[]>     // Список ссылок на посты в формате author/perm-link
 
 meta.getUserLastOnline:          // Получить время (timestamp) последного онлайна пользователей
-    user <string>                // Имя пользователя
+    params:                      // Параметры запроса из гейта
+        user <string>            // Имя пользователя
 
 content.getProfile:                 // Получение профиля пользователя
     params:                         // Параметры запроса из гейта
@@ -269,6 +272,14 @@ content.getPost:                    // Получение конкретного
         userId <string>             // Идентификатор пользователя
         permlink <string>           // Пермлинк поста
         refBlockNum <number>        // Привязанный блок поста
+        raw <boolean>(false)        // Получить данные в оригинальном виде и без санитайзинга
+
+content.getComment:                 // Получение конкретного коммента
+    params:                         // Параметры запроса из гейта
+        userId <string>             // Идентификатор пользователя
+        permlink <string>           // Пермлинк поста
+        refBlockNum <number>        // Привязанный блок поста
+        raw <boolean>(false)        // Получить данные в оригинальном виде и без санитайзинга
 
 content.getFeed:                    // Получение ленты постов
     params:                         // Параметры запроса из гейта

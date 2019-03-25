@@ -12,6 +12,7 @@ const Content = require('../controllers/Content');
 const Meta = require('../controllers/Meta');
 const Bandwidth = require('../controllers/Bandwidth');
 const Iframely = require('../controllers/Iframely');
+const Wallet = require('../controllers/Wallet');
 
 class Connector extends BasicConnector {
     constructor() {
@@ -30,6 +31,7 @@ class Connector extends BasicConnector {
         this._meta = new Meta(linking);
         this._bandwidth = new Bandwidth(linking);
         this._iframely = new Iframely(linking);
+        this._wallet = new Wallet(linking);
     }
 
     _enableSecure(handler) {
@@ -57,6 +59,7 @@ class Connector extends BasicConnector {
         const meta = this._meta;
         const bandwidth = this._bandwidth;
         const iframely = this._iframely;
+        const wallet = this._wallet;
 
         await super.start({
             serverRoutes: {
@@ -108,6 +111,8 @@ class Connector extends BasicConnector {
                 'meta.getUserLastOnline': this._enableSecure(meta.getUserLastOnline.bind(meta)),
                 'bandwidth.provide': this._enableSecure(bandwidth.provideBandwidth.bind(bandwidth)),
                 'frame.getEmbed': iframely.getEmbed.bind(iframely),
+                'wallet.getHistory': wallet.getHistory.bind(wallet),
+                'wallet.getBalance': wallet.getBalance.bind(wallet),
 
                 /* service points */
                 offline: this._enableSecure(offline.handle.bind(offline)),
@@ -127,6 +132,7 @@ class Connector extends BasicConnector {
                 prism: env.GLS_PRISM_CONNECT,
                 meta: env.GLS_META_CONNECT,
                 bandwidth: env.GLS_BANDWIDTH_PROVIDER_CONNECT,
+                wallet: env.GLS_WALLET_CONNECT,
             },
         });
     }

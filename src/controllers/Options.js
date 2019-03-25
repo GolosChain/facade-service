@@ -5,32 +5,26 @@ class Options extends Basic {
     async get({ auth: { user }, params: { profile } }) {
         const data = { user, profile };
 
-        const basic = Object(
-            await this._tryGetOptionsBy({
-                service: 'options',
-                method: 'get',
-                errorPrefix: 'Basic',
-                data,
-            })
-        );
+        const basic = await this._tryGetOptionsBy({
+            service: 'options',
+            method: 'get',
+            errorPrefix: 'Basic',
+            data,
+        });
 
-        const notify = Object(
-            await this._tryGetOptionsBy({
-                service: 'onlineNotify',
-                method: 'getOptions',
-                errorPrefix: 'Notify',
-                data,
-            })
-        );
+        const notify = await this._tryGetOptionsBy({
+            service: 'onlineNotify',
+            method: 'getOptions',
+            errorPrefix: 'Notify',
+            data,
+        });
 
-        const push = Object(
-            await this._tryGetOptionsBy({
-                service: 'push',
-                method: 'getOptions',
-                errorPrefix: 'Push',
-                data,
-            })
-        );
+        const push = await this._tryGetOptionsBy({
+            service: 'push',
+            method: 'getOptions',
+            errorPrefix: 'Push',
+            data,
+        });
 
         return { basic, notify, push };
     }
@@ -113,7 +107,7 @@ class Options extends Basic {
         try {
             return await this.callService(service, method, data);
         } catch (error) {
-            return this._makeGetError(error, errorPrefix);
+            throw this._makeGetError(error, errorPrefix);
         }
     }
 

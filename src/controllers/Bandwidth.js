@@ -7,13 +7,11 @@ class Bandwidth extends Basic {
         auth: { user },
         params: { transaction, chainId },
     }) {
-        const data = {
+        return await this.callService('bandwidth', 'bandwidth.provide', {
             routing: { channelId },
             auth: { user },
             params: { transaction, chainId },
-        };
-
-        return await this.callService('bandwidth', 'bandwidth.provide', data);
+        });
     }
 }
 

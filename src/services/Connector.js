@@ -11,6 +11,8 @@ const Rates = require('../controllers/Rates');
 const Content = require('../controllers/Content');
 const Meta = require('../controllers/Meta');
 const Bandwidth = require('../controllers/Bandwidth');
+const Iframely = require('../controllers/Iframely');
+const Wallet = require('../controllers/Wallet');
 
 class Connector extends BasicConnector {
     constructor() {
@@ -28,12 +30,14 @@ class Connector extends BasicConnector {
         this._content = new Content(linking);
         this._meta = new Meta(linking);
         this._bandwidth = new Bandwidth(linking);
+        this._iframely = new Iframely(linking);
+        this._wallet = new Wallet(linking);
     }
 
     _enableSecure(handler) {
-        return async (...params) => {
+        return async params => {
             if (params.auth && params.auth.user) {
-                return await handler.apply(this, params);
+                return await handler(params);
             } else {
                 throw {
                     code: 1103,
@@ -54,6 +58,8 @@ class Connector extends BasicConnector {
         const content = this._content;
         const meta = this._meta;
         const bandwidth = this._bandwidth;
+        const iframely = this._iframely;
+        const wallet = this._wallet;
 
         await super.start({
             serverRoutes: {
@@ -74,6 +80,8 @@ class Connector extends BasicConnector {
                 'notify.getHistoryFresh': this._enableSecure(history.notifyFresh.bind(history)),
                 'notify.markAsViewed': this._enableSecure(history.markAsViewed.bind(history)),
                 'notify.markAllAsViewed': this._enableSecure(history.markAllAsViewed.bind(history)),
+                'notify.markAsRead': this._enableSecure(history.markAsRead.bind(history)),
+                'notify.markAllAsRead': this._enableSecure(history.markAllAsRead.bind(history)),
                 'notify.getBlackList': this._enableSecure(options.getBlackList.bind(options)),
                 'notify.addToBlackList': this._enableSecure(options.addToBlackList.bind(options)),
                 'notify.removeFromBlackList': this._enableSecure(
@@ -85,6 +93,7 @@ class Connector extends BasicConnector {
                 'registration.getState': registration.getState.bind(registration),
                 'registration.firstStep': registration.firstStep.bind(registration),
                 'registration.verify': registration.verify.bind(registration),
+                'registration.setUsername': registration.setUsername.bind(registration),
                 'registration.toBlockChain': registration.toBlockChain.bind(registration),
                 'registration.changePhone': registration.changePhone.bind(registration),
                 'registration.resendSmsCode': registration.resendSmsCode.bind(registration),
@@ -92,18 +101,18 @@ class Connector extends BasicConnector {
                 'rates.getActual': rates.getActual.bind(rates),
                 'rates.getHistorical': rates.getHistorical.bind(rates),
                 'rates.getHistoricalMulti': rates.getHistoricalMulti.bind(rates),
-                'content.getNaturalFeed': content.getNaturalFeed.bind(content),
-                'content.getPopularFeed': content.getPopularFeed.bind(content),
-                'content.getActualFeed': content.getActualFeed.bind(content),
-                'content.getPromoFeed': content.getPromoFeed.bind(content),
-                'content.getPersonalFeed': this._enableSecure(
-                    content.getPersonalFeed.bind(content)
-                ),
+                'content.getComments': content.getComments.bind(content),
+                'content.getPost': content.getPost.bind(content),
+                'content.getFeed': content.getFeed.bind(content),
+                'content.getProfile': content.getProfile.bind(content),
                 'meta.getPostsViewCount': this._enableSecure(meta.getPostsViewCount.bind(meta)),
                 'meta.recordPostView': this._enableSecure(meta.recordPostView.bind(meta)),
                 'meta.markUserOnline': this._enableSecure(meta.markUserOnline.bind(meta)),
                 'meta.getUserLastOnline': this._enableSecure(meta.getUserLastOnline.bind(meta)),
                 'bandwidth.provide': this._enableSecure(bandwidth.provideBandwidth.bind(bandwidth)),
+                'frame.getEmbed': iframely.getEmbed.bind(iframely),
+                'wallet.getHistory': wallet.getHistory.bind(wallet),
+                'wallet.getBalance': wallet.getBalance.bind(wallet),
 
                 /* service points */
                 offline: this._enableSecure(offline.handle.bind(offline)),
@@ -123,6 +132,7 @@ class Connector extends BasicConnector {
                 prism: env.GLS_PRISM_CONNECT,
                 meta: env.GLS_META_CONNECT,
                 bandwidth: env.GLS_BANDWIDTH_PROVIDER_CONNECT,
+                wallet: env.GLS_WALLET_CONNECT,
             },
         });
     }

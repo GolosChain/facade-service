@@ -104,20 +104,15 @@ class Options extends Basic {
     }
 
     async _tryGetOptionsBy({ service, method, errorPrefix, data }) {
-        let result;
-        const response = await this.sendTo(service, method, data);
-
-        if (response.error) {
-            throw this._makeGetError(response, errorPrefix);
-        } else {
-            result = response.result;
+        try {
+            return await this.callService(service, method, data);
+        } catch (error) {
+            throw this._makeGetError(error, errorPrefix);
         }
-
-        return result;
     }
 
-    _makeGetError(response, prefix) {
-        return { code: response.error.code, message: `${prefix} -> ${response.error.message}` };
+    _makeGetError(error, prefix) {
+        return { code: error.code, message: `${prefix} -> ${error.message}` };
     }
 
     _makeOptionsSetter(user, profile, errors) {

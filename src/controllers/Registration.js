@@ -2,8 +2,8 @@ const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
 
 class Registration extends Basic {
-    async getState({ params: { user } }) {
-        const data = { user };
+    async getState({ params: { user, phone } }) {
+        const data = { user, phone };
 
         return await this._transfer('getState', data);
     }
@@ -18,6 +18,12 @@ class Registration extends Basic {
         const requestData = { user, ...data };
 
         return await this._transfer('verify', requestData);
+    }
+
+    async setUsername({ params: { user, phone, ...data } }) {
+        const requestData = { user, phone, ...data };
+
+        return await this._transfer('setUsername', requestData);
     }
 
     async toBlockChain({ params: { user, owner, active, posting, memo } }) {

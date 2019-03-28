@@ -101,6 +101,7 @@ class Connector extends BasicConnector {
                 'rates.getActual': rates.getActual.bind(rates),
                 'rates.getHistorical': rates.getHistorical.bind(rates),
                 'rates.getHistoricalMulti': rates.getHistoricalMulti.bind(rates),
+                'content.getComment': content.getComment.bind(content),
                 'content.getComments': content.getComments.bind(content),
                 'content.getPost': content.getPost.bind(content),
                 'content.getFeed': content.getFeed.bind(content),

@@ -58,6 +58,7 @@ class Content extends Basic {
             userId: requestedUserId,
             communityId,
             timeframe,
+            tags,
         },
     }) {
         const data = {
@@ -69,6 +70,7 @@ class Content extends Basic {
             requestedUserId,
             communityId,
             timeframe,
+            tags,
         };
 
         return await this.callService('prism', 'getFeed', data);
@@ -78,6 +80,12 @@ class Content extends Basic {
         const data = { requestedUserId };
 
         return await this.callService('prism', 'getProfile', data);
+    }
+
+    async getHashTagTop({ params: { communityId, limit, sequenceKey } }) {
+        const data = { communityId, limit, sequenceKey };
+
+        return await this.callService('prism', 'getHashTagTop', data);
     }
 }
 

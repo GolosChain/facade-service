@@ -58,6 +58,7 @@ class Content extends Basic {
             userId: requestedUserId,
             communityId,
             timeframe,
+            tags,
         },
     }) {
         const data = {
@@ -69,6 +70,7 @@ class Content extends Basic {
             requestedUserId,
             communityId,
             timeframe,
+            tags,
         };
 
         return await this.callService('prism', 'getFeed', data);

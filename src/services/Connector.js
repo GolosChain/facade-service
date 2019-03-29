@@ -106,6 +106,7 @@ class Connector extends BasicConnector {
                 'content.getPost': content.getPost.bind(content),
                 'content.getFeed': content.getFeed.bind(content),
                 'content.getProfile': content.getProfile.bind(content),
+                'content.getHashTagTop': content.getHashTagTop.bind(content),
                 'meta.getPostsViewCount': this._enableSecure(meta.getPostsViewCount.bind(meta)),
                 'meta.recordPostView': this._enableSecure(meta.recordPostView.bind(meta)),
                 'meta.markUserOnline': this._enableSecure(meta.markUserOnline.bind(meta)),

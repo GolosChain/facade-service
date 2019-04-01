@@ -12,6 +12,7 @@ class Content extends Basic {
             permlink,
             refBlockNum,
             type,
+            raw,
         },
     }) {
         const data = {
@@ -23,6 +24,7 @@ class Content extends Basic {
             permlink,
             refBlockNum,
             type,
+            raw,
         };
 
         return await this.callService('prism', 'getComments', data);
@@ -57,6 +59,7 @@ class Content extends Basic {
             communityId,
             timeframe,
             tags,
+            raw,
         },
     }) {
         const data = {
@@ -69,6 +72,7 @@ class Content extends Basic {
             communityId,
             timeframe,
             tags,
+            raw,
         };
 
         return await this.callService('prism', 'getFeed', data);

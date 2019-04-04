@@ -79,7 +79,6 @@ class Content extends Basic {
     }
 
     async getProfile({ params: { userId: requestedUserId, type } }) {
-        type = type || 'gls';
         const data = { requestedUserId, type };
 
         return await this.callService('prism', 'getProfile', data);

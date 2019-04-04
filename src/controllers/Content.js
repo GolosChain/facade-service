@@ -78,8 +78,8 @@ class Content extends Basic {
         return await this.callService('prism', 'getFeed', data);
     }
 
-    async getProfile({ params: { userId: requestedUserId } }) {
-        const data = { requestedUserId };
+    async getProfile({ params: { userId: requestedUserId, type } }) {
+        const data = { requestedUserId, type };
 
         return await this.callService('prism', 'getProfile', data);
     }

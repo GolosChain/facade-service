@@ -266,7 +266,7 @@ meta.getUserLastOnline:          // Получить время (timestamp) по
 content.getProfile:                 // Получение профиля пользователя
     params:                         // Параметры запроса из гейта
         userId <string>             // Идентификатор пользователя
-        type <string>               // Тип профиля ('gls' либо 'cyber'). По-умолчанию 'gls'
+        type <string>('gls')               // Тип профиля ('gls' либо 'cyber')
 
 content.getPost:                    // Получение конкретного поста
     params:                         // Параметры запроса из гейта

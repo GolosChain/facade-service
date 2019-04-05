@@ -41,6 +41,7 @@ class Connector extends BasicConnector {
                 message: 'Unauthorized request: access denied',
             };
         }
+        return params;
     }
 
     async start() {

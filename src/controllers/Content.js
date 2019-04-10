@@ -12,7 +12,7 @@ class Content extends Basic {
             permlink,
             refBlockNum,
             type,
-            raw,
+            contentType,
         },
     }) {
         const data = {
@@ -24,7 +24,7 @@ class Content extends Basic {
             permlink,
             refBlockNum,
             type,
-            raw,
+            contentType,
         };
 
         return await this.callService('prism', 'getComments', data);
@@ -32,18 +32,18 @@ class Content extends Basic {
 
     async getPost({
         auth: { user: currentUserId },
-        params: { userId: requestedUserId, permlink, refBlockNum, raw },
+        params: { userId: requestedUserId, permlink, refBlockNum, contentType },
     }) {
-        const data = { currentUserId, requestedUserId, permlink, refBlockNum, raw };
+        const data = { currentUserId, requestedUserId, permlink, refBlockNum, contentType };
 
         return await this.callService('prism', 'getPost', data);
     }
 
     async getComment({
         auth: { user: currentUserId },
-        params: { userId: requestedUserId, permlink, refBlockNum, raw },
+        params: { userId: requestedUserId, permlink, refBlockNum, contentType },
     }) {
-        const data = { currentUserId, requestedUserId, permlink, refBlockNum, raw };
+        const data = { currentUserId, requestedUserId, permlink, refBlockNum, contentType };
 
         return await this.callService('prism', 'getComment', data);
     }
@@ -59,7 +59,7 @@ class Content extends Basic {
             communityId,
             timeframe,
             tags,
-            raw,
+            contentType,
         },
     }) {
         const data = {
@@ -72,7 +72,7 @@ class Content extends Basic {
             communityId,
             timeframe,
             tags,
-            raw,
+            contentType,
         };
 
         return await this.callService('prism', 'getFeed', data);

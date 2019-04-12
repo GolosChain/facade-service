@@ -89,6 +89,15 @@ class Content extends Basic {
 
         return await this.callService('prism', 'getHashTagTop', data);
     }
+
+    async getLeadersTop({
+        auth: { user: currentUserId },
+        params: { communityId, limit, sequenceKey },
+    }) {
+        const data = { currentUserId, communityId, limit, sequenceKey };
+
+        return await this.callService('prism', 'getLeadersTop', data);
+    }
 }
 
 module.exports = Content;

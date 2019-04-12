@@ -34,14 +34,14 @@ class Connector extends BasicConnector {
         this._wallet = new Wallet(linking);
     }
 
-    _checkAuth(params) {
-        if (!(params.auth && params.auth.user)) {
-            throw {
-                code: 1103,
-                message: 'Unauthorized request: access denied',
-            };
+    _checkAuth({params}) {
+        if (params.auth && params.auth.user) {
+            return params;
         }
-        return params;
+        throw {
+            code: 1103,
+            message: 'Unauthorized request: access denied',
+        };
     }
 
     async start() {

@@ -34,7 +34,7 @@ class Connector extends BasicConnector {
         this._wallet = new Wallet(linking);
     }
 
-    _checkAuth({params}) {
+    _checkAuth(params) {
         if (params.auth && params.auth.user) {
             return params;
         }

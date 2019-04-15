@@ -349,6 +349,10 @@ class Connector extends BasicConnector {
                     handler: content.getHashTagTop,
                     scope: content,
                 },
+                'content.waitForBlock': {
+                    handler: content.waitForBlock,
+                    scope: content,
+                },
                 'meta.getPostsViewCount': {
                     handler: meta.getPostsViewCount,
                     scope: meta,

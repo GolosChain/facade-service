@@ -98,6 +98,12 @@ class Content extends Basic {
 
         return await this.callService('prism', 'getLeadersTop', data);
     }
+
+    async waitForBlock({ params: { blockNum } }) {
+        const data = { blockNum };
+
+        return await this.callService('prism', 'waitForBlock', data);
+    }
 }
 
 module.exports = Content;

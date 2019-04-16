@@ -104,6 +104,12 @@ class Content extends Basic {
 
         return await this.callService('prism', 'waitForBlock', data);
     }
+
+    async waitForTransaction({ params: { transactionId } }) {
+        const data = { transactionId };
+
+        return await this.callService('prism', 'waitForTransaction', data);
+    }
 }
 
 module.exports = Content;

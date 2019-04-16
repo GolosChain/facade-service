@@ -353,6 +353,10 @@ class Connector extends BasicConnector {
                     handler: content.waitForBlock,
                     scope: content,
                 },
+                'content.waitForTransaction': {
+                    handler: content.waitForTransaction,
+                    scope: content,
+                },
                 'meta.getPostsViewCount': {
                     handler: meta.getPostsViewCount,
                     scope: meta,

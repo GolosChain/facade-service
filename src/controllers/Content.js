@@ -110,6 +110,12 @@ class Content extends Basic {
 
         return await this.callService('prism', 'waitForTransaction', data);
     }
+
+    async search({ params: { where, text, field, limit, offset, type } }) {
+        const data = { where, text, field, limit, offset, type };
+
+        return await this.callService('prism', 'search', data);
+    }
 }
 
 module.exports = Content;

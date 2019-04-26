@@ -365,6 +365,22 @@ class Connector extends BasicConnector {
                     handler: content.search,
                     scope: content,
                 },
+                'content.getPostVotes': {
+                    handler: content.getPostVotes,
+                    scope: content,
+                },
+                'content.getCommentVotes': {
+                    handler: content.getCommentVotes,
+                    scope: content,
+                },
+                'content.resolveProfile': {
+                    handler: content.resolveProfile,
+                    scope: content,
+                },
+                'content.getSubscribes': {
+                    handler: content.getSubscribes,
+                    scope: content,
+                },
                 'meta.getPostsViewCount': {
                     handler: meta.getPostsViewCount,
                     scope: meta,

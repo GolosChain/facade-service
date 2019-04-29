@@ -377,8 +377,12 @@ class Connector extends BasicConnector {
                     handler: content.resolveProfile,
                     scope: content,
                 },
-                'content.getSubscribes': {
-                    handler: content.getSubscribes,
+                'content.getSubscriptions': {
+                    handler: content.getSubscriptions,
+                    scope: content,
+                },
+                'content.getSubscribers': {
+                    handler: content.getSubscribers,
                     scope: content,
                 },
                 'meta.getPostsViewCount': {

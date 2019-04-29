@@ -98,8 +98,11 @@ class Content extends Basic {
         return await this.callService('prism', 'getFeed', data);
     }
 
-    async getProfile({ params: { userId: requestedUserId, type, username, app } }) {
-        const data = { requestedUserId, type, username, app };
+    async getProfile({
+        auth: { user: currentUserId },
+        params: { userId: requestedUserId, type, username, app },
+    }) {
+        const data = { currentUserId, requestedUserId, type, username, app };
 
         return await this.callService('prism', 'getProfile', data);
     }
@@ -155,10 +158,16 @@ class Content extends Basic {
         return await this.callService('prism', 'resolveProfile', data);
     }
 
-    async getSubscribes({ params: { userId: requestedUserId } }) {
+    async getSubscriptions({ params: { userId: requestedUserId } }) {
         const data = { requestedUserId };
 
-        return await this.callService('prism', 'getSubscribes', data);
+        return await this.callService('prism', 'getSubscriptions', data);
+    }
+
+    async getSubscribers({ params: { userId: requestedUserId } }) {
+        const data = { requestedUserId };
+
+        return await this.callService('prism', 'getSubscribers', data);
     }
 }
 

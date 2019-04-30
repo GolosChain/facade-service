@@ -115,9 +115,9 @@ class Content extends Basic {
 
     async getLeadersTop({
         auth: { user: currentUserId },
-        params: { communityId, limit, sequenceKey },
+        params: { communityId, limit, sequenceKey, app },
     }) {
-        const data = { currentUserId, communityId, limit, sequenceKey };
+        const data = { currentUserId, communityId, limit, sequenceKey, app };
 
         return await this.callService('prism', 'getLeadersTop', data);
     }

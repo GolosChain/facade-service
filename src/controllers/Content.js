@@ -10,7 +10,6 @@ class Content extends Basic {
             limit,
             userId: requestedUserId,
             permlink,
-            refBlockNum,
             type,
             contentType,
         },
@@ -22,7 +21,6 @@ class Content extends Basic {
             requestedUserId,
             currentUserId,
             permlink,
-            refBlockNum,
             type,
             contentType,
         };
@@ -32,13 +30,12 @@ class Content extends Basic {
 
     async getPost({
         auth: { user: currentUserId },
-        params: { userId: requestedUserId, permlink, refBlockNum, contentType, username, app },
+        params: { userId: requestedUserId, permlink, contentType, username, app },
     }) {
         const data = {
             currentUserId,
             requestedUserId,
             permlink,
-            refBlockNum,
             contentType,
             username,
             app,
@@ -49,13 +46,12 @@ class Content extends Basic {
 
     async getComment({
         auth: { user: currentUserId },
-        params: { userId: requestedUserId, permlink, refBlockNum, contentType, username, app },
+        params: { userId: requestedUserId, permlink, contentType, username, app },
     }) {
         const data = {
             currentUserId,
             requestedUserId,
             permlink,
-            refBlockNum,
             contentType,
             username,
             app,
@@ -140,14 +136,14 @@ class Content extends Basic {
         return await this.callService('prism', 'search', data);
     }
 
-    async getPostVotes({ params: { userId: requestedUserId, permlink, refBlockNum } }) {
-        const data = { requestedUserId, permlink, refBlockNum };
+    async getPostVotes({ params: { userId: requestedUserId, permlink } }) {
+        const data = { requestedUserId, permlink };
 
         return await this.callService('prism', 'getPostVotes', data);
     }
 
-    async getCommentVotes({ params: { userId: requestedUserId, permlink, refBlockNum } }) {
-        const data = { requestedUserId, permlink, refBlockNum };
+    async getCommentVotes({ params: { userId: requestedUserId, permlink } }) {
+        const data = { requestedUserId, permlink };
 
         return await this.callService('prism', 'getCommentVotes', data);
     }

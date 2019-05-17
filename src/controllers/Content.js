@@ -158,14 +158,20 @@ class Content extends Basic {
         return await this.callService('prism', 'resolveProfile', data);
     }
 
-    async getSubscriptions({ params: { userId: requestedUserId, limit, sequenceKey, type } }) {
-        const data = { requestedUserId, limit, sequenceKey, type };
+    async getSubscriptions({
+        auth: { user: currentUserId },
+        params: { userId: requestedUserId, limit, sequenceKey, type },
+    }) {
+        const data = { currentUserId, requestedUserId, limit, sequenceKey, type };
 
         return await this.callService('prism', 'getSubscriptions', data);
     }
 
-    async getSubscribers({ params: { userId: requestedUserId, limit, sequenceKey, type } }) {
-        const data = { requestedUserId, limit, sequenceKey, type };
+    async getSubscribers({
+        auth: { user: currentUserId },
+        params: { userId: requestedUserId, limit, sequenceKey, type },
+    }) {
+        const data = { currentUserId, requestedUserId, limit, sequenceKey, type };
 
         return await this.callService('prism', 'getSubscribers', data);
     }

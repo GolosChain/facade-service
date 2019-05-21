@@ -263,78 +263,202 @@ meta.getUserLastOnline:          // Получить время (timestamp) по
     params:                      // Параметры запроса из гейта
         user <string>            // Имя пользователя
 
-content.getProfile:                 // Получение профиля пользователя
-    params:                         // Параметры запроса из гейта
-        userId <string>             // Идентификатор пользователя
-
-content.getPost:                    // Получение конкретного поста
-    params:                         // Параметры запроса из гейта
-        userId <string>             // Идентификатор пользователя
-        permlink <string>           // Пермлинк поста
-        refBlockNum <number>        // Привязанный блок поста
-        raw <boolean>(false)        // Получить данные в оригинальном виде и без санитайзинга
-
-content.getComment:                 // Получение конкретного коммента
-    params:                         // Параметры запроса из гейта
-        userId <string>             // Идентификатор пользователя
-        permlink <string>           // Пермлинк поста
-        refBlockNum <number>        // Привязанный блок поста
-        raw <boolean>(false)        // Получить данные в оригинальном виде и без санитайзинга
-
-content.getFeed:                    // Получение ленты постов
-    params:                         // Параметры запроса из гейта
-        type <string>('community')  // Тип ленты
+content.getProfile:                  // Получение профиля пользователя
+    params:                          // Параметры запроса из гейта
+        userId <string>              // Идентификатор пользователя
+        username <string>            // Имя пользователя относительно домена
+        app <string>('cyber')        // Тип приложения / домена
             [
-              community             // Лента комьюнити, требует communityId
-            | subscriptions         // Лента подписок пользователя, требует userId
-            | byUser                // Лента постов самого пользователя, требует userId
+              cyber                  // CyberWay
+            | gls                    // Golos
             ]
-        sortBy <string>('time')     // Способ сортировки
-            [
-              time                  // Сначала старые, потом новые
-            | timeDesc              // Сначала новые, потом старые
-            | popular               // По популярности (только для community)
-            ]
-        timeframe <string>('day')   // Область выборки сортировки (только для community + popular)
-            [
-              day                   // За день
-            | week                  // За неделю
-            | month                 // За месяц
-            | year                  // За год
-            | all                   // За всё время
-            | WilsonHot             // Aлгоритм Вилсона, актуальный контент сейчас
-            | WilsonTrending        // Aлгоритм Вилсона, в целом популярный контент
-            ]
-        sequenceKey <string/null>   // Идентификатор пагинации для получения следующего контента
-        limit <number>              // Количество элементов
-        userId <string/null>        // Идентификатор пользователя
-        communityId <string>        // Идентификатор комьюнити
-        tags <string[]/null>        // Теги для фильтрации (только для community и сортировкой по времени)
 
-content.getComments:                // Получение ленты комментариев
-    params:                         // Параметры запроса из гейта
-        sortBy <string>('time')     // Способ сортировки
+        @deprecated
+        type <string>('cyber')       // Тип профиля (устарело)
             [
-              time                  // Сначала старые, потом новые
-            | timeDesc              // Сначала новые, потом старые
+              cyber                  // CyberWay
+            | gls                    // Golos
             ]
-        sequenceKey <string/null>   // Идентификатор пагинации для получения следующего контента
-        limit <number>(10)          // Количество элементов
-        type <string>('post')       // Тип ленты
-            [
-              post                  // Получить комментарии для поста, требует userId, permlink, refBlockNum
-            | user                  // Получить комментарии пользователя, требует userId
-            | replies               // Получить комментарии, которые были оставлены пользователю, требует userId
-            ]
-        userId <string/null>        // Идентификатор пользователя
-        permlink <string/null>      // Пермлинк поста
-        refBlockNum <number/null>   // Привязанный блок поста
 
-getHashTagTop:                      // Получение топа хеш-тегов
-    params:                         // Параметры запроса из гейта
-        communityId <string>        // Идентификатор комьюнити
-        limit <number>(10)          // Количество элементов
-        sequenceKey <string/null>   // Идентификатор пагинации для получения следующего контента
+content.getPost:                     // Получение конкретного поста
+    params:                          // Параметры запроса из гейта
+        userId <string>              // Идентификатор пользователя
+        username <string>            // Имя пользователя относительно домена
+        app <string>('cyber')        // Тип приложения / домена
+            [
+              cyber                  // CyberWay
+            | gls                    // Golos
+            ]
+        permlink <string>            // Пермлинк поста
+        refBlockNum <number>         // Привязанный блок поста
+        contentType <string>('web')  // Определить тип получаемого контента
+            [
+              web                    // Контент, пригодный для веб-клиентов
+            | mobile                 // Контент, пригодный для мобильных устройств
+            | raw                    // Сырой контент без обработки
+            ]
+
+content.getComment:                  // Получение конкретного коммента
+    params:                          // Параметры запроса из гейта
+        userId <string>              // Идентификатор пользователя
+        username <string>            // Имя пользователя относительно домена
+        app <string>('cyber')        // Тип приложения / домена
+            [
+              cyber                  // CyberWay
+            | gls                    // Golos
+            ]
+        permlink <string>            // Пермлинк поста
+        refBlockNum <number>         // Привязанный блок поста
+        contentType <string>('web')  // Определить тип получаемого контента
+            [
+              web                    // Контент, пригодный для веб-клиентов
+            | mobile                 // Контент, пригодный для мобильных устройств
+            | raw                    // Сырой контент без обработки
+            ]
+
+content.getFeed:                     // Получение ленты постов
+    params:                          // Параметры запроса из гейта
+        type <string>('community')   // Тип ленты
+            [
+              community              // Лента комьюнити, требует communityId
+            | subscriptions          // Лента подписок пользователя, требует userId
+            | byUser                 // Лента постов самого пользователя, требует userId
+            ]
+        sortBy <string>('time')      // Способ сортировки
+            [
+              time                   // Сначала старые, потом новые
+            | timeDesc               // Сначала новые, потом старые
+            | popular                // По популярности (только для community)
+            ]
+        timeframe <string>('day')    // Область выборки сортировки (только для community + popular)
+            [
+              day                    // За день
+            | week                   // За неделю
+            | month                  // За месяц
+            | year                   // За год
+            | all                    // За всё время
+            | WilsonHot              // Aлгоритм Вилсона, актуальный контент сейчас
+            | WilsonTrending         // Aлгоритм Вилсона, в целом популярный контент
+            ]
+        sequenceKey <string/null>    // Идентификатор пагинации для получения следующего контента
+        limit <number>               // Количество элементов
+        userId <string/null>         // Идентификатор пользователя
+        communityId <string>         // Идентификатор комьюнити
+        tags <string[]/null>         // Теги для фильтрации (только для community и сортировкой по времени)
+        contentType <string>('web')  // Определить тип получаемого контента
+            [
+              web                    // Контент, пригодный для веб-клиентов
+            | mobile                 // Контент, пригодный для мобильных устройств
+            | raw                    // Сырой контент без обработки
+            ]
+        username <string>            // Имя пользователя относительно домена
+        app <string>('cyber')        // Тип приложения / домена
+            [
+              cyber                  // CyberWay
+            | gls                    // Golos
+            ]
+
+content.getComments:                 // Получение ленты комментариев
+    params:                          // Параметры запроса из гейта
+        sortBy <string>('time')      // Способ сортировки
+            [
+              time                   // Сначала старые, потом новые
+            | timeDesc               // Сначала новые, потом старые
+            ]
+        sequenceKey <string/null>    // Идентификатор пагинации для получения следующего контента
+        limit <number>(10)           // Количество элементов
+        type <string>('post')        // Тип ленты
+            [
+              post                   // Получить комментарии для поста, требует userId, permlink, refBlockNum
+            | user                   // Получить комментарии пользователя, требует userId
+            | replies                // Получить комментарии, которые были оставлены пользователю, требует userId
+            ]
+        userId <string/null>         // Идентификатор пользователя
+        permlink <string/null>       // Пермлинк поста
+        refBlockNum <number/null>    // Привязанный блок поста
+        contentType <string>('web')  // Определить тип получаемого контента
+            [
+              web                    // Контент, пригодный для веб-клиентов
+            | mobile                 // Контент, пригодный для мобильных устройств
+            | raw                    // Сырой контент без обработки
+            ]
+        username <string>            // Имя пользователя относительно домена
+        app <string>('cyber')        // Тип приложения / домена
+            [
+              cyber                  // CyberWay
+            | gls                    // Golos
+            ]
+
+content.getHashTagTop:               // Получение топа хеш-тегов
+    params:                          // Параметры запроса из гейта
+        communityId <string>         // Идентификатор комьюнити
+        limit <number>(10)           // Количество элементов
+        sequenceKey <string/null>    // Идентификатор пагинации для получения следующего контента
+
+content.getLeadersTop:               // Получить топ лидеров
+    auth:                            // Авторизационные данные
+        user <string>                // Имя пользователя
+    params:                          // Параметры запроса из гейта
+        communityId <string>         // Идентификатор комьюнити
+        sequenceKey <string/null>    // Идентификатор пагинации для получения следующего контента
+        limit <number>(10)           // Количество элементов
+        app <string>('cyber')        // Тип приложения / домена
+            [
+              cyber                  // CyberWay
+            | gls                    // Golos
+            ]
+
+
+content.waitForBlock                 // Дождаться и получить ответ когда призма обработает указанный блок
+    params:                          // Параметры запроса из гейта
+        blockNum <number>            // Номер блока
+
+content.waitForTransaction           // Дождаться и получить ответ когда призма обработает указанную транзакцию
+    params:                          // Параметры запроса из гейта
+        transactionId <string>       // Идентификатор транзакции
+
+content.getPostVotes                 // Получение списка голосов за пост
+    params:                          // Параметры запроса из гейта
+        userId <string>              // Идентификатор пользователя
+        permlink <string>            // Пермлинк поста
+        refBlockNum <number>         // Привязанный блок поста
+
+content.getCommentVotes              // Получение списка голосов за коммент
+    params:                          // Параметры запроса из гейта
+        userId <string>              // Идентификатор пользователя
+        permlink <string>            // Пермлинк коммента
+        refBlockNum <number>         // Привязанный блок коммента
+
+content.resolveProfile               // Резолв идентификатора пользователя и аватара по имени с доменом
+    params:                          // Параметры запроса из гейта
+        username <string>            // Имя пользователя относительно домена
+        app <string>('cyber')        // Тип приложения / домена
+            [
+              cyber                  // CyberWay
+            | gls                    // Golos
+            ]
+
+content.getSubscriptions             // Получить подписки пользователя
+    params:                          // Параметры запроса из гейта
+        userId <string>              // Идентификатор пользователя
+        type <string>('user')        // Тип подписки
+            [
+              user                   // Подписки на пользователей
+            | community              // Подписки на сообщества
+            ]
+        sequenceKey <string/null>    // Идентификатор пагинации для получения следующего контента
+        limit <number>(10)           // Количество элементов
+
+content.getSubscribers               // Получить подписчиков пользователя
+    params:                          // Параметры запроса из гейта
+        userId <string>              // Идентификатор пользователя
+        type <string>('user')        // Тип подписки
+            [
+              user                   // Подписчики-пользователи
+            | community              // Подписчики-сообщества
+            ]
+        sequenceKey <string/null>    // Идентификатор пагинации для получения следующего контента
+        limit <number>(10)           // Количество элементов
 ```
 
 Апи для обращения из внутренних микросервисов:

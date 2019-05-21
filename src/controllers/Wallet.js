@@ -22,11 +22,7 @@ class Wallet extends Basic {
         return await this.callService('wallet', 'getVestingBalance', data);
     }
     async getVestingHistory({ params: { account, sequenceKey, limit } }) {
-        const data = {
-            account,
-            sequenceKey,
-            limit,
-        };
+        const data = { account, sequenceKey, limit };
         return await this.callService('wallet', 'getVestingHistory', data);
     }
 }

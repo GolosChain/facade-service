@@ -115,6 +115,10 @@ class Connector extends BasicConnector {
                 'frame.getEmbed': iframely.getEmbed.bind(iframely),
                 'wallet.getHistory': wallet.getHistory.bind(wallet),
                 'wallet.getBalance': wallet.getBalance.bind(wallet),
+                'wallet.getTokensInfo': wallet.getTokensInfo.bind(wallet),
+                'wallet.getVestingInfo': wallet.getVestingInfo.bind(wallet),
+                'wallet.getVestingBalance': wallet.getVestingBalance.bind(wallet),
+                'wallet.getVestingHistory': wallet.getVestingHistory.bind(wallet),
 
                 /* service points */
                 offline: this._enableSecure(offline.handle.bind(offline)),

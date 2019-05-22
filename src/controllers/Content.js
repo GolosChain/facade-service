@@ -12,6 +12,7 @@ class Content extends Basic {
             permlink,
             refBlockNum,
             type,
+            contentType,
         },
     }) {
         const data = {
@@ -23,6 +24,7 @@ class Content extends Basic {
             permlink,
             refBlockNum,
             type,
+            contentType,
         };
 
         return await this.callService('prism', 'getComments', data);
@@ -30,18 +32,34 @@ class Content extends Basic {
 
     async getPost({
         auth: { user: currentUserId },
-        params: { userId: requestedUserId, permlink, refBlockNum, raw },
+        params: { userId: requestedUserId, permlink, refBlockNum, contentType, username, app },
     }) {
-        const data = { currentUserId, requestedUserId, permlink, refBlockNum, raw };
+        const data = {
+            currentUserId,
+            requestedUserId,
+            permlink,
+            refBlockNum,
+            contentType,
+            username,
+            app,
+        };
 
         return await this.callService('prism', 'getPost', data);
     }
 
     async getComment({
         auth: { user: currentUserId },
-        params: { userId: requestedUserId, permlink, refBlockNum, raw },
+        params: { userId: requestedUserId, permlink, refBlockNum, contentType, username, app },
     }) {
-        const data = { currentUserId, requestedUserId, permlink, refBlockNum, raw };
+        const data = {
+            currentUserId,
+            requestedUserId,
+            permlink,
+            refBlockNum,
+            contentType,
+            username,
+            app,
+        };
 
         return await this.callService('prism', 'getComment', data);
     }
@@ -57,6 +75,9 @@ class Content extends Basic {
             communityId,
             timeframe,
             tags,
+            contentType,
+            username,
+            app,
         },
     }) {
         const data = {
@@ -69,13 +90,19 @@ class Content extends Basic {
             communityId,
             timeframe,
             tags,
+            contentType,
+            username,
+            app,
         };
 
         return await this.callService('prism', 'getFeed', data);
     }
 
-    async getProfile({ params: { userId: requestedUserId } }) {
-        const data = { requestedUserId };
+    async getProfile({
+        auth: { user: currentUserId },
+        params: { userId: requestedUserId, type, username, app },
+    }) {
+        const data = { currentUserId, requestedUserId, type, username, app };
 
         return await this.callService('prism', 'getProfile', data);
     }
@@ -84,6 +111,69 @@ class Content extends Basic {
         const data = { communityId, limit, sequenceKey };
 
         return await this.callService('prism', 'getHashTagTop', data);
+    }
+
+    async getLeadersTop({
+        auth: { user: currentUserId },
+        params: { communityId, limit, sequenceKey, app },
+    }) {
+        const data = { currentUserId, communityId, limit, sequenceKey, app };
+
+        return await this.callService('prism', 'getLeadersTop', data);
+    }
+
+    async waitForBlock({ params: { blockNum } }) {
+        const data = { blockNum };
+
+        return await this.callService('prism', 'waitForBlock', data);
+    }
+
+    async waitForTransaction({ params: { transactionId } }) {
+        const data = { transactionId };
+
+        return await this.callService('prism', 'waitForTransaction', data);
+    }
+
+    async search({ params: { where, text, field, limit, offset, type } }) {
+        const data = { where, text, field, limit, offset, type };
+
+        return await this.callService('prism', 'search', data);
+    }
+
+    async getPostVotes({ params: { userId: requestedUserId, permlink, refBlockNum } }) {
+        const data = { requestedUserId, permlink, refBlockNum };
+
+        return await this.callService('prism', 'getPostVotes', data);
+    }
+
+    async getCommentVotes({ params: { userId: requestedUserId, permlink, refBlockNum } }) {
+        const data = { requestedUserId, permlink, refBlockNum };
+
+        return await this.callService('prism', 'getCommentVotes', data);
+    }
+
+    async resolveProfile({ params: { username, app } }) {
+        const data = { username, app };
+
+        return await this.callService('prism', 'resolveProfile', data);
+    }
+
+    async getSubscriptions({
+        auth: { user: currentUserId },
+        params: { userId: requestedUserId, limit, sequenceKey, type },
+    }) {
+        const data = { currentUserId, requestedUserId, limit, sequenceKey, type };
+
+        return await this.callService('prism', 'getSubscriptions', data);
+    }
+
+    async getSubscribers({
+        auth: { user: currentUserId },
+        params: { userId: requestedUserId, limit, sequenceKey, type },
+    }) {
+        const data = { currentUserId, requestedUserId, limit, sequenceKey, type };
+
+        return await this.callService('prism', 'getSubscribers', data);
     }
 }
 

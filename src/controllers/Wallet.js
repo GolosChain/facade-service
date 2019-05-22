@@ -3,22 +3,27 @@ const Basic = core.controllers.Basic;
 
 class Wallet extends Basic {
     async getBalance({ params: { name, tokensList } }) {
-        return await this.callService('wallet', 'getBalance', { name, tokensList });
+        const data = { name, tokensList };
+        return await this.callService('wallet', 'getBalance', data);
     }
     async getHistory({ params: { query } }) {
-        return await this.callService('wallet', 'getHistory', { query });
+        const data = { query };
+        return await this.callService('wallet', 'getHistory', data);
     }
-    async getTokensInfo({ params: args }) {
-        return await this.callService('wallet', 'getTokensInfo', args);
+    async getTokensInfo({ params: tokens }) {
+        const data = { tokens };
+        return await this.callService('wallet', 'getTokensInfo', data);
     }
     async getVestingInfo({ params: {} }) {
         return await this.callService('wallet', 'getVestingInfo', {});
     }
     async getVestingBalance({ params: { account } }) {
-        return await this.callService('wallet', 'getVestingBalance', { account });
+        const data = { account };
+        return await this.callService('wallet', 'getVestingBalance', data);
     }
-    async getVestingHistory({ params: args }) {
-        return await this.callService('wallet', 'getVestingHistory', args);
+    async getVestingHistory({ params: { account, sequenceKey, limit } }) {
+        const data = { account, sequenceKey, limit };
+        return await this.callService('wallet', 'getVestingHistory', data);
     }
 }
 

@@ -34,16 +34,13 @@ class Connector extends BasicConnector {
         this._wallet = new Wallet(linking);
     }
 
-    _enableSecure(handler) {
-        return async params => {
-            if (params.auth && params.auth.user) {
-                return await handler(params);
-            } else {
-                throw {
-                    code: 1103,
-                    message: 'Unauthorized request: access denied',
-                };
-            }
+    _checkAuth(params) {
+        if (params.auth && params.auth.user) {
+            return params;
+        }
+        throw {
+            code: 1103,
+            message: 'Unauthorized request: access denied',
         };
     }
 
@@ -64,67 +61,408 @@ class Connector extends BasicConnector {
         await super.start({
             serverRoutes: {
                 /* public points */
-                'options.get': this._enableSecure(options.get.bind(options)),
-                'options.set': this._enableSecure(options.set.bind(options)),
-                'onlineNotify.on': this._enableSecure(subscribe.onlineNotifyOn.bind(subscribe)),
-                'onlineNotify.off': this._enableSecure(subscribe.onlineNotifyOff.bind(subscribe)),
-                'onlineNotify.history': this._enableSecure(history.onlineNotify.bind(history)),
-                'onlineNotify.historyFresh': this._enableSecure(
-                    history.onlineNotifyFresh.bind(history)
-                ),
-                'push.notifyOn': this._enableSecure(subscribe.pushNotifyOn.bind(subscribe)),
-                'push.notifyOff': this._enableSecure(subscribe.pushNotifyOff.bind(subscribe)),
-                'push.history': this._enableSecure(history.push.bind(history)),
-                'push.historyFresh': this._enableSecure(history.pushFresh.bind(history)),
-                'notify.getHistory': this._enableSecure(history.notify.bind(history)),
-                'notify.getHistoryFresh': this._enableSecure(history.notifyFresh.bind(history)),
-                'notify.markAsViewed': this._enableSecure(history.markAsViewed.bind(history)),
-                'notify.markAllAsViewed': this._enableSecure(history.markAllAsViewed.bind(history)),
-                'notify.markAsRead': this._enableSecure(history.markAsRead.bind(history)),
-                'notify.markAllAsRead': this._enableSecure(history.markAllAsRead.bind(history)),
-                'notify.getBlackList': this._enableSecure(options.getBlackList.bind(options)),
-                'notify.addToBlackList': this._enableSecure(options.addToBlackList.bind(options)),
-                'notify.removeFromBlackList': this._enableSecure(
-                    options.removeFromBlackList.bind(options)
-                ),
-                'favorites.get': this._enableSecure(options.getFavorites.bind(options)),
-                'favorites.add': this._enableSecure(options.addFavorite.bind(options)),
-                'favorites.remove': this._enableSecure(options.removeFavorite.bind(options)),
-                'registration.getState': registration.getState.bind(registration),
-                'registration.firstStep': registration.firstStep.bind(registration),
-                'registration.verify': registration.verify.bind(registration),
-                'registration.setUsername': registration.setUsername.bind(registration),
-                'registration.toBlockChain': registration.toBlockChain.bind(registration),
-                'registration.changePhone': registration.changePhone.bind(registration),
-                'registration.resendSmsCode': registration.resendSmsCode.bind(registration),
-                'registration.subscribeOnSmsGet': registration.subscribeOnSmsGet.bind(registration),
-                'rates.getActual': rates.getActual.bind(rates),
-                'rates.getHistorical': rates.getHistorical.bind(rates),
-                'rates.getHistoricalMulti': rates.getHistoricalMulti.bind(rates),
-                'content.getComment': content.getComment.bind(content),
-                'content.getComments': content.getComments.bind(content),
-                'content.getPost': content.getPost.bind(content),
-                'content.getFeed': content.getFeed.bind(content),
-                'content.getProfile': content.getProfile.bind(content),
-                'content.getHashTagTop': content.getHashTagTop.bind(content),
-                'meta.getPostsViewCount': this._enableSecure(meta.getPostsViewCount.bind(meta)),
-                'meta.recordPostView': this._enableSecure(meta.recordPostView.bind(meta)),
-                'meta.markUserOnline': this._enableSecure(meta.markUserOnline.bind(meta)),
-                'meta.getUserLastOnline': this._enableSecure(meta.getUserLastOnline.bind(meta)),
-                'bandwidth.provide': this._enableSecure(bandwidth.provideBandwidth.bind(bandwidth)),
-                'frame.getEmbed': iframely.getEmbed.bind(iframely),
-                'wallet.getHistory': wallet.getHistory.bind(wallet),
-                'wallet.getBalance': wallet.getBalance.bind(wallet),
-                'wallet.getTokensInfo': wallet.getTokensInfo.bind(wallet),
-                'wallet.getVestingInfo': wallet.getVestingInfo.bind(wallet),
-                'wallet.getVestingBalance': wallet.getVestingBalance.bind(wallet),
-                'wallet.getVestingHistory': wallet.getVestingHistory.bind(wallet),
+                'options.get': {
+                    handler: options.get,
+                    scope: options,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'options.set': {
+                    handler: options.set,
+                    scope: options,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'onlineNotify.on': {
+                    handler: subscribe.onlineNotifyOn,
+                    scope: subscribe,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'onlineNotify.off': {
+                    handler: subscribe.onlineNotifyOff,
+                    scope: subscribe,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'onlineNotify.history': {
+                    handler: history.onlineNotify,
+                    scope: history,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'onlineNotify.historyFresh': {
+                    handler: history.onlineNotifyFresh,
+                    scope: history,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'push.notifyOn': {
+                    handler: subscribe.pushNotifyOn,
+                    scope: subscribe,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'push.notifyOff': {
+                    handler: subscribe.pushNotifyOff,
+                    scope: subscribe,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'push.history': {
+                    handler: history.push,
+                    scope: history,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'push.historyFresh': {
+                    handler: history.pushFresh,
+                    scope: history,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'notify.getHistory': {
+                    handler: history.notify,
+                    scope: history,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'notify.getHistoryFresh': {
+                    handler: history.notifyFresh,
+                    scope: history,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'notify.markAsViewed': {
+                    handler: history.markAsViewed,
+                    scope: history,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'notify.markAllAsViewed': {
+                    handler: history.markAllAsViewed,
+                    scope: history,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'notify.markAsRead': {
+                    handler: history.markAsRead,
+                    scope: history,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'notify.markAllAsRead': {
+                    handler: history.markAllAsRead,
+                    scope: history,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'notify.getBlackList': {
+                    handler: options.getBlackList,
+                    scope: options,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'notify.addToBlackList': {
+                    handler: options.addToBlackList,
+                    scope: options,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'notify.removeFromBlackList': {
+                    handler: options.removeFromBlackList,
+                    scope: options,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'favorites.get': {
+                    handler: options.getFavorites,
+                    scope: options,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'favorites.add': {
+                    handler: options.addFavorite,
+                    scope: options,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'favorites.remove': {
+                    handler: options.removeFavorite,
+                    scope: options,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'registration.getState': {
+                    handler: registration.getState,
+                    scope: registration,
+                },
+                'registration.firstStep': {
+                    handler: registration.firstStep,
+                    scope: registration,
+                },
+                'registration.verify': {
+                    handler: registration.verify,
+                    scope: registration,
+                },
+                'registration.setUsername': {
+                    handler: registration.setUsername,
+                    scope: registration,
+                },
+                'registration.toBlockChain': {
+                    handler: registration.toBlockChain,
+                    scope: registration,
+                },
+                'registration.changePhone': {
+                    handler: registration.changePhone,
+                    scope: registration,
+                },
+                'registration.resendSmsCode': {
+                    handler: registration.resendSmsCode,
+                    scope: registration,
+                },
+                'registration.subscribeOnSmsGet': {
+                    handler: registration.subscribeOnSmsGet,
+                    scope: registration,
+                },
+                'rates.getActual': {
+                    handler: rates.getActual,
+                    scope: rates,
+                },
+                'rates.getHistorical': {
+                    handler: rates.getHistorical,
+                    scope: rates,
+                },
+                'rates.getHistoricalMulti': {
+                    handler: rates.getHistoricalMulti,
+                    scope: rates,
+                },
+                'content.getComment': {
+                    handler: content.getComment,
+                    scope: content,
+                },
+                'content.getComments': {
+                    handler: content.getComments,
+                    scope: content,
+                },
+                'content.getPost': {
+                    handler: content.getPost,
+                    scope: content,
+                },
+                'content.getFeed': {
+                    handler: content.getFeed,
+                    scope: content,
+                },
+                'content.getProfile': {
+                    handler: content.getProfile,
+                    scope: content,
+                },
+                'content.getLeadersTop': {
+                    handler: content.getLeadersTop,
+                    scope: content,
+                },
+                'content.getHashTagTop': {
+                    handler: content.getHashTagTop,
+                    scope: content,
+                },
+                'content.waitForBlock': {
+                    handler: content.waitForBlock,
+                    scope: content,
+                },
+                'content.waitForTransaction': {
+                    handler: content.waitForTransaction,
+                    scope: content,
+                },
+                'content.search': {
+                    handler: content.search,
+                    scope: content,
+                },
+                'content.getPostVotes': {
+                    handler: content.getPostVotes,
+                    scope: content,
+                },
+                'content.getCommentVotes': {
+                    handler: content.getCommentVotes,
+                    scope: content,
+                },
+                'content.resolveProfile': {
+                    handler: content.resolveProfile,
+                    scope: content,
+                },
+                'content.getSubscriptions': {
+                    handler: content.getSubscriptions,
+                    scope: content,
+                },
+                'content.getSubscribers': {
+                    handler: content.getSubscribers,
+                    scope: content,
+                },
+                'meta.getPostsViewCount': {
+                    handler: meta.getPostsViewCount,
+                    scope: meta,
+                },
+                'meta.recordPostView': {
+                    handler: meta.recordPostView,
+                    scope: meta,
+                },
+                'meta.markUserOnline': {
+                    handler: meta.markUserOnline,
+                    scope: meta,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'meta.getUserLastOnline': {
+                    handler: meta.getUserLastOnline,
+                    scope: meta,
+                },
+                'bandwidth.provide': {
+                    handler: bandwidth.provideBandwidth,
+                    scope: bandwidth,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
+                'frame.getEmbed': {
+                    handler: iframely.getEmbed,
+                    scope: iframely,
+                },
+                'wallet.getHistory': {
+                    handler: wallet.getHistory,
+                    scope: wallet,
+                },
+                'wallet.getBalance': {
+                    handler: wallet.getBalance,
+                    scope: wallet,
+                },
+                'wallet.getTokensInfo': {
+                    handler: wallet.getTokensInfo,
+                    scope: wallet,
+                },
+                'wallet.getVestingInfo': {
+                    handler: wallet.getVestingInfo,
+                    scope: wallet,
+                },
+                'wallet.getVestingBalance': {
+                    handler: wallet.getVestingBalance,
+                    scope: wallet,
+                },
+                'wallet.getVestingHistory': {
+                    handler: wallet.getVestingHistory,
+                    scope: wallet,
+                },
 
                 /* service points */
-                offline: this._enableSecure(offline.handle.bind(offline)),
+                offline: {
+                    handler: offline.handle,
+                    scope: offline,
+                    before: [
+                        {
+                            handler: this._checkAuth,
+                            scope: this,
+                        },
+                    ],
+                },
 
                 /* inner services only points */
-                transfer: transfer.handle.bind(transfer),
+                transfer: {
+                    handler: transfer.handle,
+                    scope: transfer,
+                },
             },
             requiredClients: {
                 frontend: env.GLS_FRONTEND_GATE_CONNECT,

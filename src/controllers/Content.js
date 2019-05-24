@@ -140,14 +140,32 @@ class Content extends Basic {
         return await this.callService('prism', 'search', data);
     }
 
-    async getPostVotes({ params: { userId: requestedUserId, permlink, refBlockNum } }) {
-        const data = { requestedUserId, permlink, refBlockNum };
+    async getPostVotes({
+        params: { userId: requestedUserId, permlink, type, sequenceKey, limit, app },
+    }) {
+        const data = {
+            requestedUserId,
+            permlink,
+            type,
+            sequenceKey,
+            limit,
+            app,
+        };
 
         return await this.callService('prism', 'getPostVotes', data);
     }
 
-    async getCommentVotes({ params: { userId: requestedUserId, permlink, refBlockNum } }) {
-        const data = { requestedUserId, permlink, refBlockNum };
+    async getCommentVotes({
+        params: { userId: requestedUserId, permlink, type, sequenceKey, limit, app },
+    }) {
+        const data = {
+            requestedUserId,
+            permlink,
+            type,
+            sequenceKey,
+            limit,
+            app,
+        };
 
         return await this.callService('prism', 'getCommentVotes', data);
     }

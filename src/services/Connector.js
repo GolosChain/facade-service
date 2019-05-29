@@ -433,6 +433,22 @@ class Connector extends BasicConnector {
                     handler: wallet.getBalance,
                     scope: wallet,
                 },
+                'wallet.getTokensInfo': {
+                    handler: wallet.getTokensInfo,
+                    scope: wallet,
+                },
+                'wallet.getVestingInfo': {
+                    handler: wallet.getVestingInfo,
+                    scope: wallet,
+                },
+                'wallet.getVestingBalance': {
+                    handler: wallet.getVestingBalance,
+                    scope: wallet,
+                },
+                'wallet.getVestingHistory': {
+                    handler: wallet.getVestingHistory,
+                    scope: wallet,
+                },
 
                 /* service points */
                 offline: {

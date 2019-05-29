@@ -193,6 +193,12 @@ class Content extends Basic {
 
         return await this.callService('prism', 'getSubscribers', data);
     }
+
+    async getProposals({ params: { communityId, limit, sequenceKey, app } }) {
+        const data = { communityId, limit, sequenceKey, app };
+
+        return await this.callService('prism', 'getProposals', data);
+    }
 }
 
 module.exports = Content;

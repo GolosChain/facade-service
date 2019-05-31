@@ -107,6 +107,12 @@ class Content extends Basic {
         return await this.callService('prism', 'getProfile', data);
     }
 
+    async getChargers({ params: { userId } }) {
+        const data = { userId };
+
+        return await this.callService('prism', 'getChargers', data);
+    }
+
     async getHashTagTop({ params: { communityId, limit, sequenceKey } }) {
         const data = { communityId, limit, sequenceKey };
 

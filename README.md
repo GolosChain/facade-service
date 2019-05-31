@@ -279,6 +279,9 @@ content.getProfile:                  // Получение профиля пол
               cyber                  // CyberWay
             | gls                    // Golos
             ]
+            
+content.getChargers:               // Получение батареек пользователя
+    userId <string>                // Идентификатор пользователя                        
 
 content.getPost:                     // Получение конкретного поста
     params:                          // Параметры запроса из гейта

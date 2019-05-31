@@ -6,8 +6,8 @@ class Wallet extends Basic {
         const data = { name, tokensList };
         return await this.callService('wallet', 'getBalance', data);
     }
-    async getHistory({ params: { query } }) {
-        const data = { query };
+    async getHistory({ params: { sender, receiver, sequenceKey, limit } }) {
+        const data = { sender, receiver, sequenceKey, limit };
         return await this.callService('wallet', 'getHistory', data);
     }
     async getTokensInfo({ params: tokens }) {

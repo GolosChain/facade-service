@@ -148,6 +148,7 @@ class Content extends Basic {
 
     async getPostVotes({
         params: { userId: requestedUserId, permlink, type, sequenceKey, limit, app },
+        auth,
     }) {
         const data = {
             requestedUserId,
@@ -157,12 +158,17 @@ class Content extends Basic {
             limit,
             app,
         };
+
+        if (auth && auth.user) {
+            data.currentUserId = auth.user;
+        }
 
         return await this.callService('prism', 'getPostVotes', data);
     }
 
     async getCommentVotes({
         params: { userId: requestedUserId, permlink, type, sequenceKey, limit, app },
+        auth,
     }) {
         const data = {
             requestedUserId,
@@ -172,6 +178,10 @@ class Content extends Basic {
             limit,
             app,
         };
+
+        if (auth && auth.user) {
+            data.currentUserId = auth.user;
+        }
 
         return await this.callService('prism', 'getCommentVotes', data);
     }

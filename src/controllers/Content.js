@@ -143,7 +143,7 @@ class Content extends Basic {
     async search({ params: { where, text, field, limit, offset, type } }) {
         const data = { where, text, field, limit, offset, type };
 
-        return await this.callService('prism', 'search', data);
+        return await this.callService('search', 'search', data);
     }
 
     async getPostVotes({

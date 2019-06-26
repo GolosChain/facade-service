@@ -10,7 +10,7 @@ class Offline extends Basic {
         }
 
         try {
-            await this.callService('bandwidth', 'bandwidth.notifyOffline', { user, channelId });
+            await this.callService('bandwidth', 'notifyOffline', { user, channelId });
         } catch (error) {
             // service offline, do nothing
         }

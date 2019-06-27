@@ -65,20 +65,20 @@ class Options extends Basic {
         }
     }
 
-    async getFavorites({ auth: { user } }) {
-        const data = { user };
+    async getFavorites({ auth: { user }, params: { app } }) {
+        const data = { user, app };
 
         return await this.callService('options', 'getFavorites', data);
     }
 
-    async addFavorite({ auth: { user }, params: { permlink } }) {
-        const data = { user, permlink };
+    async addFavorite({ auth: { user }, params: { app, permlink } }) {
+        const data = { user, app, permlink };
 
         return await this.callService('options', 'addFavorite', data);
     }
 
-    async removeFavorite({ auth: { user }, params: { permlink } }) {
-        const data = { user, permlink };
+    async removeFavorite({ auth: { user }, params: { app, permlink } }) {
+        const data = { user, app, permlink };
 
         return await this.callService('options', 'removeFavorite', data);
     }

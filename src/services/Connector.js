@@ -437,6 +437,10 @@ class Connector extends BasicConnector {
                     handler: wallet.getBalance,
                     scope: wallet,
                 },
+                'wallet.getDelegationState': {
+                    handler: wallet.getDelegationState,
+                    scope: wallet,
+                },
                 'wallet.getTokensInfo': {
                     handler: wallet.getTokensInfo,
                     scope: wallet,

@@ -2,8 +2,8 @@ const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
 
 class Options extends Basic {
-    async get({ auth: { user }, params: { profile } }) {
-        const data = { user, profile };
+    async get({ auth: { user }, params: { app, profile } }) {
+        const data = { user, app, profile };
 
         const basic = await this._tryGetOptionsBy({
             service: 'options',
@@ -29,9 +29,9 @@ class Options extends Basic {
         return { basic, notify, push };
     }
 
-    async set({ auth: { user }, params: { profile, basic, notify, push } }) {
+    async set({ auth: { user }, params: { app, profile, basic, notify, push } }) {
         const errors = [];
-        const trySetOptionsBy = this._makeOptionsSetter(user, profile, errors);
+        const trySetOptionsBy = this._makeOptionsSetter({ user, app, profile, errors });
 
         if (basic) {
             await trySetOptionsBy({
@@ -63,42 +63,40 @@ class Options extends Basic {
         if (errors.length) {
             throw { code: 500, message: `Some options not changed - ${errors.join(' | ')}` };
         }
-
-        return 'Ok';
     }
 
-    async getFavorites({ auth: { user } }) {
-        const data = { user };
+    async getFavorites({ auth: { user }, params: { app } }) {
+        const data = { user, app };
 
         return await this.callService('options', 'getFavorites', data);
     }
 
-    async addFavorite({ auth: { user }, params: { permlink } }) {
-        const data = { user, permlink };
+    async addFavorite({ auth: { user }, params: { app, permlink } }) {
+        const data = { user, app, permlink };
 
         return await this.callService('options', 'addFavorite', data);
     }
 
-    async removeFavorite({ auth: { user }, params: { permlink } }) {
-        const data = { user, permlink };
+    async removeFavorite({ auth: { user }, params: { app, permlink } }) {
+        const data = { user, app, permlink };
 
         return await this.callService('options', 'removeFavorite', data);
     }
 
-    async getBlackList({ auth: { user: owner } }) {
-        const data = { owner };
+    async getBlackList({ auth: { user: owner, app } }) {
+        const data = { owner, app };
 
         return await this.callService('notify', 'getBlackList', data);
     }
 
-    async addToBlackList({ auth: { user: owner }, params: { banned } }) {
-        const data = { owner, banned };
+    async addToBlackList({ auth: { user: owner, app }, params: { banned } }) {
+        const data = { owner, banned, app };
 
         return await this.callService('notify', 'addToBlackList', data);
     }
 
-    async removeFromBlackList({ auth: { user: owner }, params: { banned } }) {
-        const data = { owner, banned };
+    async removeFromBlackList({ auth: { user: owner, app }, params: { banned } }) {
+        const data = { owner, banned, app };
 
         return await this.callService('notify', 'removeFromBlackList', data);
     }
@@ -115,9 +113,9 @@ class Options extends Basic {
         return { code: error.code, message: `${prefix} -> ${error.message}` };
     }
 
-    _makeOptionsSetter(user, profile, errors) {
+    _makeOptionsSetter({ user, app, profile, errors }) {
         return async ({ service, method, errorPrefix, data }) => {
-            const { error } = await this.sendTo(service, method, { user, profile, data });
+            const { error } = await this.sendTo(service, method, { user, app, profile, data });
 
             if (error) {
                 errors.push(`${errorPrefix} -> ${error.message}`);

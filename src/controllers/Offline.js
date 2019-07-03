@@ -4,15 +4,18 @@ const Basic = core.controllers.Basic;
 class Offline extends Basic {
     async handle({ auth: { user }, routing: { channelId } }) {
         try {
-            const data = { user, channelId };
-
-            await this.callService('onlineNotify', 'unsubscribe', data);
-            await this.callService('bandwidth', 'bandwidth.notifyOffline', data);
+            await this.callService('onlineNotify', 'unsubscribe', { channelId });
         } catch (error) {
-            // notify-service offline, do nothing
+            // service offline, do nothing
         }
 
-        return 'Ok';
+        try {
+            await this.callService('bandwidth', 'notifyOffline', { user, channelId });
+        } catch (error) {
+            // service offline, do nothing
+        }
+
+        return { status: 'Ok' };
     }
 }
 

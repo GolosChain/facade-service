@@ -3,27 +3,25 @@ const Basic = core.controllers.Basic;
 
 class Options extends Basic {
     async get({ auth: { user }, params: { app, profile } }) {
-        const data = { user, app, profile };
-
         const basic = await this._tryGetOptionsBy({
             service: 'options',
             method: 'get',
             errorPrefix: 'Basic',
-            data,
+            data: { user, app, profile },
         });
 
         const notify = await this._tryGetOptionsBy({
             service: 'onlineNotify',
             method: 'getOptions',
             errorPrefix: 'Notify',
-            data,
+            data: { user, app },
         });
 
         const push = await this._tryGetOptionsBy({
             service: 'push',
             method: 'getOptions',
             errorPrefix: 'Push',
-            data,
+            data: { user, app, profile },
         });
 
         return { basic, notify, push };

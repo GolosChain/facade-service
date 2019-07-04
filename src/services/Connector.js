@@ -445,6 +445,14 @@ class Connector extends BasicConnector {
                     handler: wallet.getVestingHistory,
                     scope: wallet,
                 },
+                'wallet.convertVestingToToken': {
+                    handler: wallet.convertVestingToToken,
+                    scope: wallet,
+                },
+                'wallet.convertTokensToVesting': {
+                    handler: wallet.convertTokensToVesting,
+                    scope: wallet,
+                },
 
                 /* service points */
                 offline: {

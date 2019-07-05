@@ -29,6 +29,14 @@ class Wallet extends Basic {
         const data = { account, sequenceKey, limit };
         return await this.callService('wallet', 'getVestingHistory', data);
     }
+    async convertVestingToToken({ params: { vesting } }) {
+        const data = { vesting };
+        return await this.callService('wallet', 'convertVestingToToken', data);
+    }
+    async convertTokensToVesting({ params: { tokens } }) {
+        const data = { tokens };
+        return await this.callService('wallet', 'convertTokensToVesting', data);
+    }
 }
 
 module.exports = Wallet;

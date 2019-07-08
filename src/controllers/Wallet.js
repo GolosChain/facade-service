@@ -2,9 +2,13 @@ const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
 
 class Wallet extends Basic {
-    async getBalance({ params: { name, tokensList } }) {
-        const data = { name, tokensList };
+    async getBalance({ params: { userId, currencies, type } }) {
+        const data = { userId, currencies, type };
         return await this.callService('wallet', 'getBalance', data);
+    }
+    async getDelegationState({ params: { userId, direction } }) {
+        const data = { userId, direction };
+        return await this.callService('wallet', 'getDelegationState', data);
     }
     async getHistory({ params: { sender, receiver, sequenceKey, limit } }) {
         const data = { sender, receiver, sequenceKey, limit };

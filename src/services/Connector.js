@@ -345,6 +345,10 @@ class Connector extends BasicConnector {
                     handler: content.getProfile,
                     scope: content,
                 },
+                'content.getChargers': {
+                    handler: content.getChargers,
+                    scope: content,
+                },
                 'content.getLeadersTop': {
                     handler: content.getLeadersTop,
                     scope: content,
@@ -383,6 +387,10 @@ class Connector extends BasicConnector {
                 },
                 'content.getSubscribers': {
                     handler: content.getSubscribers,
+                    scope: content,
+                },
+                'content.getProposals': {
+                    handler: content.getProposals,
                     scope: content,
                 },
                 'meta.getPostsViewCount': {
@@ -427,6 +435,10 @@ class Connector extends BasicConnector {
                 },
                 'wallet.getBalance': {
                     handler: wallet.getBalance,
+                    scope: wallet,
+                },
+                'wallet.getDelegationState': {
+                    handler: wallet.getDelegationState,
                     scope: wallet,
                 },
                 'wallet.getTokensInfo': {
@@ -482,6 +494,7 @@ class Connector extends BasicConnector {
                 registration: env.GLS_REGISTRATION_CONNECT,
                 rates: env.GLS_RATES_CONNECT,
                 prism: env.GLS_PRISM_CONNECT,
+                search: env.GLS_SEARCH_CONNECT,
                 meta: env.GLS_META_CONNECT,
                 bandwidth: env.GLS_BANDWIDTH_PROVIDER_CONNECT,
                 wallet: env.GLS_WALLET_CONNECT,

@@ -107,6 +107,12 @@ class Content extends Basic {
         return await this.callService('prism', 'getProfile', data);
     }
 
+    async getChargers({ params: { userId } }) {
+        const data = { userId };
+
+        return await this.callService('prism', 'getChargers', data);
+    }
+
     async getHashTagTop({ params: { communityId, limit, sequenceKey } }) {
         const data = { communityId, limit, sequenceKey };
 
@@ -137,17 +143,45 @@ class Content extends Basic {
     async search({ params: { where, text, field, limit, offset, type } }) {
         const data = { where, text, field, limit, offset, type };
 
-        return await this.callService('prism', 'search', data);
+        return await this.callService('search', 'search', data);
     }
 
-    async getPostVotes({ params: { userId: requestedUserId, permlink, refBlockNum } }) {
-        const data = { requestedUserId, permlink, refBlockNum };
+    async getPostVotes({
+        params: { userId: requestedUserId, permlink, type, sequenceKey, limit, app },
+        auth,
+    }) {
+        const data = {
+            requestedUserId,
+            permlink,
+            type,
+            sequenceKey,
+            limit,
+            app,
+        };
+
+        if (auth && auth.user) {
+            data.currentUserId = auth.user;
+        }
 
         return await this.callService('prism', 'getPostVotes', data);
     }
 
-    async getCommentVotes({ params: { userId: requestedUserId, permlink, refBlockNum } }) {
-        const data = { requestedUserId, permlink, refBlockNum };
+    async getCommentVotes({
+        params: { userId: requestedUserId, permlink, type, sequenceKey, limit, app },
+        auth,
+    }) {
+        const data = {
+            requestedUserId,
+            permlink,
+            type,
+            sequenceKey,
+            limit,
+            app,
+        };
+
+        if (auth && auth.user) {
+            data.currentUserId = auth.user;
+        }
 
         return await this.callService('prism', 'getCommentVotes', data);
     }
@@ -174,6 +208,12 @@ class Content extends Basic {
         const data = { currentUserId, requestedUserId, limit, sequenceKey, type };
 
         return await this.callService('prism', 'getSubscribers', data);
+    }
+
+    async getProposals({ params: { communityId, limit, sequenceKey, app } }) {
+        const data = { communityId, limit, sequenceKey, app };
+
+        return await this.callService('prism', 'getProposals', data);
     }
 }
 

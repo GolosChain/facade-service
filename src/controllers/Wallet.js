@@ -2,40 +2,26 @@ const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
 
 class Wallet extends Basic {
-    async getBalance({ params: { userId, currencies, type } }) {
-        const data = { userId, currencies, type };
-        return await this.callService('wallet', 'getBalance', data);
+    async getBalance({ params }) {
+        return await this.callService('wallet', 'getBalance', params);
     }
-    async getDelegationState({ params: { userId, direction } }) {
-        const data = { userId, direction };
-        return await this.callService('wallet', 'getDelegationState', data);
+    async getDelegationState({ params }) {
+        return await this.callService('wallet', 'getDelegationState', params);
     }
-    async getHistory({ params: { sender, receiver, sequenceKey, limit } }) {
-        const data = { sender, receiver, sequenceKey, limit };
-        return await this.callService('wallet', 'getHistory', data);
+    async getTransferHistory({ params }) {
+        return await this.callService('wallet', 'getHistory', params);
     }
-    async getTokensInfo({ params: tokens }) {
-        const data = { tokens };
-        return await this.callService('wallet', 'getTokensInfo', data);
+    async getTokensInfo({ params }) {
+        return await this.callService('wallet', 'getTokensInfo', params);
     }
-    async getVestingInfo({ params: {} }) {
-        return await this.callService('wallet', 'getVestingInfo', {});
+    async getVestingInfo({ params }) {
+        return await this.callService('wallet', 'getVestingInfo', params);
     }
-    async getVestingBalance({ params: { account } }) {
-        const data = { account };
-        return await this.callService('wallet', 'getVestingBalance', data);
+    async convertVestingToToken({ params }) {
+        return await this.callService('wallet', 'convertVestingToToken', params);
     }
-    async getVestingHistory({ params: { account, sequenceKey, limit } }) {
-        const data = { account, sequenceKey, limit };
-        return await this.callService('wallet', 'getVestingHistory', data);
-    }
-    async convertVestingToToken({ params: { vesting } }) {
-        const data = { vesting };
-        return await this.callService('wallet', 'convertVestingToToken', data);
-    }
-    async convertTokensToVesting({ params: { tokens } }) {
-        const data = { tokens };
-        return await this.callService('wallet', 'convertTokensToVesting', data);
+    async convertTokensToVesting({ params }) {
+        return await this.callService('wallet', 'convertTokensToVesting', params);
     }
 }
 

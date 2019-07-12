@@ -429,8 +429,12 @@ class Connector extends BasicConnector {
                     handler: iframely.getEmbed,
                     scope: iframely,
                 },
-                'wallet.getHistory': {
-                    handler: wallet.getHistory,
+                'wallet.getTransferHistory': {
+                    handler: wallet.getTransferHistory,
+                    scope: wallet,
+                },
+                'wallet.getRewardsHistory': {
+                    handler: wallet.getTransferHistory,
                     scope: wallet,
                 },
                 'wallet.getBalance': {
@@ -447,14 +451,6 @@ class Connector extends BasicConnector {
                 },
                 'wallet.getVestingInfo': {
                     handler: wallet.getVestingInfo,
-                    scope: wallet,
-                },
-                'wallet.getVestingBalance': {
-                    handler: wallet.getVestingBalance,
-                    scope: wallet,
-                },
-                'wallet.getVestingHistory': {
-                    handler: wallet.getVestingHistory,
                     scope: wallet,
                 },
                 'wallet.convertVestingToToken': {

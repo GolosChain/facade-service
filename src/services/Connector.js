@@ -434,7 +434,11 @@ class Connector extends BasicConnector {
                     scope: wallet,
                 },
                 'wallet.getRewardsHistory': {
-                    handler: wallet.getTransferHistory,
+                    handler: wallet.getRewardsHistory,
+                    scope: wallet,
+                },
+                'wallet.getVestingHistory': {
+                    handler: wallet.getVestingHistory,
                     scope: wallet,
                 },
                 'wallet.getBalance': {

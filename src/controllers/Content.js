@@ -215,6 +215,10 @@ class Content extends Basic {
 
         return await this.callService('prism', 'getProposals', data);
     }
+
+    async getHeaders({ params }) {
+        return await this.callService('prism', 'getPostHeaders', params);
+    }
 }
 
 module.exports = Content;

@@ -393,6 +393,10 @@ class Connector extends BasicConnector {
                     handler: content.getProposals,
                     scope: content,
                 },
+                'content.getHeaders': {
+                    handler: content.getHeaders,
+                    scope: content,
+                },
                 'meta.getPostsViewCount': {
                     handler: meta.getPostsViewCount,
                     scope: meta,

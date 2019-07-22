@@ -217,7 +217,7 @@ class Content extends Basic {
     }
 
     async getHeaders({ params }) {
-        return await this.callService('prism', 'getPostHeaders', params);
+        return await this.callService('prism', 'getHeaders', params);
     }
 }
 

@@ -219,6 +219,10 @@ class Content extends Basic {
     async getHeaders({ params }) {
         return await this.callService('prism', 'getHeaders', params);
     }
+
+    async getNotifyMeta({ params }) {
+        return await this.callService('prism', 'getNotifyMeta', params);
+    }
 }
 
 module.exports = Content;

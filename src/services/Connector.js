@@ -401,6 +401,10 @@ class Connector extends BasicConnector {
                     handler: content.getNotifyMeta,
                     scope: content,
                 },
+                'content.getCommunitySettings': {
+                    handler: content.getCommunitySettings,
+                    scope: content,
+                },
                 'meta.getPostsViewCount': {
                     handler: meta.getPostsViewCount,
                     scope: meta,

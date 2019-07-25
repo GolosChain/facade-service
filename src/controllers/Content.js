@@ -223,6 +223,10 @@ class Content extends Basic {
     async getNotifyMeta({ params }) {
         return await this.callService('prism', 'getNotifyMeta', params);
     }
+
+    async getCommunitySettings({ params }) {
+        return await this.callService('prism', 'getCommunitySettings', params);
+    }
 }
 
 module.exports = Content;

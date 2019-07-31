@@ -477,6 +477,10 @@ class Connector extends BasicConnector {
                     handler: wallet.convertTokensToVesting,
                     scope: wallet,
                 },
+                'wallet.getGenesisConv': {
+                    handler: wallet.getGenesisConv,
+                    scope: wallet,
+                },
 
                 /* service points */
                 offline: {

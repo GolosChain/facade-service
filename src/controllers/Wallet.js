@@ -30,6 +30,10 @@ class Wallet extends Basic {
         return await this.callService('wallet', 'getVestingInfo', params);
     }
 
+    async getVestingSupplyAndBalance({ params }) {
+        return await this.callService('wallet', 'getVestingSupplyAndBalance', params);
+    }
+
     async convertVestingToToken({ params }) {
         return await this.callService('wallet', 'convertVestingToToken', params);
     }

@@ -9,6 +9,7 @@ class Content extends Basic {
             sequenceKey,
             limit,
             userId: requestedUserId,
+            user,
             permlink,
             refBlockNum,
             type,
@@ -20,6 +21,7 @@ class Content extends Basic {
             sequenceKey,
             limit,
             requestedUserId,
+            user,
             currentUserId,
             permlink,
             refBlockNum,
@@ -32,7 +34,7 @@ class Content extends Basic {
 
     async getPost({
         auth: { user: currentUserId },
-        params: { userId: requestedUserId, permlink, refBlockNum, contentType, username, app },
+        params: { userId: requestedUserId, permlink, refBlockNum, contentType, username, user, app },
     }) {
         const data = {
             currentUserId,
@@ -41,6 +43,7 @@ class Content extends Basic {
             refBlockNum,
             contentType,
             username,
+            user,
             app,
         };
 
@@ -49,7 +52,7 @@ class Content extends Basic {
 
     async getComment({
         auth: { user: currentUserId },
-        params: { userId: requestedUserId, permlink, refBlockNum, contentType, username, app },
+        params: { userId: requestedUserId, permlink, refBlockNum, contentType, username, user, app },
     }) {
         const data = {
             currentUserId,
@@ -58,6 +61,7 @@ class Content extends Basic {
             refBlockNum,
             contentType,
             username,
+            user,
             app,
         };
 
@@ -100,9 +104,9 @@ class Content extends Basic {
 
     async getProfile({
         auth: { user: currentUserId },
-        params: { userId: requestedUserId, type, username, app },
+        params: { userId: requestedUserId, type, username, user, app },
     }) {
-        const data = { currentUserId, requestedUserId, type, username, app };
+        const data = { currentUserId, requestedUserId, type, username, user, app };
 
         return await this.callService('prism', 'getProfile', data);
     }

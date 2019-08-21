@@ -111,6 +111,10 @@ class Content extends Basic {
         return await this.callService('prism', 'getProfile', data);
     }
 
+    async suggestNames({ params }) {
+        return await this.callService('prism', 'suggestNames', params);
+    }
+
     async getChargers({ params: { userId } }) {
         const data = { userId };
 

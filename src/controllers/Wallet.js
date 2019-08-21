@@ -45,6 +45,10 @@ class Wallet extends Basic {
     async getGenesisConv({ params }) {
         return await this.callService('wallet', 'getGenesisConv', params);
     }
+
+    async getClaimHistory({ params }) {
+        return await this.callService('wallet', 'getClaimHistory', params);
+    }
 }
 
 module.exports = Wallet;

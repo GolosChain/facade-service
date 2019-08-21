@@ -489,6 +489,10 @@ class Connector extends BasicConnector {
                     handler: wallet.getGenesisConv,
                     scope: wallet,
                 },
+                'wallet.getClaimHistory': {
+                    handler: wallet.getClaimHistory,
+                    scope: wallet,
+                },
 
                 /* service points */
                 offline: {

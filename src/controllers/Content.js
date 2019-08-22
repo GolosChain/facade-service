@@ -34,7 +34,15 @@ class Content extends Basic {
 
     async getPost({
         auth: { user: currentUserId },
-        params: { userId: requestedUserId, permlink, refBlockNum, contentType, username, user, app },
+        params: {
+            userId: requestedUserId,
+            permlink,
+            refBlockNum,
+            contentType,
+            username,
+            user,
+            app,
+        },
     }) {
         const data = {
             currentUserId,
@@ -52,7 +60,15 @@ class Content extends Basic {
 
     async getComment({
         auth: { user: currentUserId },
-        params: { userId: requestedUserId, permlink, refBlockNum, contentType, username, user, app },
+        params: {
+            userId: requestedUserId,
+            permlink,
+            refBlockNum,
+            contentType,
+            username,
+            user,
+            app,
+        },
     }) {
         const data = {
             currentUserId,
@@ -236,8 +252,8 @@ class Content extends Basic {
         return await this.callService('prism', 'getCommunitySettings', params);
     }
 
-    async findLeaders({params}){
-        return await this.callService('prims', 'findLeaders', params)
+    async findLeaders({ auth: { user: currentUserId }, params }) {
+        return await this.callService('prims', 'findLeaders', {...params, currentUserId});
     }
 }
 

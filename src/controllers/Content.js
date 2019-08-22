@@ -235,6 +235,10 @@ class Content extends Basic {
     async getCommunitySettings({ params }) {
         return await this.callService('prism', 'getCommunitySettings', params);
     }
+
+    async findLeaders({params}){
+        return await this.callService('prims', 'findLeaders', params)
+    }
 }
 
 module.exports = Content;

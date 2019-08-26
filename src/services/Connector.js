@@ -357,10 +357,6 @@ class Connector extends BasicConnector {
                     handler: content.getLeadersTop,
                     scope: content,
                 },
-                'content.findLeaders': {
-                    handler: content.findLeaders,
-                    scope: content,
-                },
                 'content.getHashTagTop': {
                     handler: content.getHashTagTop,
                     scope: content,

@@ -152,6 +152,10 @@ class Content extends Basic {
         return await this.callService('prism', 'getLeadersTop', data);
     }
 
+    async findLeaders({ auth: { user: currentUserId }, params }) {
+        return await this.callService('prism', 'findLeaders', { ...params, currentUserId });
+    }
+
     async waitForBlock({ params: { blockNum } }) {
         const data = { blockNum };
 
@@ -250,10 +254,6 @@ class Content extends Basic {
 
     async getCommunitySettings({ params }) {
         return await this.callService('prism', 'getCommunitySettings', params);
-    }
-
-    async findLeaders({ auth: { user: currentUserId }, params }) {
-        return await this.callService('prims', 'findLeaders', {...params, currentUserId});
     }
 }
 

@@ -49,6 +49,11 @@ class Wallet extends Basic {
     async getClaimHistory({ params }) {
         return await this.callService('wallet', 'getClaimHistory', params);
     }
+
+    async getValidators({ auth: { user: currentUserId } }) {
+        const data = { currentUserId };
+        return await this.callService('wallet', 'getValidators', data);
+    }
 }
 
 module.exports = Wallet;

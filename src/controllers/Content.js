@@ -14,6 +14,7 @@ class Content extends Basic {
             refBlockNum,
             type,
             contentType,
+            app,
         },
     }) {
         const data = {
@@ -27,6 +28,7 @@ class Content extends Basic {
             refBlockNum,
             type,
             contentType,
+            app,
         };
 
         return await this.callService('prism', 'getComments', data);

@@ -13,6 +13,7 @@ const Meta = require('../controllers/Meta');
 const Bandwidth = require('../controllers/Bandwidth');
 const Iframely = require('../controllers/Iframely');
 const Wallet = require('../controllers/Wallet');
+const StateReader = require('../controllers/StateReader');
 
 class Connector extends BasicConnector {
     constructor() {
@@ -32,6 +33,7 @@ class Connector extends BasicConnector {
         this._bandwidth = new Bandwidth(linking);
         this._iframely = new Iframely(linking);
         this._wallet = new Wallet(linking);
+        this._stateReader = new StateReader(linking);
     }
 
     _checkAuth(params) {
@@ -57,6 +59,7 @@ class Connector extends BasicConnector {
         const bandwidth = this._bandwidth;
         const iframely = this._iframely;
         const wallet = this._wallet;
+        const stateReader = this._stateReader;
 
         await super.start({
             serverRoutes: {
@@ -497,6 +500,26 @@ class Connector extends BasicConnector {
                     handler: wallet.getValidators,
                     scope: wallet,
                 },
+                'stateReader.getDelegations': {
+                    handler: stateReader.getDelegations,
+                    scope: stateReader,
+                },
+                'stateReader.getValidators': {
+                    handler: stateReader.getValidators,
+                    scope: stateReader,
+                },
+                'stateReader.getLeaders': {
+                    handler: stateReader.getLeaders,
+                    scope: stateReader,
+                },
+                'stateReader.getNameBids': {
+                    handler: stateReader.getNameBids,
+                    scope: stateReader,
+                },
+                'stateReader.getLastClosedBid': {
+                    handler: stateReader.getLastClosedBid,
+                    scope: stateReader,
+                },
 
                 /* service points */
                 offline: {
@@ -530,6 +553,7 @@ class Connector extends BasicConnector {
                 meta: env.GLS_META_CONNECT,
                 bandwidth: env.GLS_BANDWIDTH_PROVIDER_CONNECT,
                 wallet: env.GLS_WALLET_CONNECT,
+                stateReader: env.GLS_STATE_READER_CONNECT,
             },
         });
     }

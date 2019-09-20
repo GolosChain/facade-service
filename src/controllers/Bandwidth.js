@@ -2,16 +2,14 @@ const core = require('gls-core-service');
 const Basic = core.controllers.Basic;
 
 class Bandwidth extends Basic {
-    async provideBandwidth({
-        routing: { channelId },
-        auth: { user },
-        params: { transaction, chainId },
-    }) {
-        return await this.callService('bandwidth', 'bandwidth.provide', {
-            routing: { channelId },
-            auth: { user },
-            params: { transaction, chainId },
-        });
+    createCallProxy(methodName) {
+        return async ({ routing: { channelId }, auth: { user }, params }) => {
+            return await this.callService('bandwidth', `bandwidth.${methodName}`, {
+                routing: { channelId },
+                auth: { user },
+                params,
+            });
+        };
     }
 }
 

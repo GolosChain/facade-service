@@ -295,6 +295,10 @@ class Connector extends BasicConnector {
                     handler: content.getProposals,
                     scope: content,
                 },
+                'content.getProposal': {
+                    handler: content.getProposal,
+                    scope: content,
+                },
                 'content.getHeaders': {
                     handler: content.getHeaders,
                     scope: content,

@@ -444,6 +444,7 @@ class Connector extends BasicConnector {
                 registration: env.GLS_REGISTRATION_CONNECT,
                 rates: env.GLS_RATES_CONNECT,
                 prism: env.GLS_PRISM_CONNECT,
+                prismApi: env.GLS_PRISM_API_CONNECT,
                 search: env.GLS_SEARCH_CONNECT,
                 meta: env.GLS_META_CONNECT,
                 bandwidth: env.GLS_BANDWIDTH_PROVIDER_CONNECT,

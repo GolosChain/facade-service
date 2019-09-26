@@ -31,7 +31,7 @@ class Content extends Basic {
             app,
         };
 
-        return await this.callService('prism', 'getComments', data);
+        return await this.callService('prismApi', 'getComments', data);
     }
 
     async getPost({
@@ -57,7 +57,7 @@ class Content extends Basic {
             app,
         };
 
-        return await this.callService('prism', 'getPost', data);
+        return await this.callService('prismApi', 'getPost', data);
     }
 
     async getComment({
@@ -83,7 +83,7 @@ class Content extends Basic {
             app,
         };
 
-        return await this.callService('prism', 'getComment', data);
+        return await this.callService('prismApi', 'getComment', data);
     }
 
     async getFeed({
@@ -117,7 +117,7 @@ class Content extends Basic {
             app,
         };
 
-        return await this.callService('prism', 'getFeed', data);
+        return await this.callService('prismApi', 'getFeed', data);
     }
 
     async getProfile({
@@ -126,27 +126,27 @@ class Content extends Basic {
     }) {
         const data = { currentUserId, requestedUserId, type, username, user, app };
 
-        return await this.callService('prism', 'getProfile', data);
+        return await this.callService('prismApi', 'getProfile', data);
     }
 
     async suggestNames({ params }) {
-        return await this.callService('prism', 'suggestNames', params);
+        return await this.callService('prismApi', 'suggestNames', params);
     }
 
     async getChargers({ params: { userId } }) {
         const data = { userId };
 
-        return await this.callService('prism', 'getChargers', data);
+        return await this.callService('prismApi', 'getChargers', data);
     }
 
     async getHashTagTop({ params: { communityId, limit, sequenceKey } }) {
         const data = { communityId, limit, sequenceKey };
 
-        return await this.callService('prism', 'getHashTagTop', data);
+        return await this.callService('prismApi', 'getHashTagTop', data);
     }
 
     async getLeadersTop({ auth: { user: currentUserId }, params }) {
-        return await this.callService('prism', 'getLeadersTop', { ...params, currentUserId });
+        return await this.callService('prismApi', 'getLeadersTop', { ...params, currentUserId });
     }
 
     async waitForBlock({ params: { blockNum } }) {
@@ -184,7 +184,7 @@ class Content extends Basic {
             data.currentUserId = auth.user;
         }
 
-        return await this.callService('prism', 'getPostVotes', data);
+        return await this.callService('prismApi', 'getPostVotes', data);
     }
 
     async getCommentVotes({
@@ -204,13 +204,13 @@ class Content extends Basic {
             data.currentUserId = auth.user;
         }
 
-        return await this.callService('prism', 'getCommentVotes', data);
+        return await this.callService('prismApi', 'getCommentVotes', data);
     }
 
     async resolveProfile({ params: { username, app } }) {
         const data = { username, app };
 
-        return await this.callService('prism', 'resolveProfile', data);
+        return await this.callService('prismApi', 'resolveProfile', data);
     }
 
     async getSubscriptions({
@@ -219,7 +219,7 @@ class Content extends Basic {
     }) {
         const data = { currentUserId, requestedUserId, limit, sequenceKey, type, app };
 
-        return await this.callService('prism', 'getSubscriptions', data);
+        return await this.callService('prismApi', 'getSubscriptions', data);
     }
 
     async getSubscribers({
@@ -228,29 +228,29 @@ class Content extends Basic {
     }) {
         const data = { currentUserId, requestedUserId, limit, sequenceKey, type, app };
 
-        return await this.callService('prism', 'getSubscribers', data);
+        return await this.callService('prismApi', 'getSubscribers', data);
     }
 
     async getProposals({ params: { communityId, limit, sequenceKey, app } }) {
         const data = { communityId, limit, sequenceKey, app };
 
-        return await this.callService('prism', 'getProposals', data);
+        return await this.callService('prismApi', 'getProposals', data);
     }
 
     async getProposal({ params }) {
-        return await this.callService('prism', 'getProposal', params);
+        return await this.callService('prismApi', 'getProposal', params);
     }
 
     async getHeaders({ params }) {
-        return await this.callService('prism', 'getHeaders', params);
+        return await this.callService('prismApi', 'getHeaders', params);
     }
 
     async getNotifyMeta({ params }) {
-        return await this.callService('prism', 'getNotifyMeta', params);
+        return await this.callService('prismApi', 'getNotifyMeta', params);
     }
 
     async getCommunitySettings({ params }) {
-        return await this.callService('prism', 'getCommunitySettings', params);
+        return await this.callService('prismApi', 'getCommunitySettings', params);
     }
 }
 

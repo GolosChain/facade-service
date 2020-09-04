@@ -17,19 +17,20 @@ class Options extends Basic {
             data: { user, app },
         });
 
-        const push = await this._tryGetOptionsBy({
-            service: 'push',
-            method: 'getOptions',
-            errorPrefix: 'Push',
-            data: { user, app, profile },
-        });
+        let push;
+        // const push = await this._tryGetOptionsBy({
+        //     service: 'push',
+        //     method: 'getOptions',
+        //     errorPrefix: 'Push',
+        //     data: { user, app, profile },
+        // });
 
         return { basic, notify, push };
     }
 
     async set({ auth: { user }, params: { app, profile, basic, notify, push } }) {
         const errors = [];
-        const trySetOptionsBy = this._makeOptionsSetter({ user, app, profile, errors });
+        const trySetOptionsBy = this._makeOptionsSetter({ user, app, errors });
 
         if (basic) {
             await trySetOptionsBy({
@@ -37,6 +38,9 @@ class Options extends Basic {
                 service: 'options',
                 method: 'set',
                 errorPrefix: 'Basic',
+                params: {
+                    profile,
+                },
             });
         }
 
@@ -55,6 +59,9 @@ class Options extends Basic {
                 service: 'push',
                 method: 'setOptions',
                 errorPrefix: 'Push',
+                params: {
+                    profile,
+                },
             });
         }
 
@@ -111,9 +118,9 @@ class Options extends Basic {
         return { code: error.code, message: `${prefix} -> ${error.message}` };
     }
 
-    _makeOptionsSetter({ user, app, profile, errors }) {
-        return async ({ service, method, errorPrefix, data }) => {
-            const { error } = await this.sendTo(service, method, { user, app, profile, data });
+    _makeOptionsSetter({ user, app, errors }) {
+        return async ({ service, method, errorPrefix, data, params }) => {
+            const { error } = await this.sendTo(service, method, { user, app, data, ...params });
 
             if (error) {
                 errors.push(`${errorPrefix} -> ${error.message}`);

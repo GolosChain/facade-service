@@ -17,12 +17,13 @@ class Options extends Basic {
             data: { user, app },
         });
 
-        const push = await this._tryGetOptionsBy({
-            service: 'push',
-            method: 'getOptions',
-            errorPrefix: 'Push',
-            data: { user, app, profile },
-        });
+        let push;
+        // const push = await this._tryGetOptionsBy({
+        //     service: 'push',
+        //     method: 'getOptions',
+        //     errorPrefix: 'Push',
+        //     data: { user, app, profile },
+        // });
 
         return { basic, notify, push };
     }

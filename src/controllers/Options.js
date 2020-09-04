@@ -10,12 +10,13 @@ class Options extends Basic {
             data: { user, app, profile },
         });
 
-        const notify = await this._tryGetOptionsBy({
-            service: 'onlineNotify',
-            method: 'getOptions',
-            errorPrefix: 'Notify',
-            data: { user, app },
-        });
+        let notify;
+        // const notify = await this._tryGetOptionsBy({
+        //     service: 'onlineNotify',
+        //     method: 'getOptions',
+        //     errorPrefix: 'Notify',
+        //     data: { user, app },
+        // });
 
         let push;
         // const push = await this._tryGetOptionsBy({

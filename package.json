@@ -10,7 +10,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "gls-core-service": "^3.42.0",
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^2.6.1",
     "valid-url": "^1.0.9"
   },
   "prettier": {
